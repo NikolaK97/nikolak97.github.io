@@ -1,6 +1,6 @@
 ---
 layout: page
-title: Sekce B – cvičení
+title: Zpracování dat v GIS – cvičení
 permalink: /zpracovani_dat/
 ---
 
