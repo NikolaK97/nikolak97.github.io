@@ -143,9 +143,9 @@ Zkontroluj, že žádná vybraná oblast nezasahuje do:
 - Dálnice, železnice, sídla.  
 - Legenda, měřítko, severka, zdroje dat.
 
-**Export:** PDF + MXD/Pro `aprx`.
+**Export:** PDF.
 
-## 7) Odevzdání (studenti)
+## 7) Odevzdání 
 - **Mapa** (PDF s layoutem).  
 - **Geoprocessing ModelBuilder** nebo exportovaný **History** kroků.  
 - **Krátká zpráva** (1–2 strany):  
