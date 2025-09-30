@@ -1,0 +1,10 @@
+title: "Návody pro studenty"
+description: "Materiály k předmětům"
+theme: minima
+
+# Navigace (menu)
+header_pages:
+  - index.md
+  - matematika.md
+  - programovani.md
+  - fyzika.md
