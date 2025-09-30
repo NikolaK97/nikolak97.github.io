@@ -6,7 +6,7 @@ theme: minima
 header_pages:
   - index.md
   - Geoinformatika/index.md
-  - Zpracování dat v GIS/index.md
+  - zpracovani_dat/index.md
 
 # volitelné: hezké URL bez .html
 permalink: /:path/
