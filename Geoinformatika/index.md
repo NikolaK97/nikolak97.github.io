@@ -1,6 +1,6 @@
 ---
 layout: page
-title: Sekce A – cvičení
+title: Geoinformatika – cvičení
 permalink: /Geoinformatika/
 ---
 
