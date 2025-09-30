@@ -12,7 +12,6 @@ permalink: /zpracovani_dat/cviceni-03/
 
 ## 0) Příprava projektu a prostředí
 - **Nový projekt:** `Map` → pojmenuj např. `CV03_MapAlgebra_Albrechtice`.
-- **Zapni Spatial Analyst:** `Project` → `Licensing` → zaškrtni rozšíření **Spatial Analyst**.
 - **Geodatabáze:** ve výchozí `CV03_MapAlgebra_Albrechtice.gdb` vytvoř *Feature Dataset* `S_JTSK` (volitelné) v **S-JTSK / Krovák East North (EPSG:5514)**.
 - **Nastavení prostředí (důležité!):**
   - `Geoprocessing` panel → `Environments` (globálně pro projekt):
@@ -27,9 +26,9 @@ permalink: /zpracovani_dat/cviceni-03/
 ---
 
 ## 1) Hranice obce Albrechtice
-**Data:** *ArcČR 4.2* (vrstva **Obce** a případně **Obce – definiční body**).
+**Data:** *ArcČR 4.3* (vrstva **Obce** a případně **Obce – definiční body**).
 
-1. Přidej ArcČR 4.2 do projektu (balík nebo sdílená GDB).
+1. Přidej ArcČR 4.3 do projektu (balík nebo sdílená GDB).
 2. Pokud **Obce** obsahuje názvy, proveď **Select By Attributes**:  
    `NAZEV = 'Albrechtice'` (nebo jiný odpovídající atribut/jméno).
 3. Pokud názvy chybí: **Spatial Join** mezi polygonovou vrstvou *Obce* (**Target**) a *Obce – definiční body* (**Join Features**) → získáš textové názvy do polygonů. Pak vyber **Albrechtice**.
