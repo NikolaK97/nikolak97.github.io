@@ -25,7 +25,6 @@ Studenti určí 1–3 nejvhodnější oblasti pro letiště s ohledem na:
 
 # Postup řešení – Dopravní systémy (ArcGIS Pro)
 
-> Tato stránka převádí původní návod do podoby čitelné na GitHub Pages.
 > Vše je psáno pro **ArcGIS Pro** a projekci **S-JTSK / Krovák East North (EPSG:5514)**.
 
 ## 1) Vytvoření projektu
