@@ -1,7 +1,7 @@
 ---
 layout: page
-title: "Úvod"
+title: Rozcestník
 ---
 
-# Vítejte na webu s návody
-Vyberte si předmět v horním menu.
+- [Geoinformatika(/geoinformatika/)
+- [Zpracování dat v GIS](/zpracovani_dat/)
