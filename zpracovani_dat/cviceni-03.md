@@ -1,7 +1,7 @@
 ---
 layout: page
-title: Cvičení 01 — Mapová algebra v ArcGIS Pro
-permalink: /sekce-a/cviceni-01/
+title: Cvičení 03 — Mapová algebra v ArcGIS Pro
+permalink: /zpracovani_dat/cviceni-03/
 ---
 
 **CV03 – Mapová algebra v ArcGIS Pro**  
