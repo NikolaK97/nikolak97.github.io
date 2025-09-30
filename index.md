@@ -3,5 +3,5 @@ layout: page
 title: Rozcestník
 ---
 
-- [Geoinformatika](/geoinformatika/)
+- [Geoinformatika](/Geoinformatika/)
 - [Zpracování dat v GIS](/zpracovani_dat/)
