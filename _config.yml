@@ -5,6 +5,6 @@ theme: minima
 # Navigace (menu)
 header_pages:
   - index.md
-  - matematika.md
-  - programovani.md
-  - fyzika.md
+  - geoinformatika.md
+  - zpracovani_gis.md
+  - open_data.md
