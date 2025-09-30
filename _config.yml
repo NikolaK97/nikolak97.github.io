@@ -7,6 +7,7 @@ header_pages:
   - index.md
   - Geoinformatika/index.md
   - zpracovani_dat/index.md
+  - dopravni_system/index.md
 
 # volitelné: hezké URL bez .html
 permalink: /:path/
