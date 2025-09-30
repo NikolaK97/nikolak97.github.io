@@ -2,9 +2,11 @@ title: "Návody pro studenty"
 description: "Materiály k předmětům"
 theme: minima
 
-# Navigace (menu)
+# co se má zobrazovat v horním menu (rozcestník)
 header_pages:
   - index.md
-  - geoinformatika.md
-  - zpracovani_gis.md
-  - open_data.md
+  - Geoinformatika/index.md
+  - Zpracování dat v GIS/index.md
+
+# volitelné: hezké URL bez .html
+permalink: /:path/
