@@ -131,7 +131,7 @@ Chceme pixely splňující **všechny tři** podmínky (**logické AND**):
 - `Solar_kWh_ok = 1`
 
 **Raster Calculator:**
-PV_suitable = Con( (Slope_ok == 1) & (CLC_ok == 1) & (Solar_kWh_ok == 1), 1, 0 )
+PV_suitable = Slope_ok + CLC_ok + Solar_kWh_ok 
 
 **Output:** `PV_suitable` *(binární 0/1).*
 
