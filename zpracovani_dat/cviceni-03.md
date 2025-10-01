@@ -47,8 +47,7 @@ permalink: /zpracovani_dat/cviceni-03/
    - *Output Extent / Feature geometry:* `Albrechtice_boundary` (zaškrtni **Use Input Features for Clipping Geometry**)
    - *Output name:* `DMR5G_albrechtice` (rastr v GDB)
    - *Pozn.:* U ImageServeru je výpočet *on-the-fly*. Pro vyšší výkon můžeš udělat **Copy Raster** po klipu, aby sis vytvořila lokální raster dataset.
-5. **Nastav Snap Raster:** `Environments` → `Snap Raster = DMR5G_albrechtice`; `Mask = Albrechtice_boundary`; `Cell size = 5`.
-6. **Sklon (Slope):** *Spatial Analyst → Surface → Slope*
+5. **Sklon (Slope):** *Spatial Analyst → Surface → Slope*
    - *Input raster:* `DMR5G_albrechtice`
    - *Output measurement:* `DEGREE` (stupně)
    - *Z-Factor:* `1` (výšky v metrech, horizont v metrech – Křovák)
