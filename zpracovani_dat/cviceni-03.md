@@ -116,7 +116,7 @@ Solar_kWh = Solar_Whm2 / 1000.0
 
 
 **B2) Raster Calculator – prahování:**
-Solar_kWh_ok = Con( Solar_kWh >= 1000, 1, 0 )
+Pomocí reclassify - nad 1000 dáme 1, pod 1000 dáme 0
 
 
 *Výsledek `Solar_kWh_ok` je binární 0/1.*
