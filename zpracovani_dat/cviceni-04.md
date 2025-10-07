@@ -21,7 +21,7 @@ Každý typ operace tedy umožňuje jiný způsob pohledu na prostorová data �
 
 ---
 
-## 🔢 2. Matematické a logické operace
+##  2. Matematické a logické operace
 
 Mapová algebra nabízí široké spektrum **aritmetických**, **relačních** a **logických** operací, které lze libovolně kombinovat:
 
@@ -153,7 +153,7 @@ Najít oblasti, které splňují tyto podmínky:
 
 ---
 
-## 🌄 3. Stínovaný reliéf (Hillshade)
+##  3. Stínovaný reliéf (Hillshade)
 
 ### 3.1 Otevři nástroj
 `Raster → Analysis → Hillshade`
