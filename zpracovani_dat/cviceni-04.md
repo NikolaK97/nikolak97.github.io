@@ -290,3 +290,13 @@ Máš vizuálně zobrazené oblasti, které:
 - mají **sklon ≤ 5°**,  
 - nebo mají **sklon ≤ 2° bez ohledu na orientaci**,  
 - a které jsou dostatečně velké *(odfiltrovány pomocí Sieve)*.
+  
+---
+
+##  ZADÁNÍ DOMÁCÍHO ÚKOLU
+použijte nástroje mapové algebry pro vyhledání míst potenciálně vhodných pro umístění fotovoltaických panelů v **obci vašeho bydliště** 
+(pokud nepocházíte z ČR, máte obec Žďár nad Sázavou)
+zajímají nás místa se sklonitostí do 15 stupňů, sluneční expozicí nad 1000 kWh/m² a mimo zastavěná území a lesy
+výstupem programu bude mapový výstup, který bude obsahovat 3 mezivýsledky podmínek (rastry po klasifikaci) a výsledek
+dále bude program obsahovat stručný komentář k získaným výsledkům
+program zašlete na mail vedoucího do termínu požadovaném vedoucím cvičení
