@@ -227,6 +227,3 @@ Automatizuj vše jako model:
 - [x] Komentář ke změnám  
 - [x] Metadata + měřítko + legenda  
 
----
-
-© Zpracováno v ArcGIS Pro, kurz GIS – Multikriteriální analýza, 2025.
