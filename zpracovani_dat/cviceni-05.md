@@ -5,7 +5,7 @@ layout: default
 
 # CV05 – Multikriteriální analýza (MKA)
 
-## 🎯 Cíl
+## Cíl
 Najít vhodné lokality pro těžbu dřeva v **Moravskoslezských Beskydech** pomocí váženého překryvu (*Weighted Overlay*) nad faktory a omezeními.
 
 ### Omezení (Boolean)
@@ -21,7 +21,7 @@ Najít vhodné lokality pro těžbu dřeva v **Moravskoslezských Beskydech** po
 
 ---
 
-## 0️⃣ Projekt & prostředí nástrojů
+##  Projekt & prostředí nástrojů
 
 ### Struktura složek
 ```
@@ -39,11 +39,11 @@ Najít vhodné lokality pro těžbu dřeva v **Moravskoslezských Beskydech** po
 - **Mask (volitelné):** polygon zájmového území (MS Beskydy)
 - **Coordinate System:** jednotný (doporučeno S-JTSK / Krovak East North)
 
-> 💡 Zajišťuje přesné lícování všech rastrů – klíčové pro mapovou algebru.
+>  Zajišťuje přesné lícování všech rastrů – klíčové pro mapovou algebru.
 
 ---
 
-## 1️⃣ Omezení (Boolean)
+##  Omezení (Boolean)
 
 ### 1.1 Nadmořská výška ≤ 700 m
 ```python
@@ -62,11 +62,11 @@ Pokud převádíš z polygonů:
 PolygonToRaster (Cellsize = 25, Field = 1 pro les / 0 pro ostatní)
 ```
 **Výstup:** `b_forest`  
-✅ Kontrola: pouze hodnoty 0 a 1, žádné NoData.
+ Kontrola: pouze hodnoty 0 a 1, žádné NoData.
 
 ---
 
-## 2️⃣ Faktory
+##  Faktory
 
 ### 2.1 Vzdálenost k silnicím
 ```python
@@ -88,7 +88,7 @@ Slope (DEM, Output measurement = DEGREE)
 
 ---
 
-## 3️⃣ Standardizace faktorů (0–255)
+##  Standardizace faktorů (0–255)
 
 **Vzorec:**
 ```python
@@ -104,7 +104,7 @@ Xi = (xi – MINi) / (MAXi – MINi) * 255
 
 ---
 
-## 4️⃣ Váhy faktorů – AHP (Saaty)
+##  Váhy faktorů – AHP (Saaty)
 
 | Kritérium | Váha |
 |:--|:--:|
@@ -117,7 +117,7 @@ Xi = (xi – MINi) / (MAXi – MINi) * 255
 
 ---
 
-## 5️⃣ Vážený překryv
+##  Vážený překryv
 
 ### 5.1 Vážený součet faktorů
 ```python
@@ -139,7 +139,7 @@ result_cont = Con(
 
 ---
 
-## 6️⃣ Klasifikace výsledku (5 tříd)
+##  Klasifikace výsledku (5 tříd)
 
 | Třída | Interval | Popis |
 |:--:|:--|:--|
@@ -153,7 +153,7 @@ result_cont = Con(
 
 ---
 
-## 7️⃣ Vizualizace a validace
+##  Vizualizace a validace
 
 **Styl mapy:** zelená → červená (1–5)  
 Přidej vrstvy CHÚ, silnice, vrstevnice.  
@@ -163,12 +163,12 @@ Nástroj `Tabulate Area` → přepočet ploch (ha, %)
 
 ---
 
-## 8️⃣ Kontrolní otázka
+##  Kontrolní otázka
 Jednalo se o **omezení**, nikoli faktory.
 
 ---
 
-## 9️⃣ Druhá varianta s jinými vahami
+##  Druhá varianta s jinými vahami
 
 | Kritérium | Váha |
 |:--|:--:|
@@ -188,7 +188,7 @@ wsum_v2 = ( "std_roads_0_255"    * 0.20
 
 ---
 
-## 🔟 Doporučení a časté chyby
+## Doporučení a časté chyby
 - Snap/Extent/CellSize vždy podle DEM (25 m)  
 - NoData vs. 0/1: drž konzistentně  
 - Globální MIN/MAX pro standardizaci  
@@ -197,7 +197,7 @@ wsum_v2 = ( "std_roads_0_255"    * 0.20
 
 ---
 
-## 11️⃣ Bonus: ModelBuilder (na 1 klik)
+##  Bonus: ModelBuilder (na 1 klik)
 Automatizuj vše jako model:
 
 **Inputs:** DEM, roads, rails, woodproc, omezení  
@@ -206,7 +206,7 @@ Automatizuj vše jako model:
 
 ---
 
-## 12️⃣ Finální výstupy
+##  Finální výstupy
 
 | Soubor | Popis |
 |:--|:--|
@@ -217,7 +217,7 @@ Automatizuj vše jako model:
 
 ---
 
-## 13️⃣ Checklist před odevzdáním
+##  Checklist před odevzdáním
 - [x] Nastavené prostředí (Extent, Snap, CellSize)  
 - [x] 4 standardizované faktory (0–255)  
 - [x] 3 omezení (0/1)  
