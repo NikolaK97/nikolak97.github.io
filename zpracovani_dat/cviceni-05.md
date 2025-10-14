@@ -3,6 +3,122 @@ title: "CV05 – Multikriteriální analýza (MKA)"
 layout: default
 ---
 
+## Teoretická část
+
+---
+
+### 1. Úvod do prostorových funkcí
+
+Prostorové funkce patří mezi základní nástroje geografických informačních systémů (GIS).  
+Umožňují analyzovat, jak spolu jednotlivé geografické objekty **prostorově souvisejí** – tedy jaké mezi nimi existují vztahy (překrývání, dotyk, vzdálenost apod.).
+
+Zatímco atributová data popisují **vlastnosti objektů** (např. počet obyvatel, typ půdy, třída silnice), **geometrická složka** dat určuje jejich **polohu a tvar** v prostoru. Kombinací obou lze provádět tzv. **prostorové analýzy** – získávat nové informace, které by jinak nebyly patrné.
+
+Příklady prostorových dotazů:
+- Kolik obyvatel žije do 500 m od železniční stanice?
+- Jaká část města leží v záplavovém území?
+- Které silnice protínají lesní oblasti?
+
+---
+
+### 2. Základní principy prostorových funkcí
+
+#### 2.1 Topologické překrytí (overlay)
+
+*Overlay* znamená porovnání **dvou nebo více vrstev** a analýzu jejich prostorového vztahu.  
+Historicky se překrývaly mapy na fóliích; dnes se overlay provádí matematicky – GIS vyhodnocuje průniky, sjednocení či rozdíly geometrií.
+
+**Výsledek overlay analýzy** → nová vrstva s kombinovanými informacemi z obou vstupních dat.
+
+---
+
+#### 2.2 Booleanovská logika v prostorových analýzách
+
+Prostorové operace se řídí **logickými operátory**:
+
+| Operátor | Význam | Logický příklad | Prostorový příklad |
+|-----------|---------|----------------|--------------------|
+| **AND (∩)** | průnik | město AND les | území, které je zároveň město i les |
+| **OR (∪)** | sjednocení | město OR les | území, které je buď město, nebo les |
+| **NOT (-)** | rozdíl | město NOT les | město bez lesních oblastí |
+
+---
+
+#### 2.3 Typy prostorových dat
+
+| Typ geometrie | Popis | Příklad |
+|----------------|--------|----------|
+| **Bod (point)** | přesná poloha | studna, strom |
+| **Linie (polyline)** | lineární prvek bez šířky | silnice, řeka |
+| **Polygon (area)** | plošný prvek | obec, les |
+
+Při kombinaci dat musí být typy geometrie **vzájemně kompatibilní** (např. CLIP může ořezávat linie polygonem).
+
+---
+
+### 3. Přehled základních prostorových funkcí
+
+#### 3.1 CLIP – ořezání dat
+- **Princip:** ořezává vstupní vrstvu podle ořezové.
+- **Vstup:** libovolná vrstva + polygonová ořezová vrstva.  
+- **Výstup:** objekty ležící uvnitř ořezové vrstvy.  
+- **Příklad:** silnice pouze na území Poruby.
+
+---
+
+#### 3.2 BUFFER – obalová zóna
+- **Princip:** vytváří území v určité vzdálenosti od objektu.  
+- **Vstup:** body, linie nebo polygony + vzdálenost.  
+- **Výstup:** polygonová vrstva zón.  
+- **Příklad:** pásma 500 m a 3 km kolem železničních stanic.
+
+---
+
+#### 3.3 INTERSECT – průnik
+- **Princip:** najde překrývající se části více vrstev.  
+- **Výstup:** nová vrstva pouze s průnikem.  
+- **Příklad:** lesy ležící uvnitř města Ostravy.
+
+---
+
+#### 3.4 UNION – sjednocení
+- **Princip:** spojí dvě polygonové vrstvy, zachová i nepřekrývající se části.  
+- **Výstup:** vrstva všech oblastí z obou vrstev.  
+- **Příklad:** sjednocení lesů a vodních ploch.
+
+---
+
+#### 3.5 MERGE – spojení dat
+- **Princip:** sloučí více vrstev stejného typu bez ohledu na polohu.  
+- **Výstup:** jedna vrstva s daty ze všech vstupů.  
+- **Příklad:** spojení vrstev Poruba a Zábřeh.
+
+---
+
+#### 3.6 DISSOLVE – sloučení podle atributu
+- **Princip:** slučuje prvky se stejným atributem do jednoho celku.  
+- **Výstup:** vrstva s menším počtem prvků.  
+- **Příklad:** sloučení všech částí obce Ostrava.
+
+---
+
+#### 3.7 ERASE – odečtení dat
+- **Princip:** odečte jednu polygonovou vrstvu od druhé.  
+- **Výstup:** území zbylé po odečtení.  
+- **Příklad:** území ČR dále než 1 km od silnic.
+
+---
+
+### 4. Význam prostorových funkcí v praxi
+
+Prostorové funkce jsou klíčovým nástrojem GIS:
+- modelují dopady jevů (povodně, hluk, doprava),  
+- hodnotí dostupnost (např. škol nebo nemocnic),  
+- určují překryvy územních limitů,  
+- vytvářejí nové datové vrstvy z kombinovaných informací.
+
+---
+
 # CV05 – Multikriteriální analýza (MKA)
 
 ## Cíl
