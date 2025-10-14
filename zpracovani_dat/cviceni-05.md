@@ -106,14 +106,66 @@ Xi = (xi – MINi) / (MAXi – MINi) * 255
 
 ##  Váhy faktorů – AHP (Saaty)
 
+Stanovení vah proběhlo pomocí **metody párového porovnání AHP (Analytic Hierarchy Process)** podle Saatyho.  
+Každé kritérium bylo posuzováno vůči ostatním z hlediska významnosti pro výběr vhodných lokalit těžby.
+
+---
+
+### 4.1 Párové porovnání faktorů
+
+Matice relativní důležitosti vyjadřuje, jak jsou jednotlivé faktory významné vůči sobě.  
+Hodnoty jsou stanoveny podle stupnice Saaty (1–9), kde 1 = stejná důležitost, 9 = extrémní převaha.
+
+**Tab. 1: Vyjádření relativní důležitosti jednotlivých faktorů v párovém srovnání**
+
+| Faktor | vzdál. k silnicím | vzdál. k železnicím | vzdál. k dř. průmyslu | sklon svahu |
+|:--|:--:|:--:|:--:|:--:|
+| vzdál. k silnicím | 1 | 1 | 1/5 | 1/7 |
+| vzdál. k železnicím | 1 | 1 | 1/5 | 1/7 |
+| vzdál. k dř. průmyslu | 5 | 5 | 1 | 1/5 |
+| sklon svahu | 7 | 7 | 5 | 1 |
+| **Suma** | **14** | **14** | **6.4** | **1.486** |
+
+---
+
+### 4.2 Normalizace a výpočet průměrných vah
+
+Jednotlivé hodnoty v buňkách matice (z tabulky 1) jsou nejprve děleny součtem buněk ve sloupci (Suma).  
+Získáme tak **normalizovanou matici**, ze které se následně pro každý řádek vypočítá **průměr** – ten odpovídá váze daného faktoru.
+
+**Tab. 2: Výpočet vah jednotlivých faktorů**
+
+| Faktor | vzdál. k silnicím | vzdál. k železnicím | vzdál. k dř. průmyslu | sklon svahu | **váha faktoru** |
+|:--|:--:|:--:|:--:|:--:|:--:|
+| vzdál. k silnicím | 0.071 | 0.071 | 0.031 | 0.096 | **0.067** |
+| vzdál. k železnicím | 0.071 | 0.071 | 0.031 | 0.096 | **0.067** |
+| vzdál. k dř. průmyslu | 0.357 | 0.357 | 0.156 | 0.135 | **0.252** |
+| sklon svahu | 0.500 | 0.500 | 0.781 | 0.673 | **0.614** |
+
+---
+
+### 4.3 Výsledné váhy
+
 | Kritérium | Váha |
 |:--|:--:|
-| Sklon | 0.614 |
-| Dřevozprac. průmysl | 0.252 |
-| Silnice | 0.067 |
-| Železnice | 0.067 |
+| **Sklon svahu** | **0.614** |
+| **Vzdál. k dřevozpracujícímu průmyslu** | **0.252** |
+| **Vzdál. k silnicím** | **0.067** |
+| **Vzdál. k železnicím** | **0.067** |
 
-> Přepočítáno párovým porovnáním (CR < 0.1).
+> Kontrola konzistence: CR < 0.1 → výpočet je konzistentní.
+
+---
+
+### 4.4 Vážený překryv (Weighted Overlay)
+
+Každý faktor je standardizován (0–255) a následně kombinován podle vypočtených vah:
+
+```python
+wsum = ( "std_roads_0_255"    * 0.067
+       + "std_rails_0_255"    * 0.067
+       + "std_woodproc_0_255" * 0.252
+       + "std_slope_0_255"    * 0.614 )
 
 ---
 
