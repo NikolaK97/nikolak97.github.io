@@ -12,7 +12,7 @@ Najít vhodné lokality pro těžbu dřeva v **Moravskoslezských Beskydech** po
 
 Všechny vstupní vrstvy byly již dopředu ořezány (funkce Clip) na území Moravskoslezských Beskyd.
 
-- vektorové vrstvy z databáze ArcČR 500 v 3.1 – silnice, železnice
+- vektorové vrstvy z databáze ArcČR 500 v 3.3 – silnice, železnice
 - sídla dřevozpracujícího průmyslu (bodová vektorová vrstva)
 - digitální model reliéfu (rastr)
 - chráněná maloplošná území (rastr)
