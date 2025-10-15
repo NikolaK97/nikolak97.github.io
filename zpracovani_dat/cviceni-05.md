@@ -79,10 +79,20 @@ Slope (DEM, Output measurement = DEGREE)
 
 ##  Standardizace faktorů (0–255)
 
+
+5.1 Spočítej statistiky (MIN/MAX) pro každý raster (dist_* a slope_deg).
+5.2 Raster Calculator – bezpečná standardizace s ořezem:
+- "R" je raster
+- MAX_R - maximální hodnota, zadáváme desetinné místo s tečkou!!!
+- MIN_R - minimální hodnota, zadáváme destinné místo s tečkou!!!
 **Vzorec:**
-```python
-Xi = (xi – MINi) / (MAXi – MINi) * 255
-```
+Con( "R" <= MAX_R,
+     Con( "R" >= MIN_R, 
+          (("R" - MIN_R) / (MAX_R - MIN_R)) * 255.0, 
+          0 ),
+     255 )
+Aplikuj na `dist_silnice`, `dist_zeleznice`, `dist_drevozpr`, `slope_deg` → `std_*`.
+
 
 | Faktor | Výstup | Poznámka |
 |:--|:--|:--|
@@ -150,16 +160,6 @@ Získáme tak **normalizovanou matici**, ze které se následně pro každý ř�
 
 Každý faktor je standardizován (0–255) a následně kombinován podle vypočtených vah:
 
-```python
-wsum = ( "std_roads_0_255"    * 0.067
-       + "std_rails_0_255"    * 0.067
-       + "std_woodproc_0_255" * 0.252
-       + "std_slope_0_255"    * 0.614 )
-
----
-
-##  Vážený překryv
-
 ### 5.1 Vážený součet faktorů
 ```python
 wsum = ( "std_roads_0_255"    * 0.067
@@ -172,7 +172,7 @@ wsum = ( "std_roads_0_255"    * 0.067
 ### 5.2 Aplikace omezení
 ```python
 result_cont = Con(
-  ("b_alt_le_700" == 1) & ("b_outside_PA" == 1) & ("b_forest" == 1),
+  ("dem_min_700" == 1) & ("MCHU_raster" == 1) & ("forest_raster" == 1),
   "wsum_0_255",
   NoData
 )
