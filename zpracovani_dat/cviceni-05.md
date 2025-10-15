@@ -13,10 +13,11 @@ Najít vhodné lokality pro těžbu dřeva v **Moravskoslezských Beskydech** po
 Všechny vstupní vrstvy byly již dopředu ořezány (funkce Clip) na území Moravskoslezských Beskyd.
 
 - vektorové vrstvy z databáze ArcČR 500 v 3.3 – silnice, železnice
+- stát - polygon
 - sídla dřevozpracujícího průmyslu (bodová vektorová vrstva)
-- digitální model reliéfu (rastr)
-- chráněná maloplošná území (rastr)
-- lesní plochy (rastr)
+- digitální model reliéfu (rastr) - také z ArcČR v 3.3.
+- chráněná maloplošná území (vektor)
+- lesní plochy (vektor)
 
 ### Omezení (Boolean)
 - nadmořská výška ≤ 700 m n. m.  
@@ -31,47 +32,24 @@ Všechny vstupní vrstvy byly již dopředu ořezány (funkce Clip) na území M
 
 ---
 
-##  Projekt & prostředí nástrojů
-
-### Struktura složek
-```
-…\MKA_Beskydy\
-├─ 01_input\     # vstupy – jen pro čtení
-├─ 02_work\      # mezi-výstupy
-├─ 03_output\    # finální výstupy – mapy, tabulky, reporty
-└─ 04_layout\
-```
-
-### Nastavení prostředí (ArcGIS Pro > Environments)
-- **Processing Extent:** `Same as layer → DMR (DEM) pro Beskydy`
-- **Snap Raster:** `DMR`
-- **Cell Size:** `25 m`
-- **Mask (volitelné):** polygon zájmového území (MS Beskydy)
-- **Coordinate System:** jednotný (doporučeno S-JTSK / Krovak East North)
-
->  Zajišťuje přesné lícování všech rastrů – klíčové pro mapovou algebru.
-
----
-
 ##  Omezení (Boolean)
 
 ### 1.1 Nadmořská výška ≤ 700 m
-```python
-Con(DEM <= 700, 1, 0)
-```
-**Výstup:** `b_alt_le_700` (celé číslo 0/1)
+- pomocí Reclassify, rozdělte na dvě třídy, kde hodnoty min 700 m bude 1 a ostatní hodnoty 0
+**Výstup:** `dem_min_700` (celé číslo 0/1)
 
 ### 1.2 Mimo MCHÚ
-Boolean rastr: 1 = mimo CHÚ, 0 = uvnitř.  
+Nejdříve si maloplošné chránněná území pomocí nástroje MERGE spojte s polygonem Stát, s názvem MCHU_stat.
+Vytvořte nový sloupec IS_MCHU, kde pro místa s MCHU nastavte 1 a pro ostatní 0.
+Následně převeďte na raster, nástroj Polygon to Raster. (v priority  field vložte sloupec IS_MCHU)
 Zkontroluj hodnoty a NoData.  
-**Výstup:** `b_outside_PA`
+**Výstup:** `MCHU_raster`
 
 ### 1.3 Lesní plochy
-Pokud převádíš z polygonů:
-```python
-PolygonToRaster (Cellsize = 25, Field = 1 pro les / 0 pro ostatní)
-```
-**Výstup:** `b_forest`  
+Nejdříve si Lesy pomocí nástroje MERGE spojte s polygonem Stát, s názvem Lesy_stat.
+Vytvořte nový sloupec IS_Forest, kde pro místa s MCHU nastavte 1 a pro ostatní 0.
+Následně převeďte na raster, nástroj Polygon to Raster. (v priority  field vložte sloupec IS_MCHU)
+**Výstup:** `forest_raster`  
  Kontrola: pouze hodnoty 0 a 1, žádné NoData.
 
 ---
