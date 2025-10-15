@@ -85,12 +85,16 @@ Slope (DEM, Output measurement = DEGREE)
 - "R" je raster
 - MAX_R - maximální hodnota, zadáváme desetinné místo s tečkou!!!
 - MIN_R - minimální hodnota, zadáváme destinné místo s tečkou!!!
+
+
 **Vzorec:**
+```python
 Con( "R" <= MAX_R,
      Con( "R" >= MIN_R, 
           (("R" - MIN_R) / (MAX_R - MIN_R)) * 255.0, 
           0 ),
      255 )
+```
 Aplikuj na `dist_silnice`, `dist_zeleznice`, `dist_drevozpr`, `slope_deg` → `std_*`.
 
 
