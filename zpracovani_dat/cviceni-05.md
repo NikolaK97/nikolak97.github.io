@@ -14,7 +14,7 @@ Všechny vstupní vrstvy byly již dopředu ořezány (funkce Clip) na území M
 
 - vektorové vrstvy z databáze ArcČR 500 v 3.3 – silnice, železnice
 - stát - polygon
-- sídla dřevozpracujícího průmyslu (bodová vektorová vrstva) [📁 Otevřít složku download na GitHubu](https://github.com/nikolak97/tvuj-repozitar/tree/main/assets/download)
+- sídla dřevozpracujícího průmyslu (bodová vektorová vrstva) [📁 Otevřít složku download na GitHubu](https://github.com/NikolaK97/nikolak97.github.io/tree/main/download)
 
 - digitální model reliéfu (rastr) - také z ArcČR v 3.3.
 - chráněná maloplošná území (vektor)
