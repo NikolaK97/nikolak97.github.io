@@ -40,14 +40,14 @@ Všechny vstupní vrstvy byly již dopředu ořezány (funkce Clip) na území M
 **Výstup:** `dem_min_700` (celé číslo 0/1)
 
 ### 1.2 Mimo MCHÚ
-Nejdříve si maloplošné chránněná území pomocí nástroje MERGE spojte s polygonem Stát, s názvem MCHU_stat.
+Nejdříve si maloplošné chránněná území pomocí nástroje UNION spojte s polygonem Stát, s názvem MCHU_stat.
 Vytvořte nový sloupec IS_MCHU, kde pro místa s MCHU nastavte 1 a pro ostatní 0.
 Následně převeďte na raster, nástroj Polygon to Raster. (v priority  field vložte sloupec IS_MCHU)
 Zkontroluj hodnoty a NoData.  
 **Výstup:** `MCHU_raster`
 
 ### 1.3 Lesní plochy
-Nejdříve si Lesy pomocí nástroje MERGE spojte s polygonem Stát, s názvem Lesy_stat.
+Nejdříve si Lesy pomocí nástroje UNION spojte s polygonem Stát, s názvem Lesy_stat.
 Vytvořte nový sloupec IS_Forest, kde pro místa s MCHU nastavte 1 a pro ostatní 0.
 Následně převeďte na raster, nástroj Polygon to Raster. (v priority  field vložte sloupec IS_MCHU)
 **Výstup:** `forest_raster`  
