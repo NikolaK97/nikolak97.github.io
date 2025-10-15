@@ -17,7 +17,7 @@ Všechny vstupní vrstvy byly již dopředu ořezány (funkce Clip) na území M
 - sídla dřevozpracujícího průmyslu (bodová vektorová vrstva) [📁 Otevřít složku download na GitHubu](https://github.com/NikolaK97/nikolak97.github.io/tree/main/download)
 
 - digitální model reliéfu (rastr) - také z ArcČR v 3.3.
-- chráněná maloplošná území (vektor)
+- chráněná maloplošná území (vektor) - odkaz:  [Maloplošky od AOPK](https://gis-aopkcr.opendata.arcgis.com/datasets/91b1bb5621ae40a58dfddcc4550e147a_2/about)
 - lesní plochy (vektor)
 
 ### Omezení (Boolean)
@@ -59,7 +59,7 @@ Následně převeďte na raster, nástroj Polygon to Raster. (v priority  field 
 
 ### 2.1 Vzdálenost k silnicím
 ```python
-EuclideanDistance (roads, cellsize = 25)
+EuclideanDistance (silnice, cellsize = 25)
 ```
 **Výstup:** `dist_roads` (metry)
 
