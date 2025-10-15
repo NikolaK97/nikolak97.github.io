@@ -57,6 +57,6 @@ th:first-child, td:first-child { text-align: left; }
     <tr><td>VLA0116</td><td>GB2GIF02</td><td>0</td><td>2</td><td>2</td><td>0</td><td>2</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>2</td></tr>
     <tr><td>WIH0010</td><td>GB2GIF01</td><td>1</td><td>0</td><td>2</td><td>1</td><td>-</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>4.5 pěkné</td></tr>
     <tr><td>ZHA0072</td><td>GB2GIF02</td><td>1</td><td>2</td><td>2</td><td>1</td><td>2</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>5</td></tr>
-    <tr><td>ZID0105</td><td>GB2GIF02</td><td>1</td><td>2</td><td>0</td><td>1</td><td>-</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>4 pěkná analýza</td></tr>
+    <tr><td>ZID0105</td><td>GB2GIF02</td><td>1</td><td>2</td><td>0</td><td>1</td><td>-</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>4 pěkná analýza</td></tr>
   </tbody>
 </table>
