@@ -47,7 +47,7 @@ th:first-child, td:first-child { text-align: left; }
     <tr><td>MAR1033</td><td>GB2GIF02</td><td>1</td><td>2</td><td>2</td><td>1</td><td>2</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>5 Pěkné</td></tr>
     <tr><td>MIK0575</td><td>GB2GIF02</td><td>1</td><td>2</td><td>2</td><td>1</td><td>2</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>4</td></tr>
     <tr><td>MIS0106</td><td>GB2GIF02</td><td>1</td><td>2</td><td>2</td><td>0</td><td>-</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>4</td></tr>
-    <tr><td>NUR0013</td><td>GB2GIF02</td><td>1</td><td>0</td><td>0</td><td>0</td><td>2</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>4.5 (po opravě)</td></tr>
+    <tr><td>NUR0013</td><td>GB2GIF02</td><td>1</td><td>2</td><td>2</td><td>1</td><td>2</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>4.5 (po opravě)</td></tr>
     <tr><td>PLS0020</td><td>GB2GIF02</td><td>0</td><td>1</td><td>2</td><td>1</td><td>-</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>3.5</td></tr>
     <tr><td>RAK0066</td><td>GB2GIF01</td><td>1</td><td>2</td><td>2</td><td>1</td><td>-</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>5</td>td</tr>
     <tr><td>RED0022</td><td>GB2GIF02</td><td>1</td><td>2</td><td>2</td><td>1</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>3.5 (neuplné)</td></tr>
