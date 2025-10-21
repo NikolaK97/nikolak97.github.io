@@ -1,11 +1,11 @@
 ---
-title: "CV07 – Nalezení trasy s nejnižšími náklady (ArcGIS Pro)"
+title: "CV06 – Nalezení trasy s nejnižšími náklady (ArcGIS Pro)"
 layout: default
 nav_order: 7
 description: "Podrobný krok-za-krokem návod v ArcGIS Pro pro cost-distance analýzu s DMR5G a CLC 2018 na území obce Jistebník."
 ---
 
-# CV07 – Nalezení trasy s nejnižšími náklady (ArcGIS Pro)
+# CV06 – Nalezení trasy s nejnižšími náklady (ArcGIS Pro)
 
 > **Cíl:** Naplánovat trasu **elektrického vedení** s nejnižšími kumulativními náklady mezi **hlavním uzlem (start)** a **dvěma místními uzly (cíle)** na území **obce Jistebník**. Náklady vycházejí z **CLC 2018** (land cover) a jsou **zvýšeny o sklon svahu** z **DMR5G**.
 
@@ -48,26 +48,9 @@ CV07_Jistebnik/
 
 ---
 
-## 2) Založení projektu a prostředí (Environments)
-
-1. **ArcGIS Pro → New → Map**.
-2. Vytvoř **File Geodatabase**: `gdb/CV07.gdb`.
-3. **Map Properties → Coordinate System**: nastav cílový SRS.
-
-**Analysis → Environments…**
-- **Processing Extent**: *Same as layer* → `AOI_Jistebnik`
-- **Mask**: `AOI_Jistebnik` (volitelné, praktické)
-- **Snap Raster**: (nastaví se po klipu DMR) → `DMR5G_clip`
-- **Cell Size**: *Same as layer* → `DMR5G_clip`
-- **Current/Scratch Workspace**: `gdb/CV07.gdb` / `scratch/`
-
-> 📌 Pokud Environments upravíš až později, spusť klíčové nástroje znovu, ať se rastry sjednotí.
-
----
-
 ## 3) DMR5G: ořez + výpočet sklonu
 
-**Připojení ImageService**
+**Připojení ImageService (možno stažení DMR)** 
 - URL: `https://ags.cuzk.cz/arcgis2/rest/services/dmr5g/ImageServer`  
   Přidej do mapy přes **Catalog/Insert → New ArcGIS Server/Portal**.
 
@@ -109,7 +92,7 @@ CV07_Jistebnik/
   - Water/Wetlands (5xx) → **20**
 - **Output:** `cost_clc` (INTEGER)
 
-> ⚠️ **NoData** nesmí zůstat uvnitř AOI. Doplň hodnoty pro všechny použité CLC kódy.
+>  **NoData** NESMÍ zůstat uvnitř AOI. Doplň hodnoty pro všechny použité CLC kódy.
 
 ---
 
@@ -133,7 +116,7 @@ cost_slope = cost_clc * (1 + "slope_deg" / 90)
 - **Output distance raster:** `costdist`
 - **Output backlink raster:** `backlink` *(nezbytné pro Cost Path)*
 
-> ✅ `costdist` musí plynule růst od startu, bez „děr“ NoData v AOI.
+>  `costdist` musí plynule růst od startu, bez „děr“ NoData v AOI.
 
 ---
 
@@ -238,7 +221,7 @@ Pak použij `cost_final` v Cost Distance.
 
 ---
 
-## 14) ArcPy – kompletní skript
+## 14) ArcPy – kompletní skript **super bonus**
 
 > Uprav názvy vrstev a cesty. Vyžaduje Spatial Analyst.
 
