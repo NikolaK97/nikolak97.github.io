@@ -9,40 +9,11 @@ description: "Podrobný krok-za-krokem návod v ArcGIS Pro pro cost-distance ana
 
 > **Cíl:** Naplánovat trasu **elektrického vedení** s nejnižšími kumulativními náklady mezi **hlavním uzlem (start)** a **dvěma místními uzly (cíle)** na území **obce Jistebník**. Náklady vycházejí z **CLC 2018** (land cover) a jsou **zvýšeny o sklon svahu** z **DMR5G**.
 
-- **Vstupy:** DMR5G ImageService, CLC 2018, polygon AOI (Jistebník), body Start/Targets (`Id`).
+- **Vstupy:** DMR5G ImageService, CLC 2018, polygon AOI (Jistebník), bodová vrstva: Start/Targets (`Id`) - návrh Váš vlastní.
 - **Výstupy:** `cost_slope`, `costdist`, `backlink`, `path_line` + mapový layout A3 a krátký report.
 
 ---
 
-## Obsah
-- [1) Struktura projektu](#1-struktura-projektu)
-- [2) Založení projektu a prostředí (Environments)](#2-založení-projektu-a-prostředí-environments)
-- [3) DMR5G: ořez + výpočet sklonu](#3-dmr5g-ořez--výpočet-sklonu)
-- [4) CLC 2018 → rastr → reklasifikace na cost](#4-clc-2018--rastr--reklasifikace-na-cost)
-- [5) Zapojení sklonu (Raster Calculator)](#5-zapojení-sklonu-raster-calculator)
-- [6) Cost Distance + Backlink](#6-cost-distance--backlink)
-- [7) Cost Path jako polylinie](#7-cost-path-jako-polylinie)
-- [8) Měření a reportování](#8-měření-a-reportování)
-- [9) Symbolizace a layout](#9-symbolizace-a-layout)
-- [10) QA checklist](#10-qa-checklist)
-- [11) Výkon a časté problémy](#11-výkon-a-časté-problémy)
-- [12) Bonusy](#12-bonusy)
-- [13) Mini workflow tabulka](#13-mini-workflow-tabulka)
-- [14) ArcPy – kompletní skript](#14-arcpy--kompletní-skript)
-- [15) Odevzdání](#15-odevzdání)
-
----
-
-## 1) Struktura projektu
-
-```text
-CV07_Jistebnik/
-  data_raw/       # vstupní/stažená data (CLC, AOI, body)
-  gdb/            # File Geodatabase (CV07.gdb)
-  scratch/        # dočasné výstupy
-  outputs/        # finální PDF mapy, exporty
-  scripts/        # volitelné .py
-```
 
 **Doporučený SRS:** S-JTSK / Krovak East North (EPSG:5514) nebo ETRS89 / LAEA Europe (EPSG:3035). Drž se **jednoho** SRS napříč všemi vrstvami.
 
