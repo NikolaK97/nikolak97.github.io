@@ -36,7 +36,7 @@ Všechny vstupní vrstvy byly již dopředu ořezány (funkce Clip) na území M
 ##  Omezení (Boolean)
 
 ### 1.1 Nadmořská výška ≤ 700 m
-- pomocí Reclassify, rozdělte na dvě třídy, kde hodnoty min 700 m bude 1 a ostatní hodnoty 0
+- pomocí Reclassify, rozdělte na dvě třídy, kde hodnoty méně 700 m bude 1 a ostatní hodnoty 0
 **Výstup:** `dem_min_700` (celé číslo 0/1)
 
 ### 1.2 Mimo MCHÚ
