@@ -43,7 +43,7 @@ th:first-child, td:first-child { text-align: left; }
     <tr><td>KOP0291</td><td>GB2GIF01</td><td>1</td><td>2</td><td>2</td><td>1</td><td>-</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>3.5 odfláknuto?</td></tr>
     <tr><td>KOP0292</td><td>GB2GIF01</td><td>1</td><td>2</td><td>2</td><td>1</td><td>-</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>4.5 HEZKÉ</td></tr>
     <tr><td>KOU0209</td><td>GB2GIF01</td><td>1</td><td>2</td><td>2</td><td>1</td><td>-</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>5 Chválím!</td></tr>
-    <tr><td>MAN0174</td><td>GB2GIF02</td><td>0.5</td><td>1</td><td>2</td><td>1</td><td>-</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+    <tr><td>MAN0174</td><td>GB2GIF02</td><td>0.5</td><td>1</td><td>2</td><td>1</td><td>-</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>4.5 Hezké</td></tr>
     <tr><td>MAR1033</td><td>GB2GIF02</td><td>1</td><td>2</td><td>2</td><td>1</td><td>2</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>5 Pěkné</td></tr>
     <tr><td>MIK0575</td><td>GB2GIF02</td><td>1</td><td>2</td><td>2</td><td>1</td><td>2</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>4</td></tr>
     <tr><td>MIS0106</td><td>GB2GIF02</td><td>1</td><td>2</td><td>2</td><td>0</td><td>-</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>4</td></tr>
