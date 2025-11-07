@@ -133,3 +133,160 @@ Potřebuješ-li z téhož netCDF odečíst hodnoty pro **leden 2014**:
 2. Otevři atributovou tabulku výsledných bodů.
 3. Přidej pole `Temp_C` (Double).
 4. **Field Calculator** pro převod Kelvin→Celsius:
+!RASTERVALU! - 273.15
+kde `RASTERVALU` je název pole s odečtenou hodnotou.
+
+### EDA v ArcGIS Pro: statistiky a grafy
+
+1. Deskriptivní statistiky:
+- V atributové tabulce klikni na záhlaví pole `Temp_C` → **Statistics**.
+- Zapiš: `count, mean, median, std, min, max, percentiles`.
+- Identifikuj outliers (porovnej min/max s očekávanými hodnotami).
+2. Grafy:
+- Pravým klikem na vrstvu `rand_points_100_temp` → **Create Chart**:
+  - **Histogram** pro `Temp_C` (zkontroluj unimodalitu, šířku tříd).
+  - **Box Plot** pro `Temp_C` (outliers, kvartily).
+  - **Scatter Plot** (např. `Temp_C` vs. nadmořská výška, pokud máš `Z`).
+3. Prostorová vizualizace:
+- Symbolika body podle `Temp_C` (graduated colors, kvantily).
+- Heatmapa pro vizuální trend (Map → Symbology → Heat Map).
+
+### Interpolace: IDW, Spline, Natural Neighbor
+
+Než spustíš interpolace, nastav jednotné prostředí (Extent, Cell Size, Mask) – viz kapitola [Doporučené nastavení prostředí a souřadnic](#doporučené-nastavení-prostředí-a-souřadnic).
+
+#### IDW
+`Spatial Analyst Tools → Interpolation → IDW`
+
+Doporučené parametry k testování:
+- **Z value field**: `Temp_C`
+- **Power (p)**: testuj např. `1.5; 2; 3`
+- **Search Radius**: Fixed vs. Variable
+- Fixed: poloměr v metrech (pozor na projekci), např. 30–60 km podle hustoty.
+- Variable: počet sousedů, např. 12–20.
+- **Cell Size**: např. 1000 m (dle měřítka studie).
+- **Output raster**: `idw_p2_cs1000.tif` (pojmenovávej s parametry)
+
+Interpretace:
+- Vyšší `p` zvýrazní lokální variabilitu, ale může „rozbít“ hladkost.
+- Příliš malý počet sousedů může vést k artefaktům.
+
+#### Spline
+`Spatial Analyst Tools → Interpolation → Spline`
+
+Varianty a parametry:
+- **Spline Type**: `Regularized` a `Tension` (otestuj oba).
+- **Weight** (Regularized) / **Tension** (Tension): testuj rozsah (např. 0.1–5).
+- **Number of Points**: kolik bodů přispívá (testuj 12–30).
+- **Cell Size**: jako u IDW.
+
+Interpretace:
+- Regularized: velmi hladký povrch, může rozmazat lokální extrémy.
+- Tension: blíže datům, méně hladký při vyšším napětí.
+
+#### Natural Neighbor
+`Spatial Analyst Tools → Interpolation → Natural Neighbor`
+
+Parametry:
+- Minimalistická nastavení; většinou není třeba nastavovat váhy.
+- **Cell Size**: stejná jako u ostatních.
+- Poznámka: extrapolace mimo konvexní obálku dat obvykle není prováděna.
+
+Interpretace:
+- Hladký povrch bez výrazných oscilací.
+- Vhodné při nepravidelném rozložení bodů.
+
+### Hodnocení přesnosti: cross-validation, RMSE, MAE
+
+Možnosti:
+
+1) **Geostatistical Wizard** (pokročilé, pohodlné)
+- `Analysis → Geostatistical Wizard`
+- Zvol `Deterministic methods → Inverse Distance Weighted`.
+- V průvodci zapni **Cross-Validation**.
+- Po dokončení zobrazí tabulku chyb: `Mean Error, RMSE, MAE, R², standardized errors`.
+- Ulož si **report** a porovnej různé konfigurace (p, search radius, neighbors).
+
+2) **Manuální křížová validace**
+- Rozděl body na tréninkovou (80 %) a validační (20 %) sadu:
+- Nástroj **Create Random Subset** (nebo přidej pole `split` a vyplň 0/1).
+- Interpoluj z tréninkových bodů.
+- Pomocí **Extract Values to Points** odečti hodnoty z interpolované rastr vrstvy do validačních bodů.
+- Vypočti chyby: `residual = observed - predicted`.
+- Přidej pole a spočti metriky:
+
+Vzorce:
+RMSE = sqrt( (1/n) * Σ (obs_i - pred_i)^2 )
+MAE = (1/n) * Σ |obs_i - pred_i|
+ME = (1/n) * Σ (obs_i - pred_i) # mean error (bias)
+
+
+V ArcGIS Pro lze souhrnné metriky získat nástrojem **Summary Statistics**:
+- Input Table: validační body
+- Statistics Field: `residual`, `abs_residual`, `residual_sq`
+- Case Field: prázdné (globální metriky)
+
+---
+
+## Doporučené nastavení prostředí a souřadnic
+
+Aby byly výsledky metod porovnatelné, sjednoť následující:
+
+- **Projekce dat**: pro metody založené na vzdálenosti pracuj v **metrech** (např. S-JTSK / Krovak East North, EPSG:5514), nebo v jiné vhodné projekci pro ČR. Vyhni se výpočtům vzdáleností v zeměpisných stupních.
+- **Environments** (ikona ozubeného kola v dialogu nástrojů):
+  - **Extent**: hranice ČR (nebo konvexní obálka bodů).
+  - **Mask**: polygon ČR (zabrání extrapolaci mimo území).
+  - **Cell Size**: jednotná pro všechny interpolace (např. 1000 m).
+  - **Snap Raster**: zvol jeden referenční raster pro zarovnání gridu.
+- **Naming convention**: zahrň klíčové parametry do názvů výstupů:
+  - `idw_p2_var12_cs1000.tif`
+  - `spline_tension3_cs1000.tif`
+  - `natneigh_cs1000.tif`
+
+---
+
+## Výstupy k odevzdání
+
+1. Raster pro prosinec 2014: `temp_2014_12_01.crf` (nebo export `.tif`).
+2. Body s odečtenými hodnotami: `rand_points_100_temp` s polem `Temp_C`.
+3. EDA:
+   - screenshot **Statistics** z pole `Temp_C`,
+   - grafy: histogram, box plot, případně scatter plot.
+4. Interpolace:
+   - `idw_*.tif`, `spline_*.tif`, `natneigh_*.tif` (uveď parametry).
+   - mapové kompozice s jednotnou legendou a měřítkem.
+5. Hodnocení přesnosti:
+   - Report z **Geostatistical Wizard** (IDW) s cross-validation,
+   - tabulka metrik: RMSE, MAE, ME pro vybrané konfigurace.
+6. Krátká interpretace:
+   - Která metoda a jaké parametry vychází nejlépe a proč?
+   - Jak rozložení bodů a volba projekce ovlivnily výsledek?
+
+---
+
+## Časté chyby a kontrolní seznam
+
+Kontrola před spuštěním:
+- [ ] Je raster i body v projektovaném souřadnicovém systému v metrech?
+- [ ] Je sjednocený **Extent**, **Mask** a **Cell Size** ve všech bězích?
+- [ ] Máš jednotný **Snap Raster**?
+
+Během EDA:
+- [ ] Zkontrolovány outliers; nejsou to chyby měření nebo geolokace?
+- [ ] Porovnány statistiky a grafy se sezónním očekáváním (prosinec/leden).
+
+Interpolace:
+- [ ] U IDW otestováno více hodnot `Power` a `Search Radius`.
+- [ ] U Spline otestován `Regularized` i `Tension` a různé váhy/napětí.
+- [ ] Natural Neighbor vyhodnocen v porovnatelné buněčné velikosti.
+
+Validace:
+- [ ] Provedena cross-validation (Wizard) nebo manuální split 80/20.
+- [ ] Spočteny RMSE, MAE, ME a porovnány napříč metodami.
+
+Prezentace:
+- [ ] Všechny mapy mají shodnou barevnou škálu a rozsah.
+- [ ] Legenda, měřítko, zdroje dat a parametry jsou uvedeny v mapě či popisku.
+
+---
+
