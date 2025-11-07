@@ -1,9 +1,9 @@
-title: CV11 – Úvod do geostatistiky
+title: CV10 – Úvod do geostatistiky
 layout: default
 description: Geostatistická EDA, normalita vs. lognormalita, semivariogram (izotropní i směrový), výběr teoretického modelu a krigování v R.
 ---
 
-# CV11 – Úvod do geostatistiky
+# CV10 – Úvod do geostatistiky
 
 Metodický návod krok za krokem (R 4.x). Zaměřuje se na:
 - vizualizaci studované oblasti a hodnot,
