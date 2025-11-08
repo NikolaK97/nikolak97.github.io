@@ -49,8 +49,8 @@ Zkontroluj hodnoty a NoData.
 
 ### 1.3 Lesní plochy
 Nejdříve si Lesy pomocí nástroje UNION spojte s polygonem Stát, s názvem Lesy_stat.
-Vytvořte nový sloupec IS_Forest, kde pro místa s MCHU nastavte 1 a pro ostatní 0.
-Následně převeďte na raster, nástroj Polygon to Raster. (v priority  field vložte sloupec IS_MCHU)
+Vytvořte nový sloupec IS_Forest, kde pro místa s Forest nastavte 1 a pro ostatní 0.
+Následně převeďte na raster, nástroj Polygon to Raster. (v priority  field vložte sloupec IS_Forest)
 **Výstup:** `forest_raster`  
  Kontrola: pouze hodnoty 0 a 1, žádné NoData.
 
@@ -60,7 +60,10 @@ Následně převeďte na raster, nástroj Polygon to Raster. (v priority  field 
 
 ### 2.1 Vzdálenost k silnicím
 ```python
-EuclideanDistance (silnice, cellsize = 25)
+EuclideanDistance
+Input raster of feature source data: silnice_Beskydy
+cellsize = 50
+POUZE TYTO 3 VĚCI! NEDÁVÁME TAM ŽÁDNÝ RASTER 
 ```
 **Výstup:** `dist_roads` (metry)
 
