@@ -16,7 +16,7 @@ Metodický návod krok za krokem (R 4.x). Zaměřuje se na:
 
 ## Vstupní data
 
-**Soubor:** `Doubrava.xls`  
+**Soubor:** `Doubrava.xls` ke stažení zde: [📁 Otevřít složku download na GitHubu](https://github.com/NikolaK97/nikolak97.github.io/tree/main/download)  
 **Proměnná pro analýzu:** `Kal` (obsah aleuropelitické frakce, %)
 
 **Sloupce:**
