@@ -24,6 +24,7 @@ description: "Podrobný krok-za-krokem návod v ArcGIS Pro pro cost-distance ana
 **Připojení ImageService (možno stažení DMR)** 
 - URL: `https://ags.cuzk.cz/arcgis2/rest/services/dmr5g/ImageServer`  
   Přidej do mapy přes **Catalog/Insert → New ArcGIS Server/Portal**.
+- NEBO VZÍT DMR Z ARCCR500 - lehčí a rychlejší
 
 **Ořez (Extract by Mask)**
 - **Input raster:** `dmr5g`
