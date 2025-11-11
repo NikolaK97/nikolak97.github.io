@@ -582,3 +582,6 @@ Zaměřte se na **dostupnost služeb**, **optimalizaci tras** a **návrh nových
 
 ---
 
+## VARIANTA FUNNY TIMES WITH ANALYSIS
+
+- Otevřete disk [Zadáníčko](https://drive.google.com/drive/folders/1PeaxpP0Suy0DBky8KBiBZswD7NctY637?usp=share_link) 
