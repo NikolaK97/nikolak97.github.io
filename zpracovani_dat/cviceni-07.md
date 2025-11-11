@@ -9,22 +9,6 @@ Podrobný metodický návod pro ArcGIS Pro a ArcGIS Online
 
 ---
 
-## Obsah
-1. [Úvod](#úvod)
-2. [Část A – Geokódování a příprava dat](#část-a--geokódování-a-příprava-dat)
-   - [Vytvoření dat v Excelu](#vytvoření-vstupních-dat-v-excelu)
-   - [Geokódování v ArcGIS Online](#geokódování-v-arcgis-online)
-   - [Geokódování pomocí Google Awesome Table](#geokódování-pomocí-google-awesome-table)
-   - [Porovnání výsledků v ArcGIS Pro](#porovnání-obou-výsledků-v-arcgis-pro)
-3. [Část B – Síťové analýzy](#část-b--síťové-analýzy-v-arcgis-pro-a-arcgis-online)
-   - [Základy a principy](#základy-síťových-analýz)
-   - [Síťové analýzy v ArcGIS Online](#síťové-analýzy-v-arcgis-online)
-   - [Síťové analýzy v ArcGIS Pro](#síťové-analýzy-v-arcgis-pro)
-   - [TSP a Dijkstrův algoritmus](#tsp--problém-obchodního-cestujícího)
-   - [Export a interpretace](#prezentace-a-export-výsledků)
-4. [Shrnutí úkolu](#shrnutí-postupu-cv08)
-
----
 
 ## Úvod
 
@@ -188,159 +172,233 @@ Každá hrana má atributy jako délka, čas, rychlost nebo omezení.
 
 ---
 
-## Síťové analýzy v ArcGIS Online
+# Síťové analýzy v ArcGIS Online a ArcGIS Pro
 
-### Aktivace
-Otevři mapu → Analysis → Use Proximity
+Tento úkol se zaměřuje na aplikaci síťových (network) analýz v prostředí **ArcGIS Online** a **ArcGIS Pro**.  
+Cílem je naučit se využívat síťová data k analýze dostupnosti, vyhledávání nejbližších zařízení, optimalizaci tras a rozvozů, a návrhu umístění nových služeb.  
 
-### Dostupné nástroje
-- Find Nearest
-- Create Drive-Time Areas
-- Plan Routes
-- Location-Allocation
-- Vehicle Routing Problem
-
----
-
-### Find Nearest
-1. Input layer – adresy  
-2. Near layer – zařízení  
-3. Measurement type – Driving distance  
-4. Search radius – 30 km  
-5. Nearest locations – 1  
-6. Run Analysis
-
-Výsledek: čáry k nejbližším bodům, atributy vzdálenosti a času.
+Pro práci použijte **datovou sadu ArcČR 500** – především vrstvy:
+- **Dopravní síť** (silnice, komunikace)
+- **Obce** nebo **části obcí**
+- **Veřejná zařízení** (např. nemocnice, školy, pošty – dle dostupných dat nebo vytvořených bodů)
+- Volitelné vrstvy: hranice krajů, centroidy obcí, administrativní členění
 
 ---
 
-### Create Drive-Time Areas
-1. Input layer: zařízení  
-2. Measure: Driving time  
-3. Drive times: 5, 10, 15  
-4. Travel mode: Auto  
-5. Run Analysis
+## 1. Síťové analýzy v ArcGIS Online
 
-Výsledek: polygony dostupnosti, barvy podle času.
-
----
-
-### Plan Routes
-1. Stops layer: Adresy  
-2. Travel mode: Driving  
-3. Reorder stops: zapnuto  
-4. Run Analysis
-
-Výsledek: optimální pořadí a celkový čas.
+### Aktivace nástrojů
+1. Přihlaste se do svého účtu **ArcGIS Online**.  
+2. Otevřete novou nebo existující webovou mapu.  
+3. V horní liště zvolte **Analysis → Use Proximity**.  
+4. Zkontrolujte, že máte přístup k síťovým službám (vyžadují *credits*).
 
 ---
 
-## Síťové analýzy v ArcGIS Pro
+### 1.1 Find Nearest
 
-### Aktivace Network Analyst
-1. Customize → Extensions → Network Analyst  
-2. Panel Network Analyst Toolbar
+**Účel:** zjistit, které zařízení (např. nemocnice) je nejblíže zadaným adresám (např. obcím).  
 
----
+**Postup:**
+1. `Input layer`: vrstvy adres (obce ArcČR 500).  
+2. `Near layer`: vrstvy zařízení (např. školy, nemocnice).  
+3. `Measurement type`: *Driving distance*.  
+4. `Search radius`: 30 km.  
+5. `Nearest locations`: 1.  
+6. Klikněte na **Run Analysis**.
 
-### Route
-1. Network Analyst → New Route  
-2. Stops → Load Locations (adresy)  
-3. Solve  
-4. Výsledek = nejkratší cesta.
-
-Parametry:  
-- Impedance: TravelTime  
-- Reorder Stops: zapnuto (TSP)
-
----
-
-### Service Area
-1. New Service Area  
-2. Přidej zařízení (Facilities).  
-3. Breaks: 5, 10, 15  
-4. Travel direction: From facility  
-5. Solve
-
-Výsledek: polygony dostupnosti.
+**Odevzdat:**
+- Výsledná mapa s liniemi (adresy → zařízení).  
+- Tabulka s atributy (vzdálenost, čas jízdy, ID zařízení).  
+- Krátký popis interpretace: *Jaká je průměrná dostupnost? Jsou regionální rozdíly?*
 
 ---
 
-### Closest Facility
-1. New Closest Facility  
-2. Facilities – zařízení  
-3. Incidents – adresy  
-4. Impedance: TravelTime  
-5. Cutoff: 20 min  
-6. Solve
+### 1.2 Create Drive-Time Areas
 
-Výsledek: trasy z adres k nejbližšímu zařízení.
+**Účel:** zjistit, jak daleko jsou zařízení dosažitelná v určitém čase (5, 10, 15 minut).  
 
----
+**Postup:**
+1. `Input layer`: zařízení (např. nemocnice, hasičské stanice).  
+2. `Measure`: *Driving time*.  
+3. `Drive times`: 5, 10, 15 minut.  
+4. `Travel mode`: *Auto*.  
+5. Klikněte na **Run Analysis**.
 
-### VRP – Vehicle Routing Problem
-1. New Vehicle Routing Problem  
-2. Orders – zákazníci  
-3. Depots – sklady  
-4. Routes – vozidla  
-5. MaxOrderCount – počet zákazníků  
-6. Solve
-
-Výsledek: optimalizované rozvozy.
+**Odevzdat:**
+- Mapa s polygony dostupnosti (izochny) s popisem vrstev.  
+- Krátká interpretace: *Jaké oblasti nejsou v 15 min dostupnosti? Kde je potřeba nové zařízení?*
 
 ---
 
-### Location-Allocation
-1. New Location-Allocation  
-2. Demand Points: adresy  
-3. Facilities: potenciální místa  
-4. Problem Type: Maximize coverage  
-5. Facilities to locate: 2  
-6. Solve
+### 1.3 Plan Routes
 
-Výsledek: optimální umístění zařízení.
+**Účel:** optimalizovat pořadí zastávek na trase (např. inspekční nebo doručovací trasa).  
 
----
+**Postup:**
+1. `Stops layer`: adresy zastávek (např. 8–12 obcí).  
+2. `Travel mode`: *Driving*.  
+3. `Reorder stops`: zapnuto.  
+4. Klikněte na **Run Analysis**.  
 
-## TSP – Problém obchodního cestujícího
-
-### Teorie
-Cíl: projít všechny body právě jednou a vrátit se na start s minimální délkou trasy.  
-ArcGIS používá heuristiku TSP založenou na Dijkstrovi.
-
-### V ArcGIS Pro
-1. New Route  
-2. Přidej body (Stops).  
-3. Reorder Stops to Find Optimal Route – zapnuto  
-4. Solve
-
-Výsledek: optimální pořadí návštěv.
+**Odevzdat:**
+- Mapa s trasou a optimálním pořadím zastávek.  
+- Popis: *Jaký je rozdíl mezi ručně zadaným pořadím a optimalizovaným výsledkem?*
 
 ---
 
-## Dijkstrův algoritmus
+## 2. Síťové analýzy v ArcGIS Pro
 
-Použit v trasování, Closest Facility i VRP.
-
-Princip:
-1. Všechny uzly mají hodnotu ∞, start = 0.  
-2. Vyber nejbližší nevyřešený uzel.  
-3. Aktualizuj hodnoty sousedů.  
-4. Opakuj, dokud nejsou všechny uzly zpracovány.
-
-Výsledek: nejkratší cesty od zdroje ke všem uzlům.  
-Varianta s heuristikou = A* algoritmus.
+### 2.1 Aktivace Network Analyst
+1. Otevřete **Customize → Extensions → Network Analyst**.  
+2. Zapněte **Network Analyst Toolbar**.  
+3. Připravte datové vrstvy (dopravní síť z ArcČR 500, obce, zařízení).  
+4. Ověřte, že síťová vrstva má atributy pro výpočet času nebo délky (`TravelTime`, `Length`).
 
 ---
 
-## Prezentace a export výsledků
+### 2.2 Route – nalezení nejkratší cesty
 
-| Úkon | Postup | Výstup |
-|------|--------|--------|
-| Export z Pro | Layer → Data → Export Features | SHP / GDB |
-| Export z Online | Layer → Export Data | CSV / GeoJSON |
-| Sdílení | Share → Web Map / Web App | Web prezentace |
-| Vizualizace | Symbology → Graduated Colors | Mapové přehledy |
+**Cíl:** vypočítat nejkratší nebo nejrychlejší trasu mezi body.
+
+**Postup:**
+1. Vytvořte nový projekt a otevřete mapu s dopravní sítí.  
+2. **Network Analyst → New Route**.  
+3. Přidejte zastávky: **Stops → Load Locations** (adresy).  
+4. Nastavte `Impedance = TravelTime` a zapněte `Reorder Stops`.  
+5. Klikněte na **Solve**.
+
+**Odevzdat:**
+- Mapa s výslednou trasou.  
+- Porovnání dvou variant: trasa podle vzdálenosti vs. podle času.  
+- Diskuze: *Jak volba impedance ovlivňuje výsledek?*
+
+---
+
+### 2.3 Service Area – analýza dostupnosti
+
+**Cíl:** vytvořit zónu dostupnosti kolem zařízení v různých časových intervalech.
+
+**Postup:**
+1. **Network Analyst → New Service Area**.  
+2. Přidejte zařízení (např. nemocnice).  
+3. Nastavte `Breaks`: 5, 10, 15 minut.  
+4. `Travel direction`: From facility.  
+5. Klikněte na **Solve**.
+
+**Odevzdat:**
+- Polygony dostupnosti.  
+- Analýzu: *Kolik obcí spadá do 15min oblasti?*
+
+---
+
+### 2.4 Closest Facility – hledání nejbližšího zařízení
+
+**Cíl:** určit, které zařízení je nejblíže jednotlivým obcím.
+
+**Postup:**
+1. **New Closest Facility**.  
+2. `Facilities`: zařízení (např. nemocnice).  
+3. `Incidents`: obce nebo adresy.  
+4. `Impedance`: TravelTime.  
+5. `Cutoff`: 20 min.  
+6. Klikněte na **Solve**.
+
+**Odevzdat:**
+- Trasy z obcí k nejbližším nemocnicím.  
+- Statistiku: *Kolik obcí je mimo 20min dostupnost?*
+
+---
+
+### 2.5 Vehicle Routing Problem (VRP)
+
+**Cíl:** naplánovat rozvoz zboží z depa k zákazníkům s omezením počtu objednávek na jedno vozidlo.
+
+**Postup:**
+1. **New Vehicle Routing Problem**.  
+2. `Orders`: zákazníci (např. obce s poptávkou).  
+3. `Depots`: sklady (výchozí body).  
+4. `Routes`: vozidla (např. 2–3).  
+5. `MaxOrderCount`: např. 10 zákazníků.  
+6. Klikněte na **Solve**.
+
+**Odevzdat:**
+- Mapa s trasami vozidel.  
+- Popis optimalizace: *Jak se změnila celková délka oproti ručnímu rozdělení tras?*
+
+---
+
+### 2.6 Location-Allocation – výběr optimálního umístění
+
+**Cíl:** najít nejlepší umístění nových zařízení vzhledem k poptávce.
+
+**Postup:**
+1. **New Location-Allocation**.  
+2. `Demand Points`: obce (populace).  
+3. `Facilities`: potenciální umístění zařízení (např. školy).  
+4. `Problem Type`: Maximize coverage.  
+5. `Facilities to locate`: 2.  
+6. Klikněte na **Solve**.
+
+**Odevzdat:**
+- Mapa s vybranými lokalitami.  
+- Interpretace: *Proč byla vybrána právě tato místa?*
+
+---
+
+### 2.7 TSP – Problém obchodního cestujícího
+
+**Teorie:**  
+Cílem je navštívit všechny body právě jednou a vrátit se na start s minimální délkou trasy.  
+ArcGIS používá heuristiku TSP založenou na **Dijkstrově algoritmu**.
+
+**Postup v ArcGIS Pro:**
+1. **New Route**  
+2. Přidejte body (Stops).  
+3. Aktivujte **Reorder Stops to Find Optimal Route**.  
+4. Klikněte na **Solve**.
+
+**Odevzdat:**
+- Optimalizovanou trasu.  
+- Porovnání s ručně zadaným pořadím zastávek.
+
+---
+
+### 2.8 Dijkstrův algoritmus (princip)
+
+**Použití:** v trasování, Closest Facility, Route i VRP.  
+Zajišťuje nalezení nejkratší cesty mezi uzly dopravní sítě.
+
+**Princip:**
+1. Každý uzel má počáteční hodnotu ∞ (nekonečno), start = 0.  
+2. Vybere se nejbližší nevyřešený uzel.  
+3. Aktualizují se vzdálenosti k sousedním uzlům.  
+4. Postup se opakuje, dokud nejsou všechny uzly zpracovány.  
+
+Varianta s heuristikou využívá **A\*** algoritmus (rychlejší výpočet díky odhadu vzdálenosti k cíli).
+
+---
+
+## 3. Zadání úkolu
+
+### Cíl
+Pro jeden vybraný kraj vytvořte a zdokumentujte příklady síťových analýz v **ArcGIS Online** a **ArcGIS Pro**.  
+Zaměřte se na **dostupnost služeb**, **optimalizaci tras** a **návrh nových lokalit**.
+
+### Datové podklady
+- ArcČR 500 (silniční síť, obce, zařízení)
+- Volitelně: vlastní body adres, doplňková zařízení (např. hasičské stanice, školy)
+- V případě potřeby převeďte vrstvy do formátu vhodného pro ArcGIS Online (Feature Layer)
+
+### Odevzdání
+1. **Dokumentace (word nebo PDF)** obsahující:
+   - popis postupu každé analýzy,  
+   - nastavené parametry,  
+   - interpretaci výsledků (2–3 věty ke každé úloze),  
+   - krátké porovnání mezi online a desktopovou verzí.  
+2. **Bonus:** vytvořte webovou mapu nebo *dashboard* s kombinací výsledků.
+
+
 
 ---
 
