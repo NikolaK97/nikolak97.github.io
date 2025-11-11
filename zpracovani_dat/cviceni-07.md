@@ -156,6 +156,165 @@ Níže najdete čtyři způsoby, jak jednoduše převést adresy na geografické
 ---
 
 # Část B – Síťové analýzy v ArcGIS Pro a ArcGIS Online
+# Teoretická část – Síťové analýzy v GIS
+
+Síťové analýzy (Network Analysis) představují jednu z klíčových skupin prostorových analýz v geografických informačních systémech.  
+Jejich cílem je modelovat a vyhodnocovat **pohyb, dostupnost, spojení a vztahy mezi objekty** v prostředí, které je reprezentováno jako **síť (network)** – nejčastěji dopravní nebo komunikační.
+
+---
+
+## 1. Princip síťového modelu
+
+Síť je matematicky reprezentována pomocí **grafu**, který se skládá z:
+- **Uzly (nodes, vertices)** – reprezentují významné body (např. křižovatky, obce, zařízení).  
+- **Hrany (edges, links)** – představují spojení mezi uzly (např. silnice, železnice).  
+
+Každé spojení může mít **atribut impedance**, který vyjadřuje náklad pohybu (např. délku, čas, cenu, kapacitu).  
+Síťový model tak umožňuje analyzovat optimální trasy, časové dostupnosti či interakce mezi místy.
+
+---
+
+## 2. Základní pojmy
+
+| Pojem | Význam |
+|--------|---------|
+| **Impedance** | Náklad pohybu po síti (např. TravelTime, Distance). |
+| **Cost** | Celková hodnota impedance na trase (součet všech hran). |
+| **Travel Mode** | Typ dopravy (auto, chůze, nákladní vozidlo). |
+| **Cutoff** | Maximální povolená vzdálenost nebo čas (např. 20 minut). |
+| **Facility** | Objekt, ke kterému směřuje analýza (např. nemocnice). |
+| **Incident / Demand Point** | Místa, která generují poptávku (např. obce). |
+| **Breaks** | Intervaly pro analýzu dostupnosti (např. 5, 10, 15 min). |
+
+---
+
+## 3. Typy síťových analýz
+
+Síťové analýzy lze rozdělit podle účelu:
+
+### 3.1 Analýzy přístupnosti (Access / Proximity)
+- Zjišťují, jak daleko jsou body od zařízení, případně kolik zařízení je v určité vzdálenosti.
+- Typické nástroje: **Find Nearest**, **Service Area**, **Create Drive-Time Areas**.
+- Výstupem bývá buď vzdálenost (číslo), nebo plocha dostupnosti (polygony).
+
+### 3.2 Analýzy trasování (Routing)
+- Hledají **nejkratší nebo nejrychlejší trasu** mezi dvěma či více body.
+- Nástroje: **Route**, **Plan Routes**, **TSP (Traveling Salesman Problem)**.
+- Výstupem je linie trasy s informací o vzdálenosti, čase a pořadí zastávek.
+
+### 3.3 Analýzy přidělování (Allocation)
+- Určují, které zařízení má obsluhovat který bod poptávky.
+- Nástroje: **Location-Allocation**, **Closest Facility**.
+- Využití: návrh umístění nové školy, skladu, nemocnice, apod.
+
+### 3.4 Analýzy rozvozu (Vehicle Routing Problem)
+- Optimalizují trasy více vozidel tak, aby obsloužila dané zákazníky s minimálními náklady.
+- Zohledňují kapacitu vozidel, časové okna, přestávky apod.
+- Typicky se využívají v logistice a zásobování.
+
+---
+
+## 4. Dijkstrův algoritmus
+
+Základem většiny síťových analýz je **Dijkstrův algoritmus** (Edsger Dijkstra, 1959), který hledá nejkratší cestu v grafu.
+
+**Princip:**
+1. Každý uzel dostane počáteční hodnotu ∞ (nekonečno), výchozí uzel = 0.  
+2. Vybere se uzel s nejnižší známou hodnotou (nejbližší dosud nevyřešený).  
+3. Přepočítají se vzdálenosti k sousedním uzlům.  
+4. Pokud je nová hodnota nižší než dosavadní, nahradí se.  
+5. Opakuje se, dokud nejsou zpracovány všechny uzly.
+
+**Výsledek:**  
+Nejkratší (nebo nejrychlejší) cesta mezi výchozím a cílovým uzlem.
+
+V prostředí GIS se používají optimalizované varianty algoritmu (např. **A\***, který využívá heuristický odhad vzdálenosti).
+
+---
+
+## 5. Síťové analýzy v ArcGIS Online
+
+ArcGIS Online umožňuje provádět síťové analýzy prostřednictvím cloudových služeb Esri.  
+Výhodou je jednoduchost a rychlost – výpočty probíhají na serveru, není nutné připravovat lokální síť.  
+
+Dostupné nástroje (v sekci **Analysis → Use Proximity**):
+- **Find Nearest** – vyhledání nejbližšího objektu.  
+- **Create Drive-Time Areas** – tvorba izochron podle času jízdy.  
+- **Plan Routes** – optimalizace pořadí zastávek.  
+- **Location-Allocation** – optimalizace rozmístění zařízení.  
+- **Vehicle Routing Problem** – plánování rozvozových tras.
+
+**Nevýhody:**  
+- Požaduje připojení k internetu a kreditní systém (ArcGIS credits).  
+- Omezené možnosti přizpůsobení a nastavení síťových parametrů.  
+
+**Výhody:**  
+- Rychlá vizualizace, snadná publikace výstupů.  
+- Vhodné pro menší nebo školní projekty.
+
+---
+
+## 6. Síťové analýzy v ArcGIS Pro
+
+ArcGIS Pro nabízí pokročilé desktopové prostředí pro detailní síťové modelování.  
+Síť může být:
+- **Předdefinovaná (Network Dataset)** – vytvořená z dat (např. ArcČR 500).  
+- **Online síť (Esri Network Service)** – dostupná přes připojení k ArcGIS Online.
+
+### Hlavní nástroje
+- **Route** – nalezení nejkratší cesty.  
+- **Service Area** – tvorba dostupnostních zón.  
+- **Closest Facility** – hledání nejbližších zařízení.  
+- **Vehicle Routing Problem (VRP)** – optimalizace rozvozů.  
+- **Location-Allocation** – výběr optimálních lokalit.  
+- **OD Cost Matrix** – výpočet vzdáleností mezi všemi páry bodů.
+
+### Výhody
+- Vysoká přesnost, možnost vlastní definice sítě a impedance.  
+- Možnost kombinovat více faktorů (čas, typ silnice, kapacita).  
+- Integrace s analytickými nástroji a Python skripty.
+
+---
+
+## 7. Typické aplikace síťových analýz
+
+| Oblast | Příklad využití |
+|---------|------------------|
+| **Dopravní plánování** | Vyhledání nejrychlejší trasy, simulace uzavírek, veřejná doprava. |
+| **Územní plánování** | Hodnocení dostupnosti služeb, návrh nové infrastruktury. |
+| **Logistika a zásobování** | Optimalizace rozvozových tras (VRP). |
+| **Zdravotnictví a záchranné složky** | Analýza dojezdových časů, rozmístění stanic. |
+| **Obchodní analýzy** | Určení spádových oblastí zákazníků. |
+
+---
+
+## 8. Srovnání ArcGIS Online a ArcGIS Pro
+
+| Kritérium | ArcGIS Online | ArcGIS Pro |
+|------------|----------------|-------------|
+| **Přístupnost** | Webové rozhraní, bez instalace | Desktopová aplikace |
+| **Náročnost na data** | Data hostována online | Vyžaduje vlastní Network Dataset |
+| **Detail nastavení** | Základní parametry | Pokročilé (impedance, omezení, směry) |
+| **Rychlost výpočtu** | Rychlá, závislá na internetu | Lokální výpočty, závislé na výkonu PC |
+| **Publikace výsledků** | Snadná (WebMap, Dashboard) | Nutnost exportu/publikace |
+| **Vhodnost pro výuku** | Vysoká | Pokročilí uživatelé, projekty |
+
+---
+
+## 9. Shrnutí teorie
+
+Síťové analýzy umožňují modelovat reálný pohyb po infrastruktuře a odpovídat na otázky typu:
+- *Jak se dostat z bodu A do bodu B nejrychleji?*
+- *Které oblasti jsou dosažitelné do 10 minut?*
+- *Kde by bylo vhodné umístit nové zařízení, aby pokrylo co nejvíce obyvatel?*
+
+Základem je **síťový model** s definovanými náklady (impedancí), nad kterým se provádějí algoritmy jako **Dijkstra** nebo **A\***.  
+Výsledky mohou mít podobu **tras (linie)**, **izočron (polygony)** nebo **tabulek vztahů** mezi poptávkou a nabídkou.
+
+Síťové analýzy představují klíčový nástroj pro rozhodování v dopravě, krizovém řízení, územním plánování i komerční sféře.
+
+---
+
 
 ## Základy síťových analýz
 
