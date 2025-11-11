@@ -107,6 +107,42 @@ Ulož jako `Adresy_CV08.xlsx`.
 - Soubor: `Adresa_Awesome.csv`.
 
 ---
+# Geokódování adres – přehled metod
+
+Níže najdete čtyři způsoby, jak jednoduše převést adresy na geografické souřadnice (latitude, longitude). Každá varianta má své výhody – od rychlých online nástrojů až po integraci přímo v Google Sheets.
+
+---
+
+## Aleternativa A – Geoapify (online, copy-paste / CSV)
+
+**Vhodné pro:** přesnější výsledky, menší objem dat (cca 10–100 adres)
+
+1. Otevřete web [Geoapify Online Geocoding](https://www.geoapify.com/geocoding-api) (nebo vyhledejte „Geoapify online geocoding“).  
+2. Vložte až 10 adres do textového pole – každá adresa na samostatný řádek.  
+   Alternativně můžete nahrát CSV soubor s adresami.  
+3. Pokud nahráváte CSV, namapujte sloupce – určete, který obsahuje plnou adresu.  
+4. Klikněte na „Geocode“ (nebo podobné tlačítko) a spusťte zpracování.  
+5. Po dokončení si stáhněte výsledky jako CSV – soubor bude obsahovat:  
+   - Latitude a Longitude  
+   - Doplňkové informace (např. typ shody, skóre přesnosti)  
+6. Soubor si uložte k sobě (např. `results.csv`).
+
+---
+
+## Alternativa B – MapDevelopers: Batch Geocode (nejrychlejší jednorázovka)
+
+**Vhodné pro:** rychlé jednorázové použití bez registrace
+
+1. Otevřete stránku [MapDevelopers – Batch Geocode](https://www.mapdevelopers.com/batch_geocode_tool.php).  
+2. Vložte 10 adres (každou na nový řádek).  
+3. Klikněte na „Find Addresses“.  
+4. U každé adresy se zobrazí souřadnice.  
+5. Výslednou tabulku zkopírujte do Excelu nebo Google Sheets.  
+6. Pomocí funkce „Text do sloupců“ (oddělovač TAB) tabulku upravte a uložte jako CSV.
+
+
+---
+
 
 ## Porovnání obou výsledků v ArcGIS Pro
 
