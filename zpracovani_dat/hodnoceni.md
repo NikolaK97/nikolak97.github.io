@@ -33,7 +33,7 @@ th:first-child, td:first-child { text-align: left; }
   </thead>
   <tbody>
     <tr><td>BED0191</td><td>GB2GIF01</td><td>1</td><td>1</td><td>2</td><td>1</td><td>2</td><td>2</td><td>1</td><td>8</td><td>2</td><td>2</td><td>2</td><td>4</td></tr>
-    <tr><td>BED0192</td><td>GB2GIF01</td><td>1</td><td>2</td><td>2</td><td>1</td><td>2</td><td>2</td><td>1</td><td>9</td><td>2</td><td>2</td><td>2</td><td>5 PĚKNÉ!</td></tr>
+    <tr><td>BED0192</td><td>GB2GIF01</td><td>1</td><td>2</td><td>2</td><td>1</td><td>2</td><td>2</td><td>1</td><td>9.5</td><td>2</td><td>2</td><td>2</td><td>5</td>td</tr>
     <tr><td>BRI0064</td><td>GB2GIF01</td><td>1</td><td>0.5</td><td>2</td><td>0</td><td>2</td><td>1</td><td>1</td><td>7.5</td><td>2</td><td>2</td><td>2</td><td>0</td></tr>
     <tr><td>CAS0067</td><td>GB2GIF01</td><td>0.5</td><td>2</td><td>2</td><td>1</td><td>2</td><td>2</td><td>1</td><td>7.5</td><td>2</td><td>2</td><td>2</td><td>4</td></tr>
     <tr><td>HUM0047</td><td>GB2GIF01</td><td>1</td><td>2</td><td>2</td><td>1</td><td>2</td><td>2</td><td>1</td><td>10</td><td>2</td><td>2</td><td>2</td><td>4.5 PĚKNÉ</td></tr>
