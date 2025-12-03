@@ -69,3 +69,22 @@
     </tr>
   </tbody>
 </table>
+
+| Kód     | Autor            | Název |
+|---------|------------------|-------|
+| BAL0359 | Balucha Juraj    | Základní údaje o volbách do Poslanecké sněmovny podle okresů |
+| BLA0389 | Blaťák Přemysl   | Uchazeči o zaměstnání v evidenci úřadu práce a podíl nezaměstnaných osob |
+| CAR0118 | Čarvaš Marek     | Zabezpečení zdravotní péče – územní srovnání |
+| CEP0048 | Čepela Adrián    | Bilance půdy – územní srovnání |
+| CES0029 | Češek Martin     | Dokončené byty v obcích (správních obvodech) |
+| DAN0218 | Danemark Roman   | Příjemci důchodů (starobní a invalidní včetně souběhu) – územní srovnání |
+| DOL0235 | Dolník Timotej   | Vyplacené důchody – územní srovnání |
+| HAJ0246 | Hajzler Jakub    | Vyplacené dávky státní sociální podpory a pěstounské péče – územní srovnání |
+| KOL0615 | Kolesár Viktor   | Návštěvnost HUZ podle kategorie – územní srovnání |
+| KUL0176 | Kulikov Ruslan   | Zaměstnaní cizinci k 31. 12. – územní srovnání |
+| KUP0157 | Kupka Jan        | Nehody v silniční dopravě – územní srovnání |
+| MAL0515 | Malcher Vojtěch  | Požáry – územní srovnání |
+| TEM0029 | Temirbek Zamr    | Cizinci podle státního občanství k 31. 12. – územní srovnání |
+| TRA0208 | Třaskoš Ondřej   | Základní ukazatele pracovní neschopnosti pro nemoc a úraz v krajích a okresech ČR |
+| HIL     | Petr Hilk        | Základní údaje o volbách do zastupitelstev krajů |
+
