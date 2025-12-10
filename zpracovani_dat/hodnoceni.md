@@ -6,57 +6,29 @@ permalink: /zpracovani_dat/hodnoceni/
 
 <h2>Hodnocení studentů – Zpracování dat v GIS</h2>
 
-<style>
-table { width: 100%; border-collapse: collapse; overflow-x: auto; display: block; }
-th, td { border: 1px solid #ccc; padding: 6px 10px; text-align: center; white-space: nowrap; }
-th:first-child, td:first-child { text-align: left; }
-</style>
-
-<table>
-  <thead>
-    <tr>
-      <th>Osobní číslo</th>
-      <th>Skupina</th>
-      <th>16. 9.(max. 1b)</th>
-      <th>23. 9.(max. 2b)</th>
-      <th>30. 9.(max. 2b)</th>
-      <th>7. 10.(max. 1b)</th>
-      <th>14. 10.(max. 2b)</th>
-      <th>21. 10.(max. 2b)</th>
-      <th>28. 10.(max. 1b)</th>
-      <th>4. 11.(max. 10b)</th>
-      <th>11. 11.(max. 2b)</th>
-      <th>18. 11.(max. 2b)</th>
-      <th>2. 12.(max. 1b)</th>
-      <th>Mapová algebra (max.7b)</th>
-      <th>Celkem bodů</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr><td>BED0191</td><td>GB2GIF01</td><td>1</td><td>1</td><td>2</td><td>1</td><td>2</td><td>2</td><td>1</td><td>8</td><td>2</td><td>2</td><td>1</td><td>6</td><td>29</td></tr>
-    <tr><td>BED0192</td><td>GB2GIF01</td><td>1</td><td>2</td><td>2</td><td>1</td><td>2</td><td>2</td><td>1</td><td>9.5</td><td>2</td><td>2</td><td>1</td><td>7</td><td>32.5</td></tr>
-    <tr><td>BRI0064</td><td>GB2GIF01</td><td>1</td><td>0.5</td><td>2</td><td>0</td><td>2</td><td>1</td><td>1</td><td>7.5</td><td>2</td><td>2</td><td>1</td><td>0</td><td>20</td></tr>
-    <tr><td>CAS0067</td><td>GB2GIF01</td><td>0.5</td><td>2</td><td>2</td><td>1</td><td>2</td><td>2</td><td>1</td><td>7.5</td><td>2</td><td>2</td><td>1</td><td>6</td><td>29</td></tr>
-    <tr><td>HUM0047</td><td>GB2GIF01</td><td>1</td><td>2</td><td>2</td><td>1</td><td>2</td><td>2</td><td>1</td><td>10</td><td>2</td><td>2</td><td>1</td><td>6.5 PĚKNÉ</td><td>32.5</td></tr>
-    <tr><td>KDY0007</td><td>GB2GIF02</td><td>1</td><td>2</td><td>2</td><td>1</td><td>2</td><td>2</td><td>1</td><td>8</td><td>2</td><td>2</td><td>0</td><td>6</td><td>28</td></tr>
-    <tr><td>KOP0291</td><td>GB2GIF01</td><td>1</td><td>2</td><td>2</td><td>1</td><td>2</td><td>1.5</td><td>1</td><td>7.5</td><td>2</td><td>2</td><td>1</td><td>5.5 odfláknuto?</td><td>28.5</td></tr>
-    <tr><td>KOP0292</td><td>GB2GIF01</td><td>1</td><td>2</td><td>2</td><td>1</td><td>2</td><td>2</td><td>1</td><td>7.5</td><td>2</td><td>2</td><td>1</td><td>6.5 HEZKÉ</td><td>30</td></tr>
-    <tr><td>KOU0209</td><td>GB2GIF01</td><td>1</td><td>2</td><td>2</td><td>1</td><td>2</td><td>2</td><td>1</td><td>8</td><td>2</td><td>2</td><td>1</td><td>7 Chválím!</td><td>31</td></tr>
-    <tr><td>MAN0174</td><td>GB2GIF02</td><td>0.5</td><td>1</td><td>2</td><td>1</td><td>2</td><td>2</td><td>1</td><td>9</td><td>2</td><td>2</td><td>1</td><td>6.5 Hezké</td><td>30</td></tr>
-    <tr><td>MAR1033</td><td>GB2GIF02</td><td>1</td><td>2</td><td>2</td><td>1</td><td>2</td><td>2</td><td>1</td><td>8</td><td>2</td><td>2</td><td>1</td><td>7 Pěkné</td><td>31</td></tr>
-    <tr><td>MIK0575</td><td>GB2GIF02</td><td>1</td><td>2</td><td>2</td><td>1</td><td>2</td><td>2</td><td>1</td><td>7.5</td><td>2</td><td>2</td><td>1</td><td>6</td><td>29.5</td></tr>
-    <tr><td>MIS0106</td><td>GB2GIF02</td><td>1</td><td>2</td><td>2</td><td>0</td><td>2</td><td>2</td><td>1</td><td>7.5</td><td>2</td><td>0</td><td>0</td><td>6</td><td>24.5</td></tr>
-    <tr><td>NUR0013</td><td>GB2GIF02</td><td>1</td><td>2</td><td>2</td><td>1</td><td>2</td><td>2</td><td>1</td><td>8</td><td>2</td><td>2</td><td>1</td><td>6.5 (po opravě)</td><td>30.5</td></tr>
-    <tr><td>PLS0020</td><td>GB2GIF02</td><td>1</td><td>1</td><td>2</td><td>1</td><td>2</td><td>2</td><td>1</td><td>8.5</td><td>2</td><td>2</td><td>1</td><td>5.5</td><td>29</td></tr>
-    <tr><td>RAK0066</td><td>GB2GIF01</td><td>1</td><td>2</td><td>2</td><td>1</td><td>2</td><td>2</td><td>1</td><td>9.5</td><td>2</td><td>2</td><td>1</td><td>7</td><td>32.5</td></tr>
-    <tr><td>RED0022</td><td>GB2GIF02</td><td>1</td><td>2</td><td>2</td><td>1</td><td>0</td><td>2</td><td>1</td><td>9</td><td>2</td><td>2</td><td>0</td><td>7 PĚKNÉ!</td><td>28</td></tr>
-    <tr><td>STE0619</td><td>GB2GIF01</td><td>0</td><td>1</td><td>2</td><td>1</td><td>2</td><td>2</td><td>0</td><td>8</td><td>2</td><td>2</td><td>1</td><td>7 Hezké!</td><td>28</td></tr>
-    <tr><td>TUL0015</td><td>GB2GIF02</td><td>0.5</td><td>1</td><td>2</td><td>1</td><td>2</td><td>2</td><td>1</td><td>7</td><td>2</td><td>2</td><td>0</td><td>4</td><td>23.5</td></tr>
-    <tr><td>URB0315</td><td>GB2GIF02</td><td>1</td><td>2</td><td>2</td><td>1</td><td>2</td><td>2</td><td>1</td><td>7</td><td>2</td><td>2</td><td>1</td><td>5.5 odfláknuto :(</td><td>28.5</td></tr>
-    <tr><td>VLA0116</td><td>GB2GIF02</td><td>0</td><td>2</td><td>2</td><td>0</td><td>2</td><td>2</td><td>1</td><td>9</td><td>2</td><td>2</td><td>0</td><td>4</td><td>25</td></tr>
-    <tr><td>WIH0010</td><td>GB2GIF01</td><td>1</td><td>0</td><td>2</td><td>1</td><td>2</td><td>2</td><td>1</td><td>7.5</td><td>2</td><td>0</td><td>0</td><td>6.5 pěkné</td><td>24</td></tr>
-    <tr><td>ZHA0072</td><td>GB2GIF02</td><td>1</td><td>2</td><td>2</td><td>1</td><td>2</td><td>2</td><td>1</td><td>9.5</td><td>2</td><td>2</td><td>0</td><td>7</td><td>30.5</td></tr>
-    <tr><td>ZID0105</td><td>GB2GIF02</td><td>1</td><td>2</td><td>2</td><td>1</td><td>2</td><td>1.5</td><td>1</td><td>8</td><td>2</td><td>0</td><td>1</td><td>6 pěkná analýza</td><td>27.5</td></tr>
-  </tbody>
-</table>
-
+| číslo   | Skupina  | 16.9 (1) | 23.9 (2) | 30.9 (2) | 7.10 (1) | 14.10 (2) | 21.10 (2) | 28.10 (1) | 4.11 (10) | 11.11 (2) | 18.11 (2) | 2.12 (1) | Mapová algebra (7) | Celkem |
+|---------|----------|----------|----------|----------|----------|-----------|-----------|-----------|------------|------------|------------|-----------|---------------------|--------|
+| BED0191 | GB2GIF01 | 1 | 1 | 2 | 1 | 2 | 2,00 | 1 | 8,00 | 2 | 2 | 1 | 6,00 | 29 |
+| BED0192 | GB2GIF01 | 1 | 2 | 2 | 1 | 2 | 2,00 | 1 | 9,50 | 2 | 2 | 1 | 7,00 | 32,5 |
+| BRI0064 | GB2GIF01 | 1 | 0,5 | 2 | 0 | 2 | 1,00 | 1 | 7,50 | 2 | 2 | 1 | 7,00 | 27 |
+| CAS0067 | GB2GIF01 | 0,5 | 2 | 2 | 1 | 2 | 2,00 | 1 | 7,50 | 2 | 2 | 1 | 6,00 | 29 |
+| HUM0047 | GB2GIF01 | 1 | 2 | 2 | 1 | 2 | 2,00 | 1 | 10,00 | 2 | 2 | 1 | 6,50 | 32,5 |
+| KDY0007 | GB2GIF02 | 1 | 2 | 2 | 1 | 2 | 2,00 | 1 | 8,00 | 2 | 2 | 1 | 6,00 | 30 |
+| KOP0291 | GB2GIF01 | 1 | 2 | 2 | 1 | 2 | 1,50 | 1 | 7,50 | 2 | 2 | 1 | 5,50 | 28,5 |
+| KOP0292 | GB2GIF01 | 1 | 2 | 2 | 1 | 2 | 2,00 | 1 | 7,50 | 2 | 2 | 1 | 6,50 | 30 |
+| KOU0209 | GB2GIF01 | 1 | 2 | 2 | 1 | 2 | 2,00 | 1 | 8,00 | 2 | 2 | 1 | 7,00 | 31 |
+| MAN0174 | GB2GIF02 | 0,5 | 1 | 2 | 1 | 2 | 2,00 | 1 | 9,00 | 2 | 2 | 1 | 6,50 | 30 |
+| MAR1033 | GB2GIF02 | 1 | 2 | 2 | 1 | 2 | 2,00 | 1 | 8,00 | 2 | 2 | 1 | 7,00 | 31 |
+| MIK0575 | GB2GIF02 | 1 | 2 | 2 | 1 | 2 | 2,00 | 1 | 7,50 | 2 | 2 | 1 | 6,00 | 29,5 |
+| MIS0106 | GB2GIF02 | 1 | 2 | 2 | 0 | 2 | 2,00 | 1 | 7,50 | 2 | 0 | 1 | 6,00 | 26,5 |
+| NUR0013 | GB2GIF02 | 1 | 2 | 2 | 1 | 2 | 2,00 | 1 | 8,00 | 2 | 2 | 1 | 6,50 | 30,5 |
+| PLS0020 | GB2GIF02 | 1 | 1 | 2 | 1 | 2 | 2,00 | 1 | 8,50 | 2 | 2 | 1 | 5,50 | 29 |
+| RAK0066 | GB2GIF01 | 1 | 2 | 2 | 1 | 2 | 2,00 | 1 | 8,50 | 2 | 2 | 1 | 7,00 | 31,5 |
+| RED0022 | GB2GIF02 | 1 | 2 | 2 | 1 | 0 | 2,00 | 1 | 9,00 | 2 | 2 | 1 | 7,00 | 30 |
+| STE0619 | GB2GIF01 | 0 | 1 | 2 | 1 | 2 | 2,00 | 0 | 8,00 | 2 | 2 | 1 | 7,00 | 28 |
+| TUL0015 | GB2GIF02 | 0,5 | 1 | 2 | 1 | 2 | 2,00 | 1 | 7,00 | 2 | 2 | 1 | 4,00 | 25,5 |
+| URB0315 | GB2GIF02 | 1 | 2 | 2 | 1 | 2 | 2,00 | 1 | 7,00 | 2 | 2 | 1 | 5,50 | 28,5 |
+| VLA0116 | GB2GIF02 | 0 | 2 | 2 | 0 | 2 | 2,00 | 1 | 9,00 | 2 | 2 | 1 | 4,00 | 27 |
+| WIH0010 | GB2GIF01 | 1 | 0 | 2 | 1 | 2 | 2,00 | 1 | 7,50 | 2 | 0 | 0 | 6,50 | 25 |
+| ZHA0072 | GB2GIF02 | 1 | 2 | 2 | 1 | 2 | 2,00 | 1 | 9,50 | 2 | 2 | 0 | 7,00 | 31,5 |
+| ZID0105 | GB2GIF02 | 1 | 2 | 2 | 1 | 2 | 1,50 | 1 | 8,00 | 2 | 0 | 1 | 6,00 | 27,5 |
