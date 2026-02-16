@@ -4,9 +4,9 @@
 2. Spusť:
 ```sql
 CREATE EXTENSION postgis;
-```
+´´´
 
 3. Ověř:
 ```sql
 SELECT PostGIS_Version();
-```
+´´´
