@@ -1,86 +1,208 @@
-# 01 – Mapa jako argument
+# 01 – Kartografie a tematická mapa: základní pojmy
 
+## Cíle lekce
 
-## 1. Mapa není realita
+Po této lekci:
 
-Mapa je:
-- selekce,
-- generalizace,
-- symbolická reprezentace,
-- interpretace dat.
-
-Každé kartografické rozhodnutí (metoda, klasifikace, barva, měřítko)
-mění sdělení mapy.
+- rozumíte, co je kartografie jako vědní obor,
+- dokážete definovat tematickou mapu,
+- rozlišujete tematický obsah a topografický podklad,
+- znáte základní dělení tematických map,
+- chápete zásady tvorby tematických map.
 
 ---
 
-## 2. Data × informace × argument
+# 1. Co je kartografie?
 
-- Data = surové hodnoty.
-- Informace = strukturované, interpretovatelné vztahy.
-- Mapa = vizuální argument.
+Kartografie je:
 
-Otázka:
-> Co tato mapa tvrdí?
+> „umění, věda a technologie vytváření map, včetně jejich studia jako vědeckých dokumentů a uměleckých prací“  
+(ICA, 1973)
+
+To znamená, že kartografie není jen kreslení map.
+
+Kartografie:
+- pracuje s prostorovými daty,
+- přenáší informace,
+- vytváří model geografické reality,
+- je zároveň technická i interpretační disciplína.
+
+Podle Sališčeva (1976) je kartografie:
+
+> vědním oborem o zobrazování prostorového rozmístění, spojení a vzájemných vazeb jevů přírody a společnosti prostřednictvím kartografických zobrazení.
+
+Mapa tedy není jen obraz.
+Mapa je model reality.
 
 ---
 
-## 3. Absolutní vs. relativní hodnoty
+# 2. Zařazení kartografie
 
-Typická chyba:
-- Kartogram z absolutních hodnot.
+Kartografie je interdisciplinární obor.
+
+Má vazby:
+- na geografii,
+- na geodézii,
+- na fotogrammetrii,
+- na dálkový průzkum Země,
+- na informatiku.
+
+Proto budeme pracovat:
+- s daty,
+- s analytickými nástroji,
+- ale i s vizuální komunikací.
+
+---
+
+# 3. Co je tematická kartografie?
+
+Tematická kartografie je:
+
+> věda, technika a umění tvorby tematických map.
+
+Tematická mapa je:
+
+> mapa, jejímž hlavním obsahem je znázornění libovolných přírodních nebo socioekonomických jevů a jejich vzájemných vztahů.
+
+Rozdíl oproti obecně zeměpisné mapě:
+
+- obecně zeměpisná mapa zobrazuje „všechno“,
+- tematická mapa zobrazuje vybraný jev.
+
+---
+
+# 4. Obsah tematické mapy
+
+Obsah tematické mapy tvoří dvě hlavní složky:
+
+## A) Tematický obsah
+
+- hlavní složka mapy,
+- zobrazuje sledovaný jev,
+- může být jeden nebo více témat.
 
 Například:
-- Počet obyvatel × hustota obyvatel.
-- Počet škol × počet škol na 1000 obyvatel.
+- hustota obyvatel,
+- nezaměstnanost,
+- srážky,
+- dopravní intenzita.
 
-Rozhodnutí o normalizaci zásadně mění interpretaci.
+## B) Topografický podklad
 
----
+- pomocná složka,
+- slouží k lokalizaci jevu,
+- nesmí být dominantní.
 
-## 4. Rámec pro kritiku mapy
+Může obsahovat:
+- administrativní hranice,
+- sídla,
+- vodstvo,
+- komunikační síť.
 
-Při hodnocení mapy postupujeme systematicky:
-
-### A) Metodika
-- Odpovídá metoda typu dat?
-- Jsou data vhodně upravena (normalizace)?
-
-### B) Klasifikace
-- Kolik tříd?
-- Jaká metoda klasifikace?
-- Je legenda srozumitelná?
-
-### C) Barvy
-- Odpovídá barevná škála typu dat?
-- Je čitelná při projekci i tisku?
-
-### D) Kompozice
-- Je zřejmá hierarchie?
-- Co je hlavní sdělení?
-
-### E) Interpretace
-- Jaké tvrzení mapa vytváří?
-- Je toto tvrzení podloženo daty?
+Topografický podklad musí být podřízen tematickému obsahu.
 
 ---
 
-## 5. Typické chyby studentů
+# 5. Dělení tematických map
 
-- Kartogram z absolutních dat.
-- Nevhodná klasifikace bez zdůvodnění.
-- Příliš mnoho tříd.
-- Náhodná barevná škála.
-- Přeplněný layout.
-- Legenda, která nevysvětluje metodu.
+Tematické mapy se dělí na:
+
+## 1) Analytické
+
+- zobrazují jeden jev,
+- neukazují vzájemné souvislosti,
+- používají omezené množství metod.
+
+Příklad:
+- mapa rozmístění referenčních stanic.
+
+## 2) Komplexní
+
+- zobrazují více jevů,
+- umožňují sledovat souvislosti,
+- kombinují více metod,
+- jsou náročnější na sestavení.
+
+Příklad:
+- geologická mapa,
+- dopravní mapa.
+
+## 3) Syntetické
+
+- vznikají syntézou více údajů,
+- představují výsledek generalizace,
+- jsou určeny poučenému čtenáři.
+
+Příklad:
+- mapa klimatických oblastí,
+- mapa přírodních krajin.
 
 ---
 
-## Shrnutí
+# 6. Zásady tvorby tematických map
 
-Mapa je argument.
-Kartografie je disciplína rozhodování.
+## 1) Zásada jednoty
 
-Od této chvíle nehodnotíme mapy podle dojmu,
-ale podle metodické správnosti a argumentační síly.
+Mapa musí být jednotná:
+- odborně,
+- technicky,
+- esteticky.
+
+---
+
+## 2) Zásada koordinace
+
+Každá mapa vzniká minimálně ve dvou fázích:
+- odborný návrh,
+- kartografické zpracování.
+
+---
+
+## 3) Zásada jednoduchosti
+
+Méně znamená více.
+
+Jednodušší mapa je čitelnější mapa.
+
+---
+
+## 4) Zásada prostorové názornosti
+
+Mapa se čte ze dvou vzdáleností:
+- z dálky – vnímáme strukturu,
+- z blízka – čteme detaily.
+
+---
+
+## 5) Zásada srozumitelnosti
+
+Mapa musí být srozumitelná bez nadměrného vysvětlování.
+
+Nejlepší legenda je taková, kterou čtenář téměř nepotřebuje.
+
+---
+
+## 6) Zásada zvýraznění dominant
+
+Nejdůležitější informace musí být nejvýraznější.
+
+Hierarchie prvků je základ kompozice.
+
+---
+
+# Shrnutí
+
+Kartografie:
+- je věda i umění,
+- pracuje s modelováním reality,
+- vytváří tematické mapy jako nástroj poznání.
+
+Tematická mapa:
+- má tematický obsah,
+- má podklad,
+- musí být metodicky správná,
+- musí být srozumitelná.
+
+Od této chvíle budeme každou mapu hodnotit podle těchto zásad.
+
 
