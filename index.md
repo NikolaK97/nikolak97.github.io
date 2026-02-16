@@ -6,5 +6,5 @@ title: Rozcestník
 - [Geoinformatika](/Geoinformatika/)
 - [Zpracování dat v GIS](/zpracovani_dat/)
 - [Dopravní systémy](/dopravni_system/)
-- [Databáze](/databaze/)
+- [Databáze](/database/)
 - [Kartografie](/cartography/)
