@@ -27,11 +27,11 @@ Mapa může pocházet například z:
 - výročních zpráv,
 - prezentací institucí.
 
-❗ Mapa nesmí být odborně správně zpracovaná.
+ Mapa nesmí být odborně správně zpracovaná.
 
 ---
 
-### 2️⃣ Analýza mapy
+### Analýza mapy
 
 Student provede písemnou analýzu (1–2 strany), ve které:
 
