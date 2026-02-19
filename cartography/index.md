@@ -1,5 +1,13 @@
 # Navigace
 
+## Hodnocení
+- pro ukončení je nutné splnit všechna tři cvičení (mohou se vracet na opravu)
+- mít splěnou docházku, max. 2 absence
+- v případě nedostatku bodu je možnost JEDNOHO úkolu navíc
+- body jsou sbírány za úkoly a splněná cvičení
+- odprezentovat a odevzdat zápočtový úkol - opravu mapy
+
+
 ## Lekce
 1. [01 – Mapa jako argument](lessons/01-mapa-jako-argument/index.md)
 2. [02 – Kompozice a vizuální hierarchie](lessons/02-kompozice-hierarchie/index.md)
