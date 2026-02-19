@@ -1,9 +1,9 @@
 # Navigace
 
 ## Hodnocení
-- pro ukončení je nutné splnit všechna tři cvičení (mohou se vracet na opravu)
-- mít splěnou docházku, max. 2 absence
-- v případě nedostatku bodu je možnost JEDNOHO úkolu navíc
+- pro ukončení je nutné splnit všechna tři domácí cvičení (mohou se vracet na opravu) + vytvořit jednu storymapu na VÁMI zvolené téma
+- mít splněnou docházku, max. 2 absence
+- v případě nedostatku bodů je možnost JEDNOHO úkolu navíc
 - body jsou sbírány za úkoly a splněná cvičení
 - odprezentovat a odevzdat zápočtový úkol - opravu mapy
 
