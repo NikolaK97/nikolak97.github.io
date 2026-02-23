@@ -180,7 +180,39 @@ Zaměstnanec 1:N Předmět
 Student M:N Předmět  
 
 ---
-
 ## Krok 5 – Parcialita
 
-Student musí být
+Student musí být na fakultě – povinná.  
+Zaměstnanec může, ale nemusí vyučovat – volitelná.  
+Předmět musí mít zaměstnance – povinná.  
+Zápis musí mít studenta i předmět – povinná na obou stranách.
+
+---
+
+## Krok 6 – Řešení M:N vztahu
+
+Student a Předmět nelze ponechat jako přímé M:N.
+
+Vzniká entita Zápis:
+
+- propojuje studenta a předmět
+- obsahuje atribut známka
+- má složený primární klíč (student_id, subject_id)
+
+Výsledné vztahy:
+
+Fakulta 1:N Student  
+Fakulta 1:N Zaměstnanec  
+Zaměstnanec 1:N Předmět  
+Student 1:N Zápis  
+Předmět 1:N Zápis  
+
+---
+
+# Kontrolní seznam
+
+- Každá entita má primární klíč.
+- Neexistuje přímý M:N vztah.
+- Známka je atributem Zápisu.
+- Kardinality jsou správně určeny.
+- Parcialita je určena alespoň u dvou vztahů.
