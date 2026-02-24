@@ -80,6 +80,16 @@ Známka:
 Vzniká asociativní entita.
 
 ---
+# Opakování minulé lekce
+- Každý autor může napsat různé množství knih, kniha může být napsána více autory.
+- Družstvo se skládá z hráčů, hráč hraje pouze za jedno družstvo.
+- Učitel vyučuje maximálně jednomu předmětu, předmět je vyučován právě jedním učitelem.
+- Objednávka zboží může být na více výrobků, výrobek se může objevit na více objednávkách.
+- Zákazník může předložit řadu objednávek, každá objednávka je právě od jednoho zákazníka.
+- Frekventanti rekvalifikačních kurzů jsou rozděleni do studijních skupin. Každou skupinu může učit několik učitelů, každý učitel může učit více skupin. Jedna skupina používá vždy stejnou učebnu, ovšem více skupin může používat stejnou učebnu v různých časech.
+
+
+
 
 # Řízený příklad
 
