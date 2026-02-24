@@ -1,5 +1,3 @@
-# Úkol – Kartodiagram
-
 ## Cíl úkolu
 
 Cílem je vytvořit tematickou mapu České republiky/Slovenska/Evropy využívající kartodiagram jako hlavní vyjadřovací prostředek a doplnit ji o dvě menší interpretační mapy.
