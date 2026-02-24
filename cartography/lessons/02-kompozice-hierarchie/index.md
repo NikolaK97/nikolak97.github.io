@@ -191,9 +191,9 @@ ne automatický výsledek exportu z GIS.
 
 ---
 # CVIČENÍ
-1) Tvorba české směrovky
-2) Příprava kartodiagramu - vyberte si téma (obyvatelstvo, zemědělství, atd)
-3) Vytvořte jednu mapu, ale dvě kompozice, jednu vhodnou pro laiky (širokou veřejnost) a druhou pro odborníky na dané téma.
+- 1) Tvorba české směrovky
+- 2) Příprava kartodiagramu - vyberte si téma (obyvatelstvo, zemědělství, atd)
+- 3) Vytvořte jednu mapu, ale dvě kompozice, jednu vhodnou pro laiky (širokou veřejnost) a druhou pro odborníky na dané téma.
 <img width="644" height="331" alt="image" src="https://github.com/user-attachments/assets/3ea76d99-5e47-44e3-83d6-4c8dd5482279" />
 <img width="696" height="410" alt="image" src="https://github.com/user-attachments/assets/3d7fe32f-c0c1-447f-a5aa-89c827057774" />
 
