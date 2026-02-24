@@ -71,9 +71,9 @@ Zadání:
 
 ---
 ## Řešení úloh z lekce
-<img width="2040" height="838" alt="image" src="https://github.com/user-attachments/assets/247c6469-daa1-4d2f-9a47-9662fdfb8b24" />
+<img width="2040" height="600" alt="image" src="https://github.com/user-attachments/assets/247c6469-daa1-4d2f-9a47-9662fdfb8b24" />
 <img width="1364" height="600" alt="image" src="https://github.com/user-attachments/assets/000c1e98-1027-4503-93c9-7e3a4743a8cd" />
-<img width="1992" height="860" alt="image" src="https://github.com/user-attachments/assets/2d7b6a44-3e1c-4400-adb1-c6fac5767547" />
+<img width="1992" height="600" alt="image" src="https://github.com/user-attachments/assets/2d7b6a44-3e1c-4400-adb1-c6fac5767547" />
 <img width="1306" height="858" alt="image" src="https://github.com/user-attachments/assets/e1c3f301-3356-47e3-a5a1-5f631e513d4c" />
 <img width="1464" height="946" alt="image" src="https://github.com/user-attachments/assets/d2e122d3-bb6a-4c69-90dd-e675a3450b39" />
 <img width="1832" height="810" alt="image" src="https://github.com/user-attachments/assets/3377015f-7421-456c-89dd-7620f2f7b3a4" />
