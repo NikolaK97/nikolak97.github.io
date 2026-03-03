@@ -28,6 +28,9 @@ Smazáním jednoho řádku ztratíme i jinou důležitou informaci (např. konta
 #### Vkládací anomálie
 Nelze vložit informaci bez jiné, která s ní nesouvisí (např. nelze vložit předmět bez zápisu studenta).
 
+<img width="1808" height="1010" alt="image" src="https://github.com/user-attachments/assets/365e359c-d99e-4b25-8436-2064e8b08fdd" />
+
+
 ---
 
 ## 2) Základní pojmy
@@ -126,6 +129,19 @@ Relace je v **BCNF**, pokud:
 5. 3NF: existuje řetězec typu `klíč → X → Y`, kde X i Y jsou neklíčové?
 6. BCNF: v každé FD musí být levá strana superklíč.
 7. Rozkládej podle porušující FD a kontroluj smysl tabulek (entity/vztahy + PK/FK).
+
+---
+<img width="1840" height="862" alt="image" src="https://github.com/user-attachments/assets/8fb0284a-6c8f-4825-8fc2-9b37e31620ac" />
+<img width="1888" height="854" alt="image" src="https://github.com/user-attachments/assets/244afbf5-5739-4736-9672-256ad7bbc5ce" />
+<img width="1842" height="874" alt="image" src="https://github.com/user-attachments/assets/5996cf64-77d1-4c4e-b652-b6fac4033ccb" />
+<img width="1848" height="858" alt="image" src="https://github.com/user-attachments/assets/fba964c4-bb93-488f-91ff-a84fe65d32a3" />
+
+---
+
+<img width="1966" height="846" alt="image" src="https://github.com/user-attachments/assets/40792f0f-e08f-4297-b2f2-d60353af9d0c" />
+
+---
+<img width="1926" height="982" alt="image" src="https://github.com/user-attachments/assets/c4bc9f73-e210-4b77-b1b5-9e519883b353" />
 
 ---
 
