@@ -46,13 +46,8 @@ Příklad: `zákazník_id → zákazník_jméno, město`
 ### Kandidátní klíč
 Množina atributů `K`, která:
 1. určí všechny atributy relace (`K⁺` obsahuje vše),
-2. je **minimální** (po odebrání libovolného atributu už neplatí bod 1).
+2. je **minimální**  – nejde z ní odebrat žádný sloupec, aniž by přestala být jednoznačná.
 
-### Superklíč
-Jakákoliv množina atributů, která určí všechny atributy (nemusí být minimální).
-
-### Prime atribut
-Atribut, který je součástí **nějakého** kandidátního klíče.
 
 ---
 
@@ -125,17 +120,17 @@ Relace je v **BCNF**, pokud:
 7. Rozkládej podle porušující FD a kontroluj smysl tabulek (entity/vztahy + PK/FK).
 
 ---
-<img width="1840" height="862" alt="image" src="https://github.com/user-attachments/assets/8fb0284a-6c8f-4825-8fc2-9b37e31620ac" />
-<img width="1888" height="854" alt="image" src="https://github.com/user-attachments/assets/244afbf5-5739-4736-9672-256ad7bbc5ce" />
-<img width="1842" height="874" alt="image" src="https://github.com/user-attachments/assets/5996cf64-77d1-4c4e-b652-b6fac4033ccb" />
-<img width="1848" height="858" alt="image" src="https://github.com/user-attachments/assets/fba964c4-bb93-488f-91ff-a84fe65d32a3" />
+<img width="1840" height="362" alt="image" src="https://github.com/user-attachments/assets/8fb0284a-6c8f-4825-8fc2-9b37e31620ac" />
+<img width="1888" height="354" alt="image" src="https://github.com/user-attachments/assets/244afbf5-5739-4736-9672-256ad7bbc5ce" />
+<img width="1842" height="374" alt="image" src="https://github.com/user-attachments/assets/5996cf64-77d1-4c4e-b652-b6fac4033ccb" />
+<img width="1848" height="358" alt="image" src="https://github.com/user-attachments/assets/fba964c4-bb93-488f-91ff-a84fe65d32a3" />
 
 ---
 
-<img width="1966" height="846" alt="image" src="https://github.com/user-attachments/assets/40792f0f-e08f-4297-b2f2-d60353af9d0c" />
+<img width="1966" height="346" alt="image" src="https://github.com/user-attachments/assets/40792f0f-e08f-4297-b2f2-d60353af9d0c" />
 
 ---
-<img width="1926" height="982" alt="image" src="https://github.com/user-attachments/assets/c4bc9f73-e210-4b77-b1b5-9e519883b353" />
+<img width="1926" height="382" alt="image" src="https://github.com/user-attachments/assets/c4bc9f73-e210-4b77-b1b5-9e519883b353" />
 
 ---
 
