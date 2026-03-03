@@ -22,7 +22,7 @@ Smazáním jednoho řádku ztratíme i jinou důležitou informaci (např. konta
 #### Vkládací anomálie
 Nelze vložit informaci bez jiné, která s ní nesouvisí (např. nelze vložit předmět bez zápisu studenta).
 
-<img width="1808" height="1010" alt="image" src="https://github.com/user-attachments/assets/365e359c-d99e-4b25-8436-2064e8b08fdd" />
+<img width="1808" height="510" alt="image" src="https://github.com/user-attachments/assets/365e359c-d99e-4b25-8436-2064e8b08fdd" />
 
 
 ---
