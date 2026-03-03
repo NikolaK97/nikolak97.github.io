@@ -1,12 +1,6 @@
 # Cvičení 3 – Převod ERA modelu do relačního modelu  
 ## Normalizace dat (1NF, 2NF, 3NF, BCNF)
 
-Tento dokument je podpůrný materiál pro studenty. Je psaný tak, aby:
-- vysvětlil **co přesně** normální formy říkají,
-- ukázal **proč** existují (anomálie),
-- dal **mechanický postup** řešení,
-- obsahoval **typické příklady** a rozklady.
-
 ---
 
 ## 1) Proč normalizujeme
