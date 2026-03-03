@@ -1,3 +1,239 @@
+# Cvičení 3 – Převod ERA modelu do relačního modelu
+
+## Cíl cvičení
+
+Po absolvování tohoto cvičení bude student schopen:
+
+- systematicky převést ERA diagram do relačního modelu
+- aplikovat pravidla pro 1:1, 1:N a M:N vztahy
+- správně určit primární a cizí klíče
+- pochopit vazbu mezi parcialitou a NOT NULL omezením
+- připravit model připravený pro implementaci v SQL nebo MS Access
+
+---
+
+# Teoretická část (minimálně 20–25 minut)
+
+## 1. Konceptuální vs. logický model
+
+ERA model:
+- popisuje realitu
+- pracuje s entitami a vztahy
+- neřeší konkrétní implementaci
+
+Relační model:
+- popisuje tabulky
+- definuje klíče
+- je připraven pro databázový systém
+
+Transformace probíhá takto:
+
+ERA model → Relační model → SQL implementace
+
+---
+
+## 2. Pravidla převodu
+
+### Entita → Tabulka
+
+Každá entita se stává tabulkou.
+
+Primární klíč entity se stává PRIMARY KEY tabulky.
+
+Atributy se stávají sloupci.
+
+---
+
+### Vztah 1:N
+
+Cizí klíč se umisťuje do tabulky na straně N.
+
+Příklad:
+
+Fakulta 1:N Student
+
+Tabulka STUDENT bude obsahovat faculty_id jako FK.
+
+---
+
+### Vztah 1:1
+
+Cizí klíč umisťujeme do jedné z tabulek.
+Obvykle do té, která má povinnou účast.
+
+---
+
+### Vztah M:N
+
+Každý M:N vztah se musí převést na novou tabulku.
+
+Tato tabulka:
+
+- obsahuje dva cizí klíče
+- má obvykle složený primární klíč
+- obsahuje atributy vztahu
+
+---
+
+### Parcialita
+
+Povinná účast → NOT NULL  
+Volitelná účast → NULL povoleno
+
+---
+
+# Řízený příklad
+
+Z ERA modelu:
+
+Zaměstnanec 1:N Předmět  
+Každý předmět je vyučován právě jedním zaměstnancem.
+
+---
+
+## Převod
+
+ZAMESTNANEC
+- employee_id (PK)
+- jmeno
+
+PREDMET
+- subject_id (PK)
+- nazev
+- employee_id (FK)
+
+Protože Předmět je na straně N.
+
+Parcialita:
+employee_id bude NOT NULL.
+
+---
+
+# Hlavní úloha – Univerzitní systém
+
+Použij ERA model z předchozího cvičení.
+
+---
+
+## Krok 1 – Seznam entit
+
+- Fakulta
+- Student
+- Zaměstnanec
+- Předmět
+- Zápis
+
+---
+
+## Krok 2 – Převod entit na tabulky
+
+FAKULTA
+- faculty_id (PK)
+- nazev
+
+STUDENT
+- student_id (PK)
+- jmeno
+
+ZAMESTNANEC
+- employee_id (PK)
+- jmeno
+
+PREDMET
+- subject_id (PK)
+- nazev
+
+ZAPIS
+- student_id
+- subject_id
+- znamka
+
+---
+
+## Krok 3 – Převod vztahů 1:N
+
+Fakulta 1:N Student
+
+→ STUDENT dostane faculty_id (FK)
+
+Fakulta 1:N Zaměstnanec
+
+→ ZAMESTNANEC dostane faculty_id (FK)
+
+Zaměstnanec 1:N Předmět
+
+→ PREDMET dostane employee_id (FK)
+
+---
+
+## Krok 4 – Převod M:N
+
+Student M:N Předmět
+
+Vzniká tabulka ZAPIS:
+
+ZAPIS
+- student_id (FK)
+- subject_id (FK)
+- znamka
+
+Primární klíč:
+(student_id, subject_id)
+
+---
+
+# Kompletní relační model
+
+FAKULTA
+- faculty_id (PK)
+- nazev
+
+STUDENT
+- student_id (PK)
+- jmeno
+- faculty_id (FK)
+
+ZAMESTNANEC
+- employee_id (PK)
+- jmeno
+- faculty_id (FK)
+
+PREDMET
+- subject_id (PK)
+- nazev
+- employee_id (FK)
+
+ZAPIS
+- student_id (PK, FK)
+- subject_id (PK, FK)
+- znamka
+
+---
+
+# Vazba na SQL implementaci
+
+V další fázi budou:
+
+- PK → PRIMARY KEY
+- FK → FOREIGN KEY
+- povinná účast → NOT NULL
+
+Například:
+
+faculty_id INTEGER NOT NULL REFERENCES fakulta(faculty_id)
+
+---
+
+# Kontrolní checklist
+
+- Každá entita má tabulku.
+- Každý vztah 1:N je převeden přes FK.
+- Neexistuje přímý M:N vztah.
+- Asociativní tabulka má složený PK.
+- Povinné vztahy jsou identifikovány.
+
+---
+
 # Pokročilé příklady – vyšší obtížnost
 
 Následující příklady obsahují:
