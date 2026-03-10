@@ -295,18 +295,12 @@ Mapa musí obsahovat:
 
 Zkontrolujte, zda je mapa čitelná i pro uživatele s poruchou barevného vidění.
 
-Zvažte například:
-
-- deuteranopii
-- protanopii
-
-Pokud je to nutné, upravte barevnou škálu.
 
 ---
 
 ### 5. Vytvoření mapového layoutu
 
-Finální mapa musí obsahovat:
+Finální mapa musí obsahovat!!!!!:
 
 - název mapy
 - legendu
