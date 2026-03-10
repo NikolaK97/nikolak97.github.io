@@ -224,3 +224,187 @@ Barva je:
 
 Volba barvy není estetické rozhodnutí.
 Je to metodické rozhodnutí.
+
+---
+
+# Kartografické cvičení: Barvy a kartografická dostupnost
+
+## Cíl cvičení
+
+Cílem cvičení je vytvořit tematickou mapu dostupnosti služeb, která bude:
+
+- kartograficky čitelná
+- využívat vhodnou barevnou škálu
+- přístupná i pro uživatele s poruchami barevného vidění
+
+Studenti si procvičí práci se symbologií v ArcGIS Pro a principy kartografické hierarchie a barev.
+
+---
+
+## Vstupní data
+
+Pro práci použijte následující vrstvy:
+
+- hranice obcí nebo městských částí
+- silniční síť
+- lokace služeb (např. zdravotnická zařízení, školy nebo knihovny)
+- populační data
+
+---
+
+## Zadání úkolu
+
+### 1. Výpočet dostupnosti služeb
+
+Vytvořte mapu dostupnosti zvolených služeb.
+
+Možné přístupy:
+
+- bufferová analýza (např. 2 km, 5 km, 10 km)
+- síťová analýza – Service Area
+
+---
+
+### 2. Klasifikace dostupnosti
+
+Rozdělte území do kategorií dostupnosti.
+
+Příklad klasifikace:
+
+| Kategorie | Popis |
+|-----------|------|
+| Dobrá dostupnost | do 5 minut |
+| Střední dostupnost | 5–10 minut |
+| Špatná dostupnost | více než 10 minut |
+
+---
+
+### 3. Kartografické zpracování
+
+Vytvořte tematickou mapu dostupnosti.
+
+Mapa musí obsahovat:
+
+- vhodnou barevnou škálu
+- jasnou vizuální hierarchii
+- čitelnou legendu
+
+---
+
+### 4. Kontrola přístupnosti
+
+Zkontrolujte, zda je mapa čitelná i pro uživatele s poruchou barevného vidění.
+
+Zvažte například:
+
+- deuteranopii
+- protanopii
+
+Pokud je to nutné, upravte barevnou škálu.
+
+---
+
+### 5. Vytvoření mapového layoutu
+
+Finální mapa musí obsahovat:
+
+- název mapy
+- legendu
+- měřítko
+- zdroj dat
+- autora mapy
+
+---
+
+## Doporučený pracovní postup v ArcGIS Pro
+
+### Výpočet dostupnosti pomocí bufferu
+Analysis → Buffer
+
+
+Příklad vzdáleností:
+
+- 2 km
+- 5 km
+- 10 km
+
+---
+
+### Výpočet dostupnosti pomocí síťové analýzy
+Network Analyst → Service Area
+
+
+Příklad časových intervalů:
+
+- 5 minut
+- 10 minut
+- 15 minut
+
+---
+
+## Možné varianty řešení
+
+### Varianta 1 – sekvenční barevná škála
+
+Příklad:
+
+| Kategorie | Barva |
+|-----------|------|
+| Špatná dostupnost | světle žlutá |
+| Střední dostupnost | oranžová |
+| Dobrá dostupnost | tmavě červená |
+
+Výhody:
+
+- silná vizuální hierarchie
+- intuitivní interpretace
+
+---
+
+### Varianta 2 – modrá sekvenční škála
+
+Příklad:
+
+| Kategorie | Barva |
+|-----------|------|
+| Špatná dostupnost | světle modrá |
+| Střední dostupnost | střední modrá |
+| Dobrá dostupnost | tmavě modrá |
+
+Výhody:
+
+- dobrá čitelnost
+- vhodné pro uživatele s poruchami barevného vidění
+
+---
+
+### Varianta 3 – divergenční škála
+
+Příklad:
+
+| Kategorie | Barva |
+|-----------|------|
+| Špatná dostupnost | červená |
+| Střední dostupnost | šedá |
+| Dobrá dostupnost | zelená |
+
+Poznámka:  
+Tato kombinace může být problematická pro některé typy color vision deficiency.!!!
+
+https://www.google.com/url?sa=t&source=web&rct=j&url=https%3A%2F%2Fwww.geoinformatics.upol.cz%2Fdprace%2Fbakalarske%2Fvodicka22%2F&ved=0CBYQjRxqFwoTCKi8wtmZlpMDFQAAAAAdAAAAABAI&opi=89978449<img width="2339" height="1654" alt="image" src="https://github.com/user-attachments/assets/e5ead3cc-7825-4113-957e-3e130c9a8383" />
+
+---
+
+## Typické chyby
+
+Při tvorbě mapy se často objevují tyto problémy:
+
+- použití příliš velkého množství barev
+- použití duhové barevné škály
+- nedostatečný kontrast
+- problematická kombinace červené a zelené
+- legenda neodpovídá mapovým symbolům
+
+---
+
+
