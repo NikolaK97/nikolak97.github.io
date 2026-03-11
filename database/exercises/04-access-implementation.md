@@ -81,6 +81,7 @@ Budeme implementovat model z Cvičení 3.
 2. Klikni na „Blank Database“.
 3. Název: univerzita.accdb.
 4. Klikni Create.
+![F0F39853-31D4-46B1-BED3-41C538EB97E8_1_105_c](https://github.com/user-attachments/assets/922dc781-1035-4869-bbed-93bad039fd5a)
 
 ---
 
