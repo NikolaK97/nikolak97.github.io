@@ -228,6 +228,9 @@ Je to metodické rozhodnutí.
 ---
 
 # Kartografické cvičení: Barvy a kartografická dostupnost
+## Cvičení na barvy:
+- https://humanbenchmark.me
+- https://colorblindtests.net
 
 ## Cíl cvičení
 
