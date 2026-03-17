@@ -747,3 +747,14 @@ PK: `(faktura_id, produkt_id)`
 - `Zařazení(zaměstnanec, oddělení FK, PK(zaměstnanec, oddělení))`
 
 ---
+![B699775A-C5FC-4D1D-93E1-9E60FCB704A0_1_105_c](https://github.com/user-attachments/assets/5f2d6031-cd1a-4df3-be00-5a7acdde147b)
+![E6716707-B32C-4368-8CBC-15DD45913A8E_1_105_c](https://github.com/user-attachments/assets/c524978a-95fd-45ee-ac0c-56b20402f339)
+![B5EB49D8-5EE8-4AA4-A163-07999BA8F247_1_105_c](https://github.com/user-attachments/assets/4ca3c715-bf35-4df7-a2e8-dd2fb760de3c)
+![4A8680DD-54C2-417C-8199-E899467D909B_1_105_c](https://github.com/user-attachments/assets/4255499c-0f7e-4a57-856c-8ba4b9770c84)
+![6D7009DE-3DD0-4795-9CA9-C15379D306FB_1_105_c](https://github.com/user-attachments/assets/c7b203c2-486e-4d25-a3df-ab2ab5b5f7d4)
+![0F75467A-E528-4596-BE70-FD3DA78FF51E_1_105_c](https://github.com/user-attachments/assets/51fbf3e4-de68-4815-a276-2152636c1d22)
+
+
+
+
+
