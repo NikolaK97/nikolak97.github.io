@@ -226,3 +226,16 @@ Předmět 1:N Zápis
 - Známka je atributem Zápisu.
 - Kardinality jsou správně určeny.
 - Parcialita je určena alespoň u dvou vztahů.
+
+--- 
+# Řešení
+![745DDE3E-B6A5-4FD7-A236-57F4BAD9EDB7_1_105_c](https://github.com/user-attachments/assets/b5b85b9c-c6b1-4781-82cc-6cd3cfc78921)
+![F7B14F51-1974-423A-A5BD-98F309F45D86_1_105_c](https://github.com/user-attachments/assets/a5ad9fee-9535-4634-8cca-967673d2e869)
+![F0F39853-31D4-46B1-BED3-41C538EB97E8_1_105_c](https://github.com/user-attachments/assets/52c2642a-5c9c-4f1a-aad9-b30475f107a3)
+![052FD67E-F070-4794-9459-E932C10CC8D2_1_105_c](https://github.com/user-attachments/assets/d0d1eeb5-f2f3-4b0f-8ac0-9c4a5f648e35)
+![A6C7C49E-292E-45F6-95B6-7607B4E2B895_1_105_c](https://github.com/user-attachments/assets/8fa218dc-86d7-41ff-9e70-4b11ad2ae3eb)
+
+
+
+
+
