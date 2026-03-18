@@ -244,6 +244,83 @@ Student by měl být schopen:
 - spojit tři tabulky
 - použít filtr
 
+## 1. SELECT
+
+### Úkol
+Vypiš všechny studenty.
+
+```sql
+SELECT * FROM student;
+```
+
+### Úkol
+Vypiš jméno a příjmení.
+
+```sql
+SELECT jmeno, prijmeni FROM student;
+```
+
+---
+
+## 2. WHERE
+
+### Úkol
+Studenti z Ostravy
+
+```sql
+SELECT * FROM student
+WHERE mesto = "Ostrava";
+```
+
+---
+
+## 3. ORDER BY
+
+```sql
+SELECT * FROM student
+ORDER BY prijmeni;
+```
+
+---
+
+## 4. Agregace
+
+```sql
+SELECT COUNT(*) FROM student;
+```
+
+---
+
+## 5. JOIN
+
+```sql
+SELECT s.jmeno, f.nazev
+FROM student AS s
+INNER JOIN fakulty AS f
+ON s.id_fakul = f.id;
+```
+
+---
+
+## 6. Více tabulek
+
+```sql
+SELECT s.jmeno, p.nazev
+FROM (student AS s
+INNER JOIN zapis AS z ON s.id = z.id_stu)
+INNER JOIN predmet AS p ON z.id_pred = p.id;
+```
+
+---
+
+## 7. Pokročilé
+
+```sql
+SELECT TOP 1 *
+FROM student
+ORDER BY studijni_prumer;
+```
+
 ---
 
 # Úkol k odevzdání
