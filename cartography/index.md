@@ -23,5 +23,5 @@
 ## Úkoly
 - [Zápočet – oprava mapy](assignments/zapocet_oprava_mapy.md)
 - [Úkol 1 – Kartodiagram + klasifikace](assignments/ukol_kartogram_klasifikace.md)
-- [Úkol 2 – Kartogram + kombinace](assignments/ukol_kartodiagram_kombinace.md)
+- [Úkol 2 – Tematicka mapa](assignments/ukol_kartodiagram_kombinace.md)
 - [Úkol 3 – Anamorfóza](assignments/ukol_anamorfoza.md)
