@@ -26,7 +26,7 @@ Použijte následující CSV soubory:
 - zapis.csv
 
 Tyto soubory obsahují testovací data pro databázi univerzity.
-
+Odkaz pro stažení (https://drive.google.com/drive/folders/1q-33JDxu-6pLPTNm4Jz0Yijyn2St6p32?usp=share_link)
 ---
 
 # Struktura dat
