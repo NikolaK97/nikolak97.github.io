@@ -1,159 +1,149 @@
-# 06 – Stupnice a klasifikace dat
+# 06 – Kartografická sémiologie 
 
-## Cíle lekce
+## Co je kartografická sémiologie
 
-Po této lekci:
+Kartografická sémiologie se zabývá teorií kartografických znaků a jejich používáním. Zkoumá, jak mapy komunikují informace a jak jsou tyto informace vnímány uživatelem.
 
-- rozumíte pojmu kartografická stupnice,
-- znáte rozdíl mezi intervalovou a funkční stupnicí,
-- víte, jak se konstruuje intervalová stupnice,
-- chápete význam počtu tříd,
-- rozumíte vlivu rozdělení dat na klasifikaci.
+- zakladatel: Jacques Bertin (1967)
+- vychází z:
+  - sémiologie (věda o znacích)
+  - teoretické kartografie
+  - teorie informace
+  - kybernetiky
+  - psychologie
 
----
+## Jazyk mapy
 
-# 1. Co je kartografická stupnice?
+Mapa je formalizovaný znakový systém, který se řídí pravidly:
 
-Kartografická stupnice je:
+- syntaktická – uspořádání znaků
+- sémantická – význam znaků
 
-> kartografický nástroj umožňující kvantifikační hodnocení prostřednictvím vybraných parametrů kartografických znaků.
+Základní prvek: **kartografický znak**  
+Grafický prostředek nesoucí význam.
 
-Stupnice:
+## Vnímání mapy
 
-- nikdy nevystupuje samostatně,
-- vždy závisí na zvolené metodě,
-- závisí na typu dat (kvantitativní × kvalitativní).
+Porozumění mapě závisí na:
 
----
+- množství informací
+- způsobu kódování
+- nosiči (papír vs. digitál)
+- uživateli (myšlení, paměť)
 
-# 2. Dělení stupnic
+Cílem mapy je:
 
-Základní dělení:
+- rychlé pochopení
+- dobrá zapamatovatelnost
+- srozumitelnost
 
-## 2.1 Intervalová stupnice
+## Funkce mapy
 
-Používá se v metodách:
+### Mapa jako výstup
 
-- kartogram,
-- kartodiagram (intervalový),
-- izolinie,
-- metoda teček.
+- finální produkt poznání
+- statická prezentace dat
+- nástroj v GIS pro analýzu vrstev
 
-Data jsou rozdělena do intervalů.
+### Mapa jako vstup
 
----
+- nástroj pro rozhodování
+- uživatel interpretuje realitu
+- důležitá je použitelnost, ne jen kvalita
 
-## 2.2 Funkční stupnice
+### Mapa k podívání
 
-Používá se výhradně u kartodiagramu.
+- důležitý je první dojem
+- mapa musí rychle zaujmout a být přehledná
 
-Velikost znaku je funkcí konkrétní hodnoty jevu.
+### Mapa k obdivu
 
-Každá hodnota má vlastní velikost znaku.
+- estetická funkce
+- důraz na vizuální stránku
+- riziko ztráty čitelnosti
 
----
+## Aspekty kartografických znaků
 
-# 3. Konstrukce intervalové stupnice
+- **syntaktický aspekt** – vztahy mezi znaky
+- **sémantický aspekt** – význam znaků
+- **sigmatický aspekt** – vztah k realitě
+- **pragmatický aspekt** – vztah k uživateli
 
-Konstrukce zahrnuje:
+## Specifické vlastnosti mapy
 
-1. Vymezení hranic intervalů.
-2. Stanovení počtu intervalů.
-3. Přiřazení vizuální proměnné (např. odstínu barvy).
+- **komunikovatelnost** – schopnost předat informaci
+- **názornost** – rychlé pochopení
+- **interpretovatelnost** – jednoznačnost
+- **komprimovatelnost** – zhuštění informací
 
----
+## Vizuální zpracování dat
 
-# 4. Počet intervalů
+Stejná data mohou být interpretována různě podle:
 
-Neexistuje pevné pravidlo.
+- barevné škály
+- kontrastu
+- klasifikace dat
 
-Obecně:
+Problémy:
 
-- nejčastěji 4–10 intervalů,
-- méně intervalů → příliš hrubé rozlišení,
-- více intervalů → zhoršení čitelnosti.
+- nevhodné barvy zhoršují čitelnost
+- příliš mnoho tříd vytváří chaos
+- špatný kontrast vede ke zkreslení
 
-Počet intervalů závisí na:
+Forma ovlivňuje význam.
 
-- cíli mapy,
-- typu dat,
-- schopnosti čtenáře rozlišovat odstíny.
+## Optické a psychologické jevy
 
-Příliš mnoho tříd je častá chyba.
+Lidské vnímání může zkreslovat realitu:
 
----
+- iradiace – světlé plochy se zdají větší
+- optické klamy – zkreslení velikosti, délky a směru
+- opakující se vzory vytvářejí vizuální šum
 
-# 5. Rozdělení dat
+Mapa tedy může klamat i bez chyby v datech.
 
-Před klasifikací je nutné analyzovat rozdělení dat.
+## Znakový klíč a legenda
 
-Doporučený postup:
+Znakový klíč je soubor mapových znaků s vysvětlením jejich významu.
 
-- vykreslit histogram,
-- porovnat s teoretickým rozdělením.
+### Musí být:
 
-Rozdělení může být:
+- úplný
+- přehledný
+- uspořádaný
+- v souladu s mapou
+- srozumitelný
 
-- normální,
-- asymetrické,
-- rovnoměrné,
-- silně vychýlené.
+### Faktory tvorby
 
-Rozdělení dat výrazně ovlivňuje výběr hranic intervalů.
+#### Technické
 
----
+- minimální šířka čar
+- možnosti tisku nebo zobrazení na displeji
 
-# 6. Vymezování hranic intervalů
+#### Fyziologické
 
-Intervaly musí být vymezeny:
+- černá je čitelnější než barvy
+- malé rozdíly nemusí být rozeznatelné
+- kontrast ovlivňuje vnímání znaků
 
-- v celém rozsahu dat,
-- systematicky,
-- s ohledem na interpretaci.
+## Časté chyby
 
-Intervaly mohou:
+- neuspořádaná legenda zhoršuje orientaci
+- příliš mnoho znaků přetěžuje uživatele
+- podobné symboly vedou k záměně
+- dlouhé texty zpomalují práci s mapou
 
-- obsahovat přibližně stejný počet prvků,
-- mít stejnou šířku,
-- respektovat přirozené zlomy v datech.
+Platí, že méně je často více.
 
----
+## Hlavní myšlenka
 
-# 7. Intervalová vs. funkční stupnice
+Mapa není jen obraz reality. Je to komunikační systém, ve kterém způsob zobrazení ovlivňuje způsob pochopení.
 
-## Intervalová stupnice
-
-- každá hodnota je zařazena do intervalu,
-- jeden interval = jeden znak (např. odstín).
-
-Výhoda:
-- přehlednost.
-
-Nevýhoda:
-- ztráta přesné informace.
-
----
-
-## Funkční stupnice
-
-- velikost znaku je přímo funkcí hodnoty,
-- používá se zejména u proporcionálních kartodiagramů.
-
-Výhoda:
-- zachování proporcí.
-
-Nevýhoda:
-- vyšší náročnost interpretace.
-
----
-
-# Shrnutí
-
-Stupnice:
-
-- je klíčovým prvkem tematické mapy,
-- ovlivňuje interpretaci dat,
-- musí odpovídat typu metody.
-
-Počet intervalů a rozdělení dat nejsou technická drobnost,
-ale zásadní kartografické rozhodnutí.
+--
+### CVIČENÍ
+- stáhněte si data o sčítání dopravy: Výsledná sestava V2 ve formátu XLSX (předběžné výsledky CSD 2025) -- https://rsd.cz/web/guest/silnice-a-dalnice/scitani-dopravy#zalozka-celostatni-scitani-dopravy-2025
+- napojte je na vrstvu silnic (silnicedalnice) z Data 50 (https://geoportal.cuzk.cz/(S(ami5fgwxd0l4u401goaultex))/Default.aspx?menu=2290&mode=TextMeta&side=mapy_data50&text=dSady_mapyData50)
+- vytvořte Stuhový kartodiagram
+- data je nutné před použití upravit!
+  <img width="547" height="294" alt="image" src="https://github.com/user-attachments/assets/e2ad1d15-ac82-4e36-88e2-86a431cf138a" />
