@@ -1,17 +1,92 @@
 # Cvičení 6 – Agregační dotazy v MS Access
 
-## Cíl cvičení
+## # JOINy v SQL – teorie
 
-Po absolvování tohoto cvičení bude student schopen:
+JOIN je operace v SQL, která umožňuje **spojit data z více tabulek do jednoho výsledku**.
 
-- používat agregační funkce v databázových dotazech
-- vytvářet dotazy typu GROUP BY
-- počítat počet záznamů pomocí COUNT
-- počítat průměr pomocí AVG
-- analyzovat data pomocí agregací
-- pracovat s větším datasetem
+Používá se v situacích, kdy jsou data rozdělena do více tabulek (např. kvůli normalizaci databáze) a potřebujeme je zobrazit společně.
 
-Toto cvičení navazuje na Cvičení 5 a pracuje s rozšířeným datasetem.
+---
+
+##  Proč JOINy existují?
+
+V relačních databázích se data často ukládají do více tabulek, aby se:
+- zabránilo duplicitám
+- zlepšila přehlednost
+- usnadnila správa dat
+
+Například:
+- tabulka `studenti` obsahuje jména studentů
+- tabulka `tridy` obsahuje názvy tříd
+
+Místo ukládání názvu třídy ke každému studentovi se uloží pouze **odkaz (ID)**.
+
+JOIN pak umožní tato data znovu propojit.
+
+---
+
+##  Jak JOIN funguje?
+
+JOIN pracuje tak, že:
+1. vezme dvě tabulky
+2. porovná hodnoty ve vybraných sloupcích
+3. spojí řádky, které splňují podmínku
+
+Tato podmínka se zapisuje pomocí:
+ON tabulka1.sloupec = tabulka2.sloupec
+
+---
+
+### Typy JOINů (princip)
+
+INNER JOIN
+Vrací pouze ty řádky, kde existuje shoda v obou tabulkách.
+Pokud neexistuje odpovídající záznam, řádek se do výsledku nedostane.
+
+LEFT JOIN
+Vrací všechny řádky z levé tabulky.
+Pokud pro některý řádek neexistuje shoda v pravé tabulce, doplní se hodnoty NULL.
+
+RIGHT JOIN
+Vrací všechny řádky z pravé tabulky.
+Funguje stejně jako LEFT JOIN, jen z opačné strany.
+
+FULL JOIN
+Vrací všechny řádky z obou tabulek.
+Pokud neexistuje shoda, chybějící hodnoty se doplní NULL.
+
+---
+
+### Co znamená „levá“ a „pravá“ tabulka?
+Pořadí tabulek v dotazu je důležité:
+FROM tabulka1
+LEFT JOIN tabulka2
+tabulka1 = levá tabulka
+tabulka2 = pravá tabulka
+LEFT JOIN tedy znamená: „vezmi vše z tabulka1“.
+
+---
+
+### NULL hodnoty při JOINu
+Pokud neexistuje odpovídající záznam:
+SQL doplní NULL
+znamená to „žádná hodnota / neznámá hodnota“
+To je důležité například při filtrování výsledků.
+
+---
+
+### Kartézský součin
+Pokud se nepoužije podmínka ON, vznikne tzv. kartézský součin:
+každý řádek z první tabulky se spojí s každým řádkem z druhé tabulky
+To většinou není žádoucí a vede k velkému množství dat.
+
+---
+
+### JOIN vs. WHERE
+Podmínky v JOINu:
+ON → určuje, jak se tabulky spojují
+WHERE → filtruje výsledky po spojení
+Tyto dvě věci mají odlišnou roli a neměly by se zaměňovat.
 
 ---
 
