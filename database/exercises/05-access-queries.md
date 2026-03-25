@@ -342,3 +342,117 @@ V příštím cvičení se budeme věnovat pokročilým dotazům:
 - GROUP BY
 - COUNT
 - formuláře
+
+## řešení
+--vyber vše z tabulky fakulty
+
+SELECT *
+FROM fakulty;
+
+--vyber název a rozzalozeni z tabulky fakulty s aliasy 
+
+SELECT nazev AS 'Název', rok_zalozeni AS 'Rok založení'
+FROM fakulty;
+
+--vypis vše z tabulky student 
+SELECT *
+FROM student;
+
+--studenty z jihomoravského kraje
+SELECT *
+FROM student
+WHERE kraj = 'Jihomoravský';
+--studenti z města Kladno
+SELECT *
+FROM student
+WHERE mesto = 'Kladno';
+
+--studeti z kladna, jen ženy
+SELECT *
+FROM student
+WHERE mesto = 'Kladno' AND pohlavi = 'Ž';
+--studeti z kladna, jen ženy a kombinované stadium 
+
+SELECT *
+FROM student
+WHERE mesto = 'Kladno' AND pohlavi = 'Ž' AND forma_studia = 'kombinovaná';
+
+--všechny studenty muže, kteří jsou aktivní a nebo žijí v olomouci
+SELECT *
+FROM student
+WHERE (mesto = 'Olomouc' OR aktivni = 'ano') AND pohlavi = 'M';
+
+--všichni muži ve vyšším než 4 ročníku 
+SELECT *
+FROM student
+WHERE pohlavi = 'M' AND rocnik > 4;
+--všichni muži ve 4 ročníku a výše 
+
+SELECT *
+FROM student
+WHERE pohlavi = 'M' AND rocnik >= 4;
+--všechny studenty, kteří nejsou ženy
+
+SELECT *
+FROM student
+WHERE pohlavi <> 'Ž';
+
+--všechny studenty, kteří nestují 1 ročník, zároveň dostávají stipendium větší než 2000
+SELECT *
+FROM student
+WHERE rocnik <> 1 AND stipendium_kc > 2000;
+
+--kolik je žen a mužů mezi studenty
+
+SELECT pohlavi, COUNT(*) AS 'Počet'
+FROM student
+group by pohlavi;
+
+--počet student za jednolitvé kraje 
+
+SELECT kraj, COUNT(*) AS 'Počet'
+FROM student
+group by kraj;
+
+--počet student za jednolitvé kraje s vice jak 60 studenty
+
+SELECT kraj, COUNT(*) AS 'Počet'
+FROM student
+group by kraj
+HAVING COUNT(*) >60;
+--počet studentů za jednolitvé kraje podle pohlaví
+
+SELECT kraj, pohlavi, COUNT(*) AS 'Počet'
+FROM student
+group by kraj, pohlavi
+;
+
+--vyberte pouze studenty, jejichž jméno začíná na M
+SELECT *
+from student
+where jmeno LIKE 'M*';
+
+--VYBERTE všechny studenty, kteří jsou z Olomouckého a Plzenského kraje, zároveň jsou prezenční a jejich jméno obsahuje A nebo I 
+
+SELECT *
+from student
+where kraj IN ('Olomoucký', 'Plzeňský') AND forma_studia = 'prezenční' AND (jmeno LIKE '*a*' OR jmeno LIKE '*i*') ;
+
+--vyberte studenty mezi 2-4 ročníkem a jsou to ženy
+SELECT *
+from student
+where (rocnik BETWEEN 2 AND 4) AND pohlavi = 'Ž';
+
+--počet předmětů, které mají vice jak 8 kreditů a zároven jsou povinne
+SELECT *
+from predmet
+where kredity > 8 AND typ = 'povinný';
+
+--jaký je maximální, minimální a průměrný počet kreditů u předmětů, rozděl do kategorií podle typu
+
+SELECT typ, MIN(kredity) AS 'MIN', MAX(kredity) AS 'MAX', AVG(kredity) AS 'Průměr'
+from predmet
+GROUP BY typ;
+
+
+
