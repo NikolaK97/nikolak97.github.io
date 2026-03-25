@@ -15,7 +15,7 @@ Vítej v materiálech ke cvičením.
   - [03 – ERA → relační model](exercises/03-era-to-relational.md)
   - [04 – Access implementace](exercises/04-access-implementation.md)
   - [05 – Access dotazy](exercises/05-access-queries.md)
-  - [06 – Access pokročilé + formuláře](exercises/06-access-advanced-queries-forms.md)
+  - [06 – Access pokročilé + formuláře](exercises/06-access-aggregation.md)
   - [07 – Access opakování + mock test](exercises/07-access-recap-mock-test.md)
   - [08 – PostgreSQL základy](exercises/08-postgres-basics.md)
   - [09 – Vztahy + JOIN](exercises/09-postgres-relations-joins.md)
