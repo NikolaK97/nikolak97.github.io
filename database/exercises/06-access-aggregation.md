@@ -19,192 +19,192 @@ Toto cvičení navazuje na Cvičení 5 a pracuje s rozšířeným datasetem.
 
 ### Studenti z konkrétního ročníku
 ```sql
+--studenti z prnvího ročníku
 SELECT *
 FROM student
 WHERE rocnik = 1;
-Aktivní studenti
+
+-- Aktivní studenti
 SELECT id, jmeno, prijmeni, aktivni
 FROM student
-WHERE aktivni = TRUE;
-Neaktivní studenti
+WHERE aktivni = ano;
+
+-- Neaktivní studenti
 SELECT id, jmeno, prijmeni
 FROM student
-WHERE aktivni = FALSE;
-Studenti s vysokým stipendiem
+WHERE aktivni = ne;
+
+-- Studenti s vysokým stipendiem
 SELECT id, jmeno, prijmeni, stipendium_kc
 FROM student
 WHERE stipendium_kc > 5000;
-Studenti s průměrem lepším než 2.00
+
+-- Studenti s průměrem lepším než 2.00
 SELECT id, jmeno, prijmeni, studijni_prumer
 FROM student
 WHERE studijni_prumer < 2.00;
-Kombinované studium
-SELECT id, jmeno, prijmeni, forma_studia
-FROM student
-WHERE forma_studia = 'kombinované';
-Fakulty v Brně
+
+-- Fakulty v Brně
 SELECT *
 FROM fakulty
 WHERE mesto = 'Brno';
-Předměty v zimním semestru
-SELECT *
-FROM predmet
-WHERE semester = 'ZS';
-Povinné předměty s více než 5 kredity
+
+--Povinné předměty s více než 5 kredity
 SELECT id, nazev, kredity, typ
 FROM predmet
 WHERE typ = 'povinný'
   AND kredity > 5;
-Zaměstnanci s úvazkem 1.0
-SELECT id, jmeno, prijmeni, uvazek
-FROM zamestnanci
-WHERE uvazek = 1;
-Zaměstnanci s platem mezi 50 000 a 80 000
+
+-- Zaměstnanci s platem mezi 50 000 a 80 000
 SELECT id, jmeno, prijmeni, plat_kc
 FROM zamestnanci
 WHERE plat_kc BETWEEN 50000 AND 80000;
-Studenti z více měst
+
+-- Studenti z více měst brno, ostrava liberec
 SELECT id, jmeno, prijmeni, mesto
 FROM student
 WHERE mesto IN ('Brno', 'Ostrava', 'Liberec');
-Předměty, které nejsou volitelné
+
+-- Předměty, které nejsou volitelné
 SELECT id, nazev, typ
 FROM predmet
 WHERE typ <> 'volitelný';
-Zaměstnanci nastoupení po roce 2018
-SELECT id, jmeno, prijmeni, datum_nastupu
-FROM zamestnanci
-WHERE datum_nastupu > '2018-12-31';
-Studenti bez stipendia
-SELECT id, jmeno, prijmeni
-FROM student
-WHERE stipendium_kc = 0;
+
 2) WHERE + JOIN
-Aktivní studenti i s názvem fakulty
+-- Aktivní studenti i s názvem fakulty
 SELECT s.jmeno, s.prijmeni, f.nazev AS fakulta
 FROM student s
 JOIN fakulty f ON s.id_fakul = f.id
 WHERE s.aktivni = TRUE;
-Studenti z Brna a jejich fakulty
+
+--Studenti z Brna a jejich fakulty
 SELECT s.jmeno, s.prijmeni, s.mesto, f.nazev AS fakulta
 FROM student s
 JOIN fakulty f ON s.id_fakul = f.id
 WHERE s.mesto = 'Brno';
-Předměty vyučované profesory
+
+--Předměty vyučované profesory
 SELECT p.nazev AS predmet, z.jmeno, z.prijmeni, z.pozice
 FROM predmet p
 JOIN zamestnanci z ON p.id_vyucujici = z.id
 WHERE z.pozice = 'profesor';
-Zápisy jen do povinných předmětů
+
+--Zápisy jen do povinných předmětů
 SELECT s.jmeno, s.prijmeni, p.nazev AS predmet, p.typ
 FROM zapis zp
 JOIN student s ON zp.id_stu = s.id
 JOIN predmet p ON zp.id_pred = p.id
 WHERE p.typ = 'povinný';
-Studenti zapsaní v letním semestru
+
+--Studenti zapsaní v letním semestru
 SELECT s.jmeno, s.prijmeni, p.nazev, p.semester
 FROM zapis zp
 JOIN student s ON zp.id_stu = s.id
 JOIN predmet p ON zp.id_pred = p.id
 WHERE p.semester = 'LS';
-Studenti z kombinovaného studia na fakultách v Brně
+
+--Studenti z kombinovaného studia na fakultách v Brně
 SELECT s.jmeno, s.prijmeni, s.forma_studia, f.nazev, f.mesto
 FROM student s
 JOIN fakulty f ON s.id_fakul = f.id
 WHERE s.forma_studia = 'kombinované'
   AND f.mesto = 'Brno';
+
 3) Agregace bez JOIN
-Počet studentů
+-- Počet studentů
 SELECT COUNT(*) AS pocet_studentu
 FROM student;
-Počet fakult
-SELECT COUNT(*) AS pocet_fakult
-FROM fakulty;
-Průměrné stipendium
+
+--Průměrné stipendium
 SELECT AVG(stipendium_kc) AS prumerne_stipendium
 FROM student;
-Nejvyšší a nejnižší stipendium
+
+--Nejvyšší a nejnižší stipendium
 SELECT
     MIN(stipendium_kc) AS min_stipendium,
     MAX(stipendium_kc) AS max_stipendium
 FROM student;
-Průměrný plat zaměstnanců
+
+--Průměrný plat zaměstnanců
 SELECT AVG(plat_kc) AS prumerny_plat
 FROM zamestnanci;
-Celkový součet mezd
-SELECT SUM(plat_kc) AS celkove_mzdy
-FROM zamestnanci;
-Nejvíce kreditovaný předmět
-SELECT MAX(kredity) AS max_kredity
-FROM predmet;
-Počet povinných předmětů
-SELECT COUNT(*) AS pocet_povinnych
-FROM predmet
-WHERE typ = 'povinný';
-4) GROUP BY — hodně typických příkladů
-Počet studentů podle ročníku
+
+4) GROUP BY 
+-- Počet studentů podle ročníku
 SELECT rocnik, COUNT(*) AS pocet_studentu
 FROM student
 GROUP BY rocnik
 ORDER BY rocnik;
-Počet studentů podle formy studia
+
+--Počet studentů podle formy studia
 SELECT forma_studia, COUNT(*) AS pocet_studentu
 FROM student
 GROUP BY forma_studia;
-Počet studentů podle aktivity
+
+--Počet studentů podle aktivity
 SELECT aktivni, COUNT(*) AS pocet_studentu
 FROM student
 GROUP BY aktivni;
-Průměrné stipendium podle ročníku
+
+--Průměrné stipendium podle ročníku
 SELECT rocnik, AVG(stipendium_kc) AS prumerne_stipendium
 FROM student
 GROUP BY rocnik
 ORDER BY rocnik;
-Nejlepší a nejhorší studijní průměr podle ročníku
+
+--Nejlepší a nejhorší studijní průměr podle ročníku
 SELECT
     rocnik,
     MIN(studijni_prumer) AS nejlepsi_prumer,
     MAX(studijni_prumer) AS nejhorsi_prumer
 FROM student
 GROUP BY rocnik;
-Počet předmětů podle typu
+
+--Počet předmětů podle typu
 SELECT typ, COUNT(*) AS pocet
 FROM predmet
 GROUP BY typ;
-Počet předmětů podle semestru
+
+--Počet předmětů podle semestru
 SELECT semester, COUNT(*) AS pocet
 FROM predmet
 GROUP BY semester;
-Průměr kreditů podle typu předmětu
+
+--Průměr kreditů podle typu předmětu
 SELECT typ, AVG(kredity) AS prumer_kreditu
 FROM predmet
 GROUP BY typ;
-Počet zaměstnanců podle pozice
+
+--Počet zaměstnanců podle pozice
 SELECT pozice, COUNT(*) AS pocet
 FROM zamestnanci
 GROUP BY pozice;
-Průměrný plat podle pozice
+
+--Průměrný plat podle pozice
 SELECT pozice, AVG(plat_kc) AS prumerny_plat
 FROM zamestnanci
 GROUP BY pozice;
-Počet zaměstnanců podle úvazku
+-- Počet zaměstnanců podle úvazku
 SELECT uvazek, COUNT(*) AS pocet
 FROM zamestnanci
 GROUP BY uvazek;
+
 5) GROUP BY + JOIN
-Počet studentů na fakultách
+--Počet studentů na fakultách
 SELECT f.id, f.nazev, COUNT(s.id) AS pocet_studentu
 FROM fakulty f
 LEFT JOIN student s ON s.id_fakul = f.id
 GROUP BY f.id, f.nazev
 ORDER BY pocet_studentu DESC;
-Průměrné stipendium na fakultách
+
+--Průměrné stipendium na fakultách
 SELECT f.nazev, AVG(s.stipendium_kc) AS prumerne_stipendium
 FROM fakulty f
 JOIN student s ON s.id_fakul = f.id
 GROUP BY f.nazev
 ORDER BY prumerne_stipendium DESC;
-Počet zaměstnanců na fakultách
+
+--Počet zaměstnanců na fakultách
 SELECT f.nazev, COUNT(z.id) AS pocet_zamestnancu
 FROM fakulty f
 LEFT JOIN zamestnanci z ON z.id_fakul = f.id
@@ -216,52 +216,60 @@ FROM fakulty f
 JOIN zamestnanci z ON z.id_fakul = f.id
 GROUP BY f.nazev
 ORDER BY prumerny_plat DESC;
-Celkové mzdy podle fakulty
+
+--Celkové mzdy podle fakulty
 SELECT f.nazev, SUM(z.plat_kc) AS celkove_mzdy
 FROM fakulty f
 JOIN zamestnanci z ON z.id_fakul = f.id
 GROUP BY f.nazev
 ORDER BY celkove_mzdy DESC;
-Počet studentů podle města fakulty
+
+--Počet studentů podle města fakulty
 SELECT f.mesto, COUNT(s.id) AS pocet_studentu
 FROM fakulty f
 JOIN student s ON s.id_fakul = f.id
 GROUP BY f.mesto
 ORDER BY pocet_studentu DESC;
-Počet studentů v kombinovaném/prezenčním studiu na fakultách
+
+--Počet studentů v kombinovaném/prezenčním studiu na fakultách
 SELECT f.nazev, s.forma_studia, COUNT(*) AS pocet_studentu
 FROM student s
 JOIN fakulty f ON s.id_fakul = f.id
 GROUP BY f.nazev, s.forma_studia
 ORDER BY f.nazev, pocet_studentu DESC;
-Počet aktivních studentů na fakultách
+
+--Počet aktivních studentů na fakultách
 SELECT f.nazev, COUNT(*) AS pocet_aktivnich
 FROM student s
 JOIN fakulty f ON s.id_fakul = f.id
 WHERE s.aktivni = TRUE
 GROUP BY f.nazev
 ORDER BY pocet_aktivnich DESC;
+
 6) Agregace nad zápisy
-Kolik předmětů má každý student
+--Kolik předmětů má každý student
 SELECT s.id, s.jmeno, s.prijmeni, COUNT(zp.id_pred) AS pocet_predmetu
 FROM student s
 LEFT JOIN zapis zp ON s.id = zp.id_stu
 GROUP BY s.id, s.jmeno, s.prijmeni
 ORDER BY pocet_predmetu DESC;
-Kolik kreditů má každý student celkem
+
+--Kolik kreditů má každý student celkem
 SELECT s.id, s.jmeno, s.prijmeni, SUM(p.kredity) AS celkem_kreditu
 FROM student s
 JOIN zapis zp ON s.id = zp.id_stu
 JOIN predmet p ON zp.id_pred = p.id
 GROUP BY s.id, s.jmeno, s.prijmeni
 ORDER BY celkem_kreditu DESC;
-Kolik studentů je zapsáno na jednotlivé předměty
+
+--Kolik studentů je zapsáno na jednotlivé předměty
 SELECT p.id, p.nazev, COUNT(zp.id_stu) AS pocet_studentu
 FROM predmet p
 LEFT JOIN zapis zp ON p.id = zp.id_pred
 GROUP BY p.id, p.nazev
 ORDER BY pocet_studentu DESC;
-Průměrný počet studentů na předmět podle typu
+
+--Průměrný počet studentů na předmět podle typu
 SELECT p.typ, AVG(t.pocet_studentu) AS prumer_studentu
 FROM (
     SELECT p.id, p.typ, COUNT(zp.id_stu) AS pocet_studentu
@@ -271,156 +279,182 @@ FROM (
 ) t
 JOIN predmet p ON p.id = t.id
 GROUP BY p.typ;
-Kolik předmětů učí každý zaměstnanec
+
+--Kolik předmětů učí každý zaměstnanec
 SELECT z.id, z.jmeno, z.prijmeni, COUNT(p.id) AS pocet_predmetu
 FROM zamestnanci z
 LEFT JOIN predmet p ON p.id_vyucujici = z.id
 GROUP BY z.id, z.jmeno, z.prijmeni
 ORDER BY pocet_predmetu DESC;
-Kolik studentů celkem učí každý vyučující
+
+--Kolik studentů celkem učí každý vyučující
 SELECT z.id, z.jmeno, z.prijmeni, COUNT(zp.id_stu) AS pocet_zapisu
 FROM zamestnanci z
 LEFT JOIN predmet p ON p.id_vyucujici = z.id
 LEFT JOIN zapis zp ON zp.id_pred = p.id
 GROUP BY z.id, z.jmeno, z.prijmeni
 ORDER BY pocet_zapisu DESC;
-Počet zápisů podle semestru
+
+--Počet zápisů podle semestru
 SELECT p.semester, COUNT(*) AS pocet_zapisu
 FROM zapis zp
 JOIN predmet p ON zp.id_pred = p.id
 GROUP BY p.semester;
-Počet zápisů podle typu předmětu
+
+--Počet zápisů podle typu předmětu
 SELECT p.typ, COUNT(*) AS pocet_zapisu
 FROM zapis zp
 JOIN predmet p ON zp.id_pred = p.id
 GROUP BY p.typ;
-7) HAVING — hodně příkladů
-Fakulty s více než 30 studenty
+
+7) HAVING 
+--Fakulty s více než 30 studenty
 SELECT f.nazev, COUNT(s.id) AS pocet_studentu
 FROM fakulty f
 JOIN student s ON s.id_fakul = f.id
 GROUP BY f.nazev
 HAVING COUNT(s.id) > 30;
-Fakulty s průměrným stipendiem nad 4000
+
+--Fakulty s průměrným stipendiem nad 4000
 SELECT f.nazev, AVG(s.stipendium_kc) AS prumerne_stipendium
 FROM fakulty f
 JOIN student s ON s.id_fakul = f.id
 GROUP BY f.nazev
 HAVING AVG(s.stipendium_kc) > 4000;
-Ročníky s více než 100 studenty
+
+--Ročníky s více než 100 studenty
 SELECT rocnik, COUNT(*) AS pocet_studentu
 FROM student
 GROUP BY rocnik
 HAVING COUNT(*) > 100;
-Pozice s průměrným platem nad 60 000
+
+--Pozice s průměrným platem nad 60 000
 SELECT pozice, AVG(plat_kc) AS prumerny_plat
 FROM zamestnanci
 GROUP BY pozice
 HAVING AVG(plat_kc) > 60000;
-Předměty s více než 20 zapsanými studenty
+
+--Předměty s více než 20 zapsanými studenty
 SELECT p.nazev, COUNT(zp.id_stu) AS pocet_studentu
 FROM predmet p
 JOIN zapis zp ON p.id = zp.id_pred
 GROUP BY p.nazev
 HAVING COUNT(zp.id_stu) > 20;
-Studenti, kteří mají více než 6 zapsaných předmětů
+
+--Studenti, kteří mají více než 6 zapsaných předmětů
 SELECT s.id, s.jmeno, s.prijmeni, COUNT(zp.id_pred) AS pocet_predmetu
 FROM student s
 JOIN zapis zp ON s.id = zp.id_stu
 GROUP BY s.id, s.jmeno, s.prijmeni
 HAVING COUNT(zp.id_pred) > 6;
-Studenti s více než 30 kredity
+
+--Studenti s více než 30 kredity
 SELECT s.id, s.jmeno, s.prijmeni, SUM(p.kredity) AS celkem_kreditu
 FROM student s
 JOIN zapis zp ON s.id = zp.id_stu
 JOIN predmet p ON zp.id_pred = p.id
 GROUP BY s.id, s.jmeno, s.prijmeni
 HAVING SUM(p.kredity) > 30;
-Vyučující, kteří učí více než 3 předměty
+
+--Vyučující, kteří učí více než 3 předměty
 SELECT z.id, z.jmeno, z.prijmeni, COUNT(p.id) AS pocet_predmetu
 FROM zamestnanci z
 JOIN predmet p ON p.id_vyucujici = z.id
 GROUP BY z.id, z.jmeno, z.prijmeni
 HAVING COUNT(p.id) > 3;
-Fakulty s více než 5 zaměstnanci
+
+--Fakulty s více než 5 zaměstnanci
 SELECT f.nazev, COUNT(z.id) AS pocet_zamestnancu
 FROM fakulty f
 JOIN zamestnanci z ON z.id_fakul = f.id
 GROUP BY f.nazev
 HAVING COUNT(z.id) > 5;
-Města, kde je více než 1 fakulta
+
+--Města, kde je více než 1 fakulta
 SELECT mesto, COUNT(*) AS pocet_fakult
 FROM fakulty
 GROUP BY mesto
 HAVING COUNT(*) > 1;
+
 8) WHERE + GROUP BY + HAVING dohromady
-Jen aktivní studenti, seskupení podle fakulty
+--Jen aktivní studenti, seskupení podle fakulty
 SELECT f.nazev, COUNT(s.id) AS pocet_aktivnich
 FROM student s
 JOIN fakulty f ON s.id_fakul = f.id
 WHERE s.aktivni = TRUE
 GROUP BY f.nazev
 HAVING COUNT(s.id) > 10;
-Jen povinné předměty, které mají hodně studentů
+
+--Jen povinné předměty, které mají hodně studentů
 SELECT p.nazev, COUNT(zp.id_stu) AS pocet_studentu
 FROM predmet p
 JOIN zapis zp ON p.id = zp.id_pred
 WHERE p.typ = 'povinný'
 GROUP BY p.nazev
 HAVING COUNT(zp.id_stu) > 15;
-Jen zaměstnanci s plným úvazkem, průměr platů podle pozice
+
+--Jen zaměstnanci s plným úvazkem, průměr platů podle pozice
 SELECT pozice, AVG(plat_kc) AS prumerny_plat
 FROM zamestnanci
 WHERE uvazek = 1
 GROUP BY pozice
 HAVING AVG(plat_kc) > 50000;
-Jen studenti prezenční formy, průměr stipendia podle ročníku
+
+--Jen studenti prezenční formy, průměr stipendia podle ročníku
 SELECT rocnik, AVG(stipendium_kc) AS prumerne_stipendium
 FROM student
 WHERE forma_studia = 'prezenční'
 GROUP BY rocnik
 HAVING AVG(stipendium_kc) > 3000;
-Jen LS předměty, průměr kreditů podle typu
+
+--Jen LS předměty, průměr kreditů podle typu
 SELECT typ, AVG(kredity) AS prumer_kreditu
 FROM predmet
 WHERE semester = 'LS'
 GROUP BY typ
 HAVING AVG(kredity) > 5;
+
 9) LEFT JOIN příklady
-Všechny fakulty i bez studentů
+--Všechny fakulty i bez studentů
 SELECT f.nazev, COUNT(s.id) AS pocet_studentu
 FROM fakulty f
 LEFT JOIN student s ON s.id_fakul = f.id
 GROUP BY f.nazev;
-Všichni zaměstnanci i bez vyučovaných předmětů
+
+--Všichni zaměstnanci i bez vyučovaných předmětů
 SELECT z.id, z.jmeno, z.prijmeni, COUNT(p.id) AS pocet_predmetu
 FROM zamestnanci z
 LEFT JOIN predmet p ON p.id_vyucujici = z.id
 GROUP BY z.id, z.jmeno, z.prijmeni;
-Všichni studenti i bez zápisu
+
+--Všichni studenti i bez zápisu
 SELECT s.id, s.jmeno, s.prijmeni, COUNT(zp.id) AS pocet_zapisu
 FROM student s
 LEFT JOIN zapis zp ON s.id = zp.id_stu
 GROUP BY s.id, s.jmeno, s.prijmeni;
-Předměty, které si nikdo nezapsal
+
+-- Předměty, které si nikdo nezapsal
 SELECT p.id, p.nazev
 FROM predmet p
 LEFT JOIN zapis zp ON p.id = zp.id_pred
 WHERE zp.id IS NULL;
-Zaměstnanci, kteří neučí žádný předmět
+
+--Zaměstnanci, kteří neučí žádný předmět
 SELECT z.id, z.jmeno, z.prijmeni
 FROM zamestnanci z
 LEFT JOIN predmet p ON p.id_vyucujici = z.id
 WHERE p.id IS NULL;
+
 10) Složitější a zkouškové příklady
-Fakulta s nejvyšším počtem studentů
+--Fakulta s nejvyšším počtem studentů
 SELECT f.nazev, COUNT(s.id) AS pocet_studentu
 FROM fakulty f
 JOIN student s ON s.id_fakul = f.id
 GROUP BY f.id, f.nazev
 ORDER BY pocet_studentu DESC
 LIMIT 1;
-Student s největším počtem kreditů
+
+--Student s největším počtem kreditů
 SELECT s.id, s.jmeno, s.prijmeni, SUM(p.kredity) AS celkem_kreditu
 FROM student s
 JOIN zapis zp ON s.id = zp.id_stu
@@ -428,22 +462,25 @@ JOIN predmet p ON zp.id_pred = p.id
 GROUP BY s.id, s.jmeno, s.prijmeni
 ORDER BY celkem_kreditu DESC
 LIMIT 1;
-Předmět s největším počtem studentů
+
+--Předmět s největším počtem studentů
 SELECT p.id, p.nazev, COUNT(zp.id_stu) AS pocet_studentu
 FROM predmet p
 JOIN zapis zp ON p.id = zp.id_pred
 GROUP BY p.id, p.nazev
 ORDER BY pocet_studentu DESC
 LIMIT 1;
-Průměrný počet předmětů na studenta
+
+--Průměrný počet předmětů na studenta
 SELECT AVG(t.pocet_predmetu) AS prumer_predmetu_na_studenta
 FROM (
     SELECT s.id, COUNT(zp.id_pred) AS pocet_predmetu
     FROM student s
     LEFT JOIN zapis zp ON s.id = zp.id_stu
     GROUP BY s.id
-) t;
-Fakulty, kde je zároveň více než 20 studentů a více než 5 zaměstnanců
+);
+
+--Fakulty, kde je zároveň více než 20 studentů a více než 5 zaměstnanců
 SELECT
     f.nazev,
     COUNT(DISTINCT s.id) AS pocet_studentu,
@@ -454,7 +491,8 @@ LEFT JOIN zamestnanci z ON z.id_fakul = f.id
 GROUP BY f.id, f.nazev
 HAVING COUNT(DISTINCT s.id) > 20
    AND COUNT(DISTINCT z.id) > 5;
-Kolik studentů má každý vyučující přes své předměty
+
+--Kolik studentů má každý vyučující přes své předměty
 SELECT
     z.id,
     z.jmeno,
@@ -465,7 +503,8 @@ LEFT JOIN predmet p ON p.id_vyucujici = z.id
 LEFT JOIN zapis zp ON zp.id_pred = p.id
 GROUP BY z.id, z.jmeno, z.prijmeni
 ORDER BY pocet_unikatnich_studentu DESC;
-Průměr kreditů předmětů na fakultách vyučujících
+
+--Průměr kreditů předmětů na fakultách vyučujících
 SELECT
     f.nazev,
     AVG(p.kredity) AS prumer_kreditu
@@ -474,28 +513,26 @@ JOIN zamestnanci z ON p.id_vyucujici = z.id
 JOIN fakulty f ON z.id_fakul = f.id
 GROUP BY f.nazev
 ORDER BY prumer_kreditu DESC;
+
 11) Příklady na COUNT DISTINCT
-Kolik různých měst mají studenti
+--Kolik různých měst mají studenti
 SELECT COUNT(DISTINCT mesto) AS pocet_mest
 FROM student;
-Kolik různých krajů mají studenti
-SELECT COUNT(DISTINCT kraj) AS pocet_kraju
-FROM student;
-Kolik vyučujících skutečně učí alespoň jeden předmět
-SELECT COUNT(DISTINCT id_vyucujici) AS pocet_vyucujicich
-FROM predmet;
-Kolik studentů si zapsalo alespoň jeden předmět
+
+-- Kolik studentů si zapsalo alespoň jeden předmět
 SELECT COUNT(DISTINCT id_stu) AS pocet_studentu_se_zapisem
 FROM zapis;
+
 12) Vnořené dotazy s WHERE / HAVING
-Studenti s nadprůměrným stipendiem
+-- Studenti s nadprůměrným stipendiem
 SELECT id, jmeno, prijmeni, stipendium_kc
 FROM student
 WHERE stipendium_kc > (
     SELECT AVG(stipendium_kc)
     FROM student
 );
-Zaměstnanci s platem vyšším než průměr jejich pozice
+
+-- Zaměstnanci s platem vyšším než průměr jejich pozice
 SELECT z1.id, z1.jmeno, z1.prijmeni, z1.pozice, z1.plat_kc
 FROM zamestnanci z1
 WHERE z1.plat_kc > (
@@ -503,7 +540,8 @@ WHERE z1.plat_kc > (
     FROM zamestnanci z2
     WHERE z2.pozice = z1.pozice
 );
-Předměty s více studenty než je průměrný počet studentů na předmět
+
+-- Předměty s více studenty než je průměrný počet studentů na předmět
 SELECT p.id, p.nazev, COUNT(zp.id_stu) AS pocet_studentu
 FROM predmet p
 LEFT JOIN zapis zp ON p.id = zp.id_pred
@@ -517,25 +555,9 @@ HAVING COUNT(zp.id_stu) > (
         GROUP BY p2.id
     ) t
 );
-13) Mini tahák k logice
-Pořadí čtení dotazu
-SELECT ...
-FROM ...
-JOIN ...
-WHERE ...
-GROUP BY ...
-HAVING ...
-ORDER BY ...
-Rozdíl
-WHERE = filtruje jednotlivé řádky
-GROUP BY = seskupí řádky
-HAVING = filtruje celé skupiny
-COUNT(*) = počet řádků
-COUNT(sloupec) = počítá neprázdné hodnoty
-COUNT(DISTINCT sloupec) = počet unikátních hodnot
-AVG() = průměr
-SUM() = součet
-MIN()/MAX() = minimum / maximum
+
+
+
 14) Krátká sada úplně typických zkouškových zadání
 -- 1. Vypiš studenty 3. ročníku
 SELECT *
