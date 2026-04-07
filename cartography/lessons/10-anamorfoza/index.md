@@ -1,157 +1,81 @@
-# 10 – Kartografická anamorfóza (Cartogram)
+# 10 – Generalizace
 
-## Cíle lekce
+# Kartografická generalizace – přehled metod
 
-Po této lekci:
-
-- víte, co je kartografická anamorfóza,
-- rozumíte principu plošné deformace,
-- znáte základní typy anamorfóz,
-- dokážete posoudit vhodnost dat,
-- chápete rozdíl mezi kartogramem a anamorfózou.
+Tento přehled shrnuje základní metody kartografické generalizace, které slouží ke zjednodušení mapy při zachování její informační hodnoty.
 
 ---
 
-# 1. Co je kartografická anamorfóza?
+## Přehled metod
 
-Kartografická anamorfóza (cartogram) je:
-
-> tematická mapa, ve které je velikost ploch územních jednotek deformována podle hodnoty sledovaného jevu.
-
-Na rozdíl od kartogramu:
-
-- kartogram zachovává plochu územních jednotek,
-- anamorfóza plochu mění.
+### (a) Výběr
+- odstranění méně důležitých prvků  
+- zachování klíčových objektů  
+- cílem je snížení přeplněnosti mapy  
 
 ---
 
-# 2. Princip metody
-
-Základní princip:
-
-- plocha územní jednotky je úměrná hodnotě sledovaného jevu.
-
-Například:
-
-- stát s vyšší populací bude mít větší plochu,
-- stát s nižší populací bude zmenšen.
-
-Cílem není zachování geometrické přesnosti,
-ale zachování kvantitativního poměru.
+### (b) Zjednodušení tvaru
+- redukce složitosti linií a hranic  
+- zachování základního tvaru objektu  
+- typicky u řek, hranic, obrysů  
 
 ---
 
-# 3. Typy anamorfóz
-
-## 3.1 Geometrická (plošná) anamorfóza
-
-- deformuje skutečný tvar území,
-- snaží se zachovat sousedství,
-- plochy jsou proporcionální hodnotě.
-
-Používá se nejčastěji.
+### (c) Agregace (seskupení)
+- spojování menších ploch do větších celků  
+- snížení detailu v plošných jevech  
+- zlepšení přehlednosti  
 
 ---
 
-## 3.2 Topologická anamorfóza
-
-- zachovává sousedské vztahy,
-- geometrická přesnost není prioritou,
-- tvary jsou výrazně deformovány.
-
----
-
-## 3.3 Dorlingova anamorfóza
-
-- územní jednotky jsou nahrazeny kruhy,
-- plocha kruhu odpovídá hodnotě jevu,
-- poloha je přibližná,
-- sousedství může být částečně zachováno.
-
-Výhoda:
-- vysoká čitelnost.
-
-Nevýhoda:
-- ztráta původního tvaru.
+### (d) Symbolizace
+- převod ploch na bodové nebo liniové znaky  
+- prostorová redukce  
+- např. budovy → bod  
 
 ---
 
-# 4. Vhodnost dat
-
-Anamorfóza je vhodná pro:
-
-- absolutní hodnoty,
-- výrazně rozdílné velikosti jevů,
-- porovnávání mezi jednotkami.
-
-Nevhodná pro:
-
-- relativní ukazatele,
-- data s malými rozdíly,
-- příliš velký počet jednotek.
+### (e) Výběr podle hustoty
+- redukce počtu prvků v závislosti na jejich koncentraci  
+- zachování rovnoměrné hustoty mapy  
 
 ---
 
-# 5. Technické vlastnosti
-
-Anamorfóza:
-
-- mění plochu,
-- deformuje hranice,
-- může zhoršit orientaci v prostoru.
-
-Je nutné:
-
-- zachovat základní orientační prvky,
-- uvést zdroj deformace,
-- jasně popsat použitý ukazatel.
+### (f) Zvýraznění
+- zesílení nebo zvýraznění důležitých prvků  
+- zlepšení čitelnosti (např. hlavní silnice)  
 
 ---
 
-# 6. Porovnání s kartogramem
-
-Kartogram:
-
-- plocha jednotek zůstává stejná,
-- mění se výplň.
-
-Anamorfóza:
-
-- mění se samotná plocha jednotek,
-- vizuální dominance odpovídá hodnotě.
-
-Kartogram je čitelnější geograficky.
-Anamorfóza je výraznější kvantitativně.
+### (g) Sloučení (klasifikace)
+- spojování kategorií do menšího počtu tříd  
+- zevšeobecnění kvalitativních charakteristik  
+- změna legendy mapy  
 
 ---
 
-# 7. Konstrukce anamorfózy
-
-Postup:
-
-1. Výběr absolutního ukazatele.
-2. Kontrola dat (extrémy).
-3. Výpočet proporcionality ploch.
-4. Aplikace deformace (např. specializovaný software).
-5. Kontrola sousedských vztahů.
-6. Grafická úprava.
+### (h) Přeskupení / výběr podle rozmístění
+- úprava rozmístění prvků  
+- zachování logické struktury prostoru  
+- eliminace nadbytečných prvků  
 
 ---
 
-# 8. Omezení metody
-
-- ztráta tvarové přesnosti,
-- obtížnější orientace,
-- možné překrytí jednotek,
-- zkreslení vnímání vzdáleností.
+### (i) Posunutí
+- změna polohy objektů pro lepší čitelnost  
+- používá se při kolizích prvků  
+- zachovává se relativní poloha  
 
 ---
 
-# Shrnutí
+## Shrnutí
 
-Kartografická anamorfóza:
+Kartografická generalizace je soubor metod, které:
+- snižují množství detailu  
+- zvyšují přehlednost mapy  
+- přizpůsobují obsah měřítku  
 
-- deformuje prostor podle hodnot,
-- zdůrazňuje kvantitativní rozdíly,
-- je technicky náročnější než kartogram,
-- vyžaduje vhodně zvolená data.
+Cílem je zachovat podstatné informace při omezeném prostoru mapy.
+
+
