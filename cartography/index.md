@@ -18,7 +18,7 @@
 7. [07 – Kartodiagramy](lessons/07-kartodiagramy/index.md)
 8. [08 – Kombinace metod a mapové konflikty](lessons/08-kombinace-metod/index.md)
 9. [09 – Izolinie a interpolace](lessons/09-izolinie-interpolace/index.md)
-10. [10 – Kartografická anamorfóza](lessons/10-anamorfoza/index.md)
+10. [10 – Generalizace](lessons/10-anamorfoza/index.md)
 
 ## Úkoly
 - [Zápočet – oprava mapy](assignments/zapocet_oprava_mapy.md)
