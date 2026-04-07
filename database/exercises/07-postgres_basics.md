@@ -96,7 +96,7 @@ INSERT INTO objednavka_produkt (objednavka_id, produkt_id, mnozstvi) VALUES
 
 1. Zobraz všechny zákazníky  
 2. Zobraz zákazníky s adresou (použij JOIN)  
-3. Zobraz všechny objednávky zákazníka „Petr Mlynář“  
+3. Zobraz všechny objednávky zákazníka „1“  
 4. Zobraz všechny produkty, které byly objednány  
 
 ### 3.2 Agregační dotazy
