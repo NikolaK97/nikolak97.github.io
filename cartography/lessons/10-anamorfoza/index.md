@@ -78,4 +78,75 @@ Kartografická generalizace je soubor metod, které:
 
 Cílem je zachovat podstatné informace při omezeném prostoru mapy.
 
+# CVIČENÍ
+## Studijní oblast
+
+Vyberte si vlastní město (doporučeno: město, které dobře znáte).
+
+---
+
+## Vstupní data
+
+Použijte vlastní nebo veřejně dostupná data z ArcGIS Online:
+
+- zařízení (např. nemocnice, školy, hasiči)
+- body poptávky (např. obyvatelstvo, sídliště)
+- kandidátní lokality (pro nové objekty)
+
+---
+
+## Úkoly
+
+###  Analýza dostupnosti (Drive-Time Areas)
+
+Vytvořte dojezdové oblasti:
+
+- 5 minut  
+- 10 minut  
+- 15 minut  
+
+Použijte režim:
+
+- **Driving Time**
+
+#### Vyhodnoťte:
+
+- Které oblasti nejsou pokryty do 10 minut  
+- Kde se nacházejí mezery v dostupnosti  
+
+---
+
+###  Analýza tras (Find Routes)
+
+Vyberte 3–5 důležitých cílů (např. nemocnice).
+
+Proveďte:
+
+- výpočet nejrychlejší trasy  
+- porovnání alternativních tras  
+
+#### Porovnejte:
+
+- čas vs. vzdálenost  
+- případný vliv dopravního režimu  
+
+---
+
+### Location-Allocation (Choose Best Facilities)
+
+Použijte nástroj:
+
+- **Choose Best Facilities**
+
+Definujte:
+
+- existující zařízení  
+- kandidátní lokality  
+- poptávkové body  
+
+#### Úkol:
+
+- Navrhněte umístění **alespoň 1 nového zařízení**  
+- Minimalizujte dojezdový čas  
+
 
