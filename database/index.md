@@ -17,7 +17,7 @@ Vítej v materiálech ke cvičením.
   - [05 – Access dotazy](exercises/05-access-queries.md)
   - [06 – Access pokročilé](exercises/06-access-aggregation.md)
   - [07 – PostgreSQL základy](exercises/07-postgres_basics.md)
-  - [08 – PostgreSQL základy](exercises/08-postgres-basics.md)
+  - [08 – PostgreSQL CSV ](exercises/08-postgres-csv.md)
   - [09 – Vztahy + JOIN](exercises/09-postgres-relations-joins.md)
   - [10 – PostGIS + QGIS](exercises/10-postgis-qgis.md)
 - Projekt:
