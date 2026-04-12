@@ -23,4 +23,3 @@ Vítej v materiálech ke cvičením.
 - Projekt:
   - [Závěrečný projekt](project/final-project.md)
   - [Vzorové řešení](project/sample-solution.md)
-  - [Rubrika](project/rubric.md)
