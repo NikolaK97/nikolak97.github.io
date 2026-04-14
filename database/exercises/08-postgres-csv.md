@@ -323,6 +323,81 @@ JOIN zapis zp ON h.id_zap = zp.id
 JOIN student s ON zp.id_stu = s.id
 JOIN predmet p ON zp.id_pred = p.id
 LIMIT 20;
+
+
+-- Úloha 2: Vypište počet studentů na každé fakultě.
+SELECT id_fakul, COUNT(*) AS pocet_studentu
+FROM studenti
+GROUP BY id_fakul
+ORDER BY pocet_studentu DESC;
+ 
+-- Úloha 3: Najděte studenty s průměrem lepším než 1.5 a stipendiem > 5000 Kč.
+SELECT jmeno, prijmeni, studijni_prumer, stipendium_kc
+FROM studenti
+WHERE studijni_prumer < 1.5
+  AND stipendium_kc > 5000
+ORDER BY studijni_prumer;
+ 
+-- Úloha 4: Vypište název fakulty a jméno dekana pro všechny fakulty v Brně.
+SELECT nazev, dekan, mesto
+FROM fakulty
+WHERE mesto = 'Brno'
+ORDER BY nazev;
+ 
+-- Úloha 5: Průměrný plat podle pozice zaměstnance.
+SELECT pozice, ROUND(AVG(plat_kc)) AS prumerny_plat, COUNT(*) AS pocet
+FROM zamestnanci
+GROUP BY pozice
+ORDER BY prumerny_plat DESC;
+ 
+-- Úloha 6: Jméno studenta + název jeho fakulty (JOIN).
+SELECT s.jmeno, s.prijmeni, f.nazev AS fakulta
+FROM studenti s
+JOIN fakulty f ON s.id_fakul = f.id
+ORDER BY f.nazev, s.prijmeni;
+ 
+-- Úloha 7: 10 předmětů s nejvyšším počtem zapsaných studentů.
+SELECT p.nazev, COUNT(z.id) AS pocet_zapsanych
+FROM predmety p
+JOIN zapis z ON p.id = z.id_pred
+GROUP BY p.id, p.nazev
+ORDER BY pocet_zapsanych DESC
+LIMIT 10;
+ 
+-- Úloha 8: Předměty bez zapsaného studenta (LEFT JOIN + NULL test).
+SELECT p.id, p.nazev, p.kredity
+FROM predmety p
+LEFT JOIN zapis z ON p.id = z.id_pred
+WHERE z.id IS NULL
+ORDER BY p.id;
+ 
+-- Úloha 9: Počet hodnocení A a celkový počet hodnocení na studenta.
+SELECT s.jmeno, s.prijmeni,
+       COUNT(h.id)                                  AS celkem_hodnoceni,
+       COUNT(h.id) FILTER (WHERE h.znamka = 'A')    AS pocet_A
+FROM studenti s
+JOIN zapis z     ON s.id = z.id_stu
+JOIN hodnoceni h ON z.id = h.id_zap
+GROUP BY s.id, s.jmeno, s.prijmeni
+ORDER BY pocet_A DESC;
+ 
+-- Úloha 10: Zaměstnanci vyučující alespoň 3 předměty.
+SELECT z.jmeno, z.prijmeni, COUNT(p.id) AS pocet_predmetu
+FROM zamestnanci z
+JOIN predmety p ON z.id = p.id_vyucujici
+GROUP BY z.id, z.jmeno, z.prijmeni
+HAVING COUNT(p.id) >= 3
+ORDER BY pocet_predmetu DESC;
+ 
+-- Úloha 11: Studenti s průměrem horším než průměr jejich fakulty (korelovaný poddotaz).
+SELECT s.jmeno, s.prijmeni, s.studijni_prumer, s.id_fakul,
+       (SELECT AVG(s2.studijni_prumer)
+        FROM studenti s2 WHERE s2.id_fakul = s.id_fakul) AS prumer_fakulty
+FROM studenti s
+WHERE s.studijni_prumer > (
+    SELECT AVG(s2.studijni_prumer) FROM studenti s2 WHERE s2.id_fakul = s.id_fakul
+)
+ORDER BY s.id_fakul, s.studijni_prumer DESC;
 ```
 
 ## 14. Nejčastější chyby při importu přes pgAdmin
