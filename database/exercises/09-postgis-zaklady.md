@@ -157,57 +157,65 @@ Spočítej vzdálenost mezi:
 ### Řešení
 
 ```sql
-SELECT ST_Distance(
-    ST_SetSRID(ST_MakePoint(16.6068, 49.1951), 4326)::geography,
-    ST_SetSRID(ST_MakePoint(15.0562, 50.7671), 4326)::geography
-);
+SELECT
+       ST_Distance(b.geom::geography, l.geom::geography) AS vzdalenost_m
+FROM   fakulty b,
+       fakulty l
+WHERE  b.mesto = 'Brno'
+  AND  l.mesto = 'Liberec'
+LIMIT  1;
 ```
 
 ---
 
-## Cvičení 3 — Nejbližší fakulta
+## Cvičení 3 — Nejbližší fakulta od fakulty 23
 
 ### Zadání
 
 Najdi nejbližší fakultu k bodu:
 
-```text
-Brno centrum (16.6068, 49.1951)
-```
 
 ### Řešení
 
 ```sql
 SELECT
-    nazev,
-    mesto,
-    ST_Distance(
-        geom::geography,
-        ST_SetSRID(ST_MakePoint(16.6068, 49.1951), 4326)::geography
-    ) AS vzdalenost
-FROM fakulty
-ORDER BY vzdalenost
-LIMIT 1;
+       f2.nazev,
+       f2.mesto,
+       ST_Distance(
+         f1.geom::geography,
+         f2.geom::geography
+       ) AS vzdalenost_m
+FROM   fakulty f1,
+       fakulty f2
+WHERE  f1.nazev = 'Fakulta 23'
+  AND  f1.id <> f2.id
+ORDER BY vzdalenost_m
+LIMIT  1;
 ```
 
 ---
 
-## Cvičení 4 — Fakulty do 3 km
+## Cvičení 4 — Fakulty do 3 km od fakulty 1
 
 ### Zadání
 
-Najdi všechny fakulty do 3 km od centra Brna.
+Najdi všechny fakulty do 3 km od fakulty 1.
 
 ### Řešení
 
 ```sql
-SELECT nazev, mesto
-FROM fakulty
-WHERE ST_DWithin(
-    geom::geography,
-    ST_SetSRID(ST_MakePoint(16.6068, 49.1951), 4326)::geography,
-    3000
-);
+SELECT
+       f2.nazev,
+       f2.mesto
+FROM   fakulty f1,
+       fakulty f2
+WHERE  f1.nazev = 'Fakulta 1'
+  AND  f1.id <> f2.id
+  AND  ST_DWithin(
+         f1.geom::geography,
+         f2.geom::geography,
+         3000
+       );
 ```
 
 ---
@@ -216,7 +224,7 @@ WHERE ST_DWithin(
 
 ### Zadání
 
-Seřaď všechny fakulty podle vzdálenosti od Brna.
+Seřaď všechny fakulty podle vzdálenosti od Brna (16.6068, 49.1951).
 
 ### Řešení
 
