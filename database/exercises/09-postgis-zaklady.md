@@ -128,7 +128,6 @@ ON fakulty USING GIST (geom);
 
 ---
 
-# 6.8 Cvičení (verze pro výuku)
 
 ## Cvičení 1 — Fakulty v Brně
 
