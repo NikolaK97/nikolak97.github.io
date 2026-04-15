@@ -1,7 +1,4 @@
----
-title: 6. PostGIS — setup
-nav_order: 7
----
+
 
 # 6. PostGIS — aktivace a setup
 
@@ -51,6 +48,304 @@ ST_Distance(geom, cil)                          -- → stupně (nevhodné pro vz
 ```
 
 ---
+# 6. PostGIS — práce s daty fakult (reálný dataset)
+
+## 6.1 Dataset
+
+Pracujeme s tabulkou:
+
+```text
+fakulty_s_adresami_a_souradnicemi.csv
+```
+
+Obsahuje:
+
+* `id` — identifikátor
+* `nazev` — název fakulty
+* `mesto` — město
+* `adresa` — adresa
+* `x` — longitude (zeměpisná délka)
+* `y` — latitude (zeměpisná šířka)
+
+### Ukázka dat
+
+| id | nazev     | mesto | x       | y       |
+| -- | --------- | ----- | ------- | ------- |
+| 1  | Fakulta 1 | Brno  | 16.6068 | 49.1951 |
+| 2  | Fakulta 2 | Brno  | 16.6113 | 49.1989 |
+
+---
+
+
+## 6.3 Aktivace PostGIS
+
+```sql
+CREATE EXTENSION IF NOT EXISTS postgis;
+```
+
+---
+
+## 6.4 Přidání geometrie
+
+```sql
+ALTER TABLE fakulty
+ADD COLUMN geom GEOMETRY(Point, 4326);
+```
+
+---
+
+## 6.5 Naplnění geometrie
+
+```sql
+UPDATE fakulty
+SET geom = ST_SetSRID(ST_MakePoint(x, y), 4326)
+WHERE x IS NOT NULL AND y IS NOT NULL;
+```
+
+---
+
+## 6.6 Kontrola dat
+
+```sql
+SELECT
+    id,
+    nazev,
+    mesto,
+    ST_AsText(geom) AS geom,
+    ST_X(geom) AS lon,
+    ST_Y(geom) AS lat
+FROM fakulty;
+```
+
+---
+
+## 6.7 Prostorový index
+
+```sql
+CREATE INDEX idx_fakulty_geom
+ON fakulty USING GIST (geom);
+```
+
+---
+
+# 6.8 Cvičení (verze pro výuku)
+
+## Cvičení 1 — Fakulty v Brně
+
+### Zadání
+
+Najdi všechny fakulty v Brně.
+
+### Řešení
+
+```sql
+SELECT *
+FROM fakulty
+WHERE mesto = 'Brno';
+```
+
+---
+
+## Cvičení 2 — Vzdálenost mezi městy
+
+### Zadání
+
+Spočítej vzdálenost mezi:
+
+* Brno (16.6068, 49.1951)
+* Liberec (15.0562, 50.7671)
+
+### Řešení
+
+```sql
+SELECT ST_Distance(
+    ST_SetSRID(ST_MakePoint(16.6068, 49.1951), 4326)::geography,
+    ST_SetSRID(ST_MakePoint(15.0562, 50.7671), 4326)::geography
+);
+```
+
+---
+
+## Cvičení 3 — Nejbližší fakulta
+
+### Zadání
+
+Najdi nejbližší fakultu k bodu:
+
+```text
+Brno centrum (16.6068, 49.1951)
+```
+
+### Řešení
+
+```sql
+SELECT
+    nazev,
+    mesto,
+    ST_Distance(
+        geom::geography,
+        ST_SetSRID(ST_MakePoint(16.6068, 49.1951), 4326)::geography
+    ) AS vzdalenost
+FROM fakulty
+ORDER BY vzdalenost
+LIMIT 1;
+```
+
+---
+
+## Cvičení 4 — Fakulty do 3 km
+
+### Zadání
+
+Najdi všechny fakulty do 3 km od centra Brna.
+
+### Řešení
+
+```sql
+SELECT nazev, mesto
+FROM fakulty
+WHERE ST_DWithin(
+    geom::geography,
+    ST_SetSRID(ST_MakePoint(16.6068, 49.1951), 4326)::geography,
+    3000
+);
+```
+
+---
+
+## Cvičení 5 — Seřazení podle vzdálenosti
+
+### Zadání
+
+Seřaď všechny fakulty podle vzdálenosti od Brna.
+
+### Řešení
+
+```sql
+SELECT
+    nazev,
+    mesto,
+    ST_Distance(
+        geom::geography,
+        ST_SetSRID(ST_MakePoint(16.6068, 49.1951), 4326)::geography
+    ) AS vzdalenost
+FROM fakulty
+ORDER BY vzdalenost;
+```
+
+---
+
+## Cvičení 6 — Fakulty mimo Brno
+
+### Zadání
+
+Najdi fakulty, které nejsou v Brně.
+
+### Řešení
+
+```sql
+SELECT *
+FROM fakulty
+WHERE mesto != 'Brno';
+```
+
+---
+
+## Cvičení 7 — Buffer (oblast)
+
+### Zadání
+
+Vytvoř zónu 1 km kolem centra Brna.
+
+### Řešení
+
+```sql
+SELECT ST_Buffer(
+    ST_SetSRID(ST_MakePoint(16.6068, 49.1951), 4326)::geography,
+    1000
+);
+```
+
+---
+
+## Cvičení 8 — Kolik fakult je v každém městě
+
+### Zadání
+
+Spočítej počet fakult podle města.
+
+### Řešení
+
+```sql
+SELECT mesto, COUNT(*) AS pocet
+FROM fakulty
+GROUP BY mesto
+ORDER BY pocet DESC;
+```
+
+---
+
+## 6.9 Mini projekt
+
+### Zadání
+
+Najdi:
+
+* všechny fakulty do 5 km od Brna
+* vypiš název, město a vzdálenost
+* seřaď podle vzdálenosti
+
+### Řešení
+
+```sql
+SELECT
+    nazev,
+    mesto,
+    ST_Distance(
+        geom::geography,
+        ST_SetSRID(ST_MakePoint(16.6068, 49.1951), 4326)::geography
+    ) AS vzdalenost_m
+FROM fakulty
+WHERE ST_DWithin(
+    geom::geography,
+    ST_SetSRID(ST_MakePoint(16.6068, 49.1951), 4326)::geography,
+    5000
+)
+ORDER BY vzdalenost_m;
+```
+
+---
+
+## 6.10 Typické chyby (na těchto datech)
+
+❌ špatné pořadí:
+
+```sql
+ST_MakePoint(y, x)
+```
+
+✅ správně:
+
+```sql
+ST_MakePoint(x, y)
+```
+
+---
+
+❌ vzdálenost bez geography:
+
+```sql
+ST_Distance(geom, geom)
+```
+
+✅ správně:
+
+```sql
+ST_Distance(geom::geography, geom::geography)
+```
+
+
+
 
 ## 6.4 Přidání sloupce geometrie
 
