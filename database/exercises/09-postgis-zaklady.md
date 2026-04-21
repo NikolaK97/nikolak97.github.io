@@ -129,168 +129,206 @@ ON fakulty USING GIST (geom);
 ---
 
 
-## Cvičení 1 — Fakulty v Brně
+## Cvičení 1
 
 ### Zadání
 
-Najdi všechny fakulty v Brně.
+Najdi všechny fakulty, které se nachází ve stejném městě jako fakulta "Fakulta 1".
 
 ### Řešení
 
 ```sql
-SELECT *
+SELECT f2.*
+FROM fakulty f1
+JOIN fakulty f2
+  ON f1.mesto = f2.mesto
+WHERE f1.nazev = 'Fakulta 1';
+```
+
+---
+
+## Cvičení 2 
+
+### Zadání
+
+Najdi fakulty do vzdálenosti 5 km od fakulty "Fakulta 1".
+
+### Řešení
+
+```sql
+SELECT f2.nazev,
+       ST_Distance(f1.geom::geography, f2.geom::geography) AS vzdalenost
+FROM fakulty f1
+JOIN fakulty f2
+  ON ST_DWithin(f1.geom::geography, f2.geom::geography, 5000)
+WHERE f1.nazev = 'Fakulta 1';
+```
+
+---
+
+## Cvičení 3 
+
+### Zadání
+
+Pro každou fakultu najdi její nejbližší fakultu.
+
+
+### Řešení
+
+```sql
+SELECT f1.nazev,
+       (
+         SELECT f2.nazev
+         FROM fakulty_s_adresami_a_souradnicemi f2
+         ORDER BY f1.geom <-> f2.geom
+         LIMIT 1
+       )
+FROM fakulty_s_adresami_a_souradnicemi f1;
+```
+
+---
+
+## Cvičení 4 
+
+### Zadání
+
+Spočítej vzdálenosti mezi všemi dvojicemi fakult.
+
+### Řešení
+
+```sql
+SSELECT f1.nazev, f2.nazev,
+       ST_Distance(f1.geom::geography, f2.geom::geography)
+FROM fakulty f1
+JOIN fakulty f2
+  ON f1.id < f2.id;
+```
+
+---
+
+## Cvičení 5 
+### Zadání
+
+Zjisti počet studentů na jednotlivých fakultách.
+
+### Řešení
+
+```sql
+SELECT f.nazev,
+       COUNT(s.id)
+FROM fakulty f
+LEFT JOIN student s ON s.id_fakul = f.id
+GROUP BY f.nazev;
+```
+
+---
+
+## Cvičení 6
+
+### Zadání
+
+Najdi studenty studující na fakultách do 10 km od "Fakulta 1".
+### Řešení
+
+```sql
+SELECT s.jmeno, s.prijmeni, f2.nazev
+FROM fakulty f1
+JOIN fakulty f2
+  ON ST_DWithin(f1.geom::geography, f2.geom::geography, 10000)
+JOIN student s ON s.id_fakul = f2.id
+WHERE f1.nazev = 'Fakulta 1';
+```
+
+---
+
+## Cvičení 7 
+
+### Zadání
+
+Vytvoř buffer o poloměru 3 km kolem fakulty s názvem `'Fakulta 4'`.
+
+### Řešení
+
+```sql
+SELECT nazev,
+       ST_Buffer(geom::geography, 3000)::geometry AS buffer_3km
 FROM fakulty
-WHERE mesto = 'Brno';
+WHERE nazev = 'Fakulta 4';
 ```
 
 ---
 
-## Cvičení 2 — Vzdálenost mezi městy
+## Cvičení 8
 
 ### Zadání
 
-Spočítej vzdálenost mezi:
-
-* Brno (16.6068, 49.1951)
-* Liberec (15.0562, 50.7671)
+Najdi všechny fakulty, jejichž geometrie leží uvnitř bufferu 30 km kolem fakulty 'Fakulta 5'.
 
 ### Řešení
 
 ```sql
-SELECT
-       ST_Distance(b.geom::geography, l.geom::geography) AS vzdalenost_m
-FROM   fakulty b,
-       fakulty l
-WHERE  b.mesto = 'Brno'
-  AND  l.mesto = 'Liberec'
-LIMIT  1;
+WITH buffer_fakulty AS (
+    SELECT ST_Buffer(geom::geography, 30000)::geometry AS geom_buffer
+    FROM fakulty
+    WHERE nazev = 'Fakulta 5'
+)
+SELECT f.id,
+       f.nazev,
+       f.mesto
+FROM fakulty f
+JOIN buffer_fakulty b
+  ON ST_Intersects(f.geom, b.geom_buffer);
 ```
 
 ---
 
-## Cvičení 3 — Nejbližší fakulta od fakulty 23
+## Cvičení 
 
 ### Zadání
 
-Najdi nejbližší fakultu k bodu:
-
+Urči centroid množiny všech fakult.
 
 ### Řešení
 
 ```sql
-SELECT
-       f2.nazev,
-       f2.mesto,
-       ST_Distance(
-         f1.geom::geography,
-         f2.geom::geography
-       ) AS vzdalenost_m
-FROM   fakulty f1,
-       fakulty f2
-WHERE  f1.nazev = 'Fakulta 23'
-  AND  f1.id <> f2.id
-ORDER BY vzdalenost_m
-LIMIT  1;
+SELECT ST_Centroid(ST_Collect(geom)) AS centroid_vsech_fakult
+FROM fakulty_s_adresami_a_souradnicemi;
 ```
 
 ---
-
-## Cvičení 4 — Fakulty do 3 km od fakulty 1
+## Cvičení 
 
 ### Zadání
 
-Najdi všechny fakulty do 3 km od fakulty 1.
+Seskup fakulty podle města a pro každé město vytvoř jednu kolekci bodů.
 
 ### Řešení
 
 ```sql
-SELECT
-       f2.nazev,
-       f2.mesto
-FROM   fakulty f1,
-       fakulty f2
-WHERE  f1.nazev = 'Fakulta 1'
-  AND  f1.id <> f2.id
-  AND  ST_DWithin(
-         f1.geom::geography,
-         f2.geom::geography,
-         3000
-       );
-```
-
----
-
-## Cvičení 5 — Seřazení podle vzdálenosti
-
-### Zadání
-
-Seřaď všechny fakulty podle vzdálenosti od Brna (16.6068, 49.1951).
-
-### Řešení
-
-```sql
-SELECT
-    nazev,
-    mesto,
-    ST_Distance(
-        geom::geography,
-        ST_SetSRID(ST_MakePoint(16.6068, 49.1951), 4326)::geography
-    ) AS vzdalenost
-FROM fakulty
-ORDER BY vzdalenost;
-```
-
----
-
-## Cvičení 6 — Fakulty mimo Brno
-
-### Zadání
-
-Najdi fakulty, které nejsou v Brně.
-
-### Řešení
-
-```sql
-SELECT *
-FROM fakulty
-WHERE mesto != 'Brno';
-```
-
----
-
-## Cvičení 7 — Buffer (oblast)
-
-### Zadání
-
-Vytvoř zónu 1 km kolem centra Brna.
-
-### Řešení
-
-```sql
-SELECT ST_Buffer(
-    ST_SetSRID(ST_MakePoint(16.6068, 49.1951), 4326)::geography,
-    1000
-);
-```
-
----
-
-## Cvičení 8 — Kolik fakult je v každém městě
-
-### Zadání
-
-Spočítej počet fakult podle města.
-
-### Řešení
-
-```sql
-SELECT mesto, COUNT(*) AS pocet
+SELECT mesto,
+       ST_Collect(geom) AS kolekce_geom
 FROM fakulty
 GROUP BY mesto
-ORDER BY pocet DESC;
+ORDER BY mesto;
 ```
-
 ---
+## Cvičení 
+
+### Zadání
+
+Vytvoř pro každou fakultu buffer o poloměru 2 km a následně proveď sjednocení (ST_Union) všech bufferů v rámci stejného města.
+
+### Řešení
+
+```sql
+SELECT mesto,
+       ST_Union(ST_Buffer(geom::geography, 2000)::geometry) AS sjednoceny_buffer
+FROM fakulty
+GROUP BY mesto
+ORDER BY mesto;
+```
+---
+
 
 ## 6.9 Mini projekt
 
