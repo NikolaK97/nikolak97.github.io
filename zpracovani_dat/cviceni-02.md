@@ -67,7 +67,7 @@ NetCDF soubor se skládá ze tří hlavních komponent: **dimenzí**, **proměnn
 
 ## Data potřebná ke cvičení
 
-**ERA5 Hourly Data on Single Levels from 1940 to Present:** <https://cds-beta.climate.copernicus.eu/>
+**ERA5 Hourly Data on Single Levels from 1940 to Present:** <[ERA Link](https://cds.climate.copernicus.eu/datasets/reanalysis-era5-single-levels?tab=overview)>
 
 ERA5 je pátá generace klimatických dat produkovaných Evropským centrem pro střednědobé předpovědi počasí (ECMWF). ERA5 poskytuje globální klimatická data na hodinové bázi od roku 1940 do současnosti. Tato data jsou široce využívána při výzkumu klimatu, v meteorologii a dalších geovědních oborech.
 
