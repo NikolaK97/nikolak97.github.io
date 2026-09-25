@@ -34,14 +34,6 @@ Vytvořte **komplexní geologickou mapu** zvoleného výřezu (cca 5 × 5 km, m�
 4. Layout A3 podle lekce 02.
 5. Kontrola: simulace barvosleposti, tisk na 100 % a kontrola čitelnosti.
 
-## Hodnocení
 
-| Kritérium | Body |
-|---|---|
-| geologický obsah správně a úplně | 6 |
-| symbolika (konvence, značky, typy linií) | 5 |
-| legenda a řez (konzistence s mapou) | 5 |
-| kompozice a hierarchie, potlačený podklad | 5 |
-| druhá metoda – volba a provedení | 4 |
 
-Mapy s černými vrstevnicemi přebíjejícími geologii se vracejí bez hodnocení.
+
