@@ -6,7 +6,6 @@ title: Úkol 3 – Storymapa
 # Úkol 3 – Storymapa
 
 **Vazba na lekce:** všechny
-**Body:** 15
 **Odevzdání:** odkaz na publikovanou storymapu + PDF export
 
 ## Zadání
@@ -33,12 +32,4 @@ Doporučené okruhy:
 
 **ArcGIS StoryMaps** (univerzitní licence). Mapy připravte v ArcGIS Pro a publikujte jako web maps do ArcGIS Online, odtud je vložíte do storymapy.
 
-## Hodnocení
 
-| Kritérium | Body |
-|---|---|
-| téma a vyprávění | 3 |
-| kvalita vlastních map | 6 |
-| práce se zdroji a licencemi | 2 |
-| srozumitelnost pro laika | 2 |
-| technické provedení | 2 |
