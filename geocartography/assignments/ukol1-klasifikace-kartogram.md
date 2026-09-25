@@ -28,13 +28,4 @@ Na max. 1 stranu, s odkazy na literaturu (min. 2 citace, viz [Literatura]({{ '/l
 - co která klasifikace o datech vypovídá a která nejvíce zkresluje jejich rozdělení,
 - proč jste vybrali finální variantu a komu je mapa určena.
 
-## Hodnocení
 
-| Kritérium | Body |
-|---|---|
-| volba jednotky a normalizace | 3 |
-| správnost tří klasifikací | 4 |
-| finální mapa – layout, legenda, barvy | 5 |
-| text – argumentace | 3 |
-
-Časté chyby: duhová stupnice, absolutní hodnoty místo relativních, chybějící jednotky v legendě, třídy s mezerami.
