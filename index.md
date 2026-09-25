@@ -8,3 +8,4 @@ title: Rozcestník
 - [Dopravní systémy](/dopravni_system/)
 - [Databáze](/database/)
 - [Kartografie](/cartography/)
+- [Kartografie pro geology](/geocartography/)
