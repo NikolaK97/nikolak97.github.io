@@ -5,7 +5,7 @@ title: Zápočet – Oprava geologické mapy
 
 # Zápočet – Oprava geologické mapy
 
-**Body:** 25 (15 opravená mapa + 10 prezentace)
+
 **Odevzdání:** PDF s původní a opravenou mapou vedle sebe + prezentace 5 min
 
 ## Zadání
@@ -33,10 +33,3 @@ Kontrolní seznam (nemusí být kompletní):
 - [ ] generalizace odpovídá měřítku, minimální plocha dodržena? (10)
 - [ ] měřítko grafické, tiráž kompletní, souřadnicový systém uveden?
 
-## Hodnocení
-
-| Kritérium | Body |
-|---|---|
-| úplnost diagnózy | 5 |
-| kvalita opravy | 10 |
-| prezentace – argumentace a jasnost | 10 |
