@@ -14,8 +14,8 @@ Struktura vychází z kurzu *Kartografie* (nikolak97.github.io/cartography), obs
 
 - `index.md` – rozcestník
 - `hodnoceni.md` – podmínky ukončení
-- `_lessons/` – 10 lekcí
-- `_assignments/` – 3 úkoly + zápočet
+- `lessons/` – 10 lekcí
+- `assignments/` – 3 úkoly + zápočet
 - `data.md` – zdroje geologických dat
 - `literatura.md` – seznam literatury kurzu
 - `arcgis-nastroje.md` – přehled nástrojů ArcGIS Pro použitých v kurzu
