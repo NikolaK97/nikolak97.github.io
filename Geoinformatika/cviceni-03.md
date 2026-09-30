@@ -26,7 +26,7 @@ Data si stahujete sami – obě sady jsou volně dostupné.
 | Data | Zdroj | Poznámka |
 |---|---|---|
 | Polygonová vrstva okresů ČR | [ArcČR 4](https://www.arcdata.cz/produkty/geograficka-data/arccr) (ARCDATA PRAHA, zdarma po registraci) | vrstva `Okresy`; klíčový atribut je kód okresu (LAU 1, např. `CZ0806`) – název pole ověřte ve stažené verzi |
-| Míra nezaměstnanosti podle okresů | [Veřejná databáze ČSÚ](https://vdb.czso.cz/vdbvo2/) | ve VDB vyhledejte *nezaměstnanost* → tabulka nezaměstnanosti v okresech (ukazatel je ve VDB veden jako *podíl nezaměstnaných osob*, zdroj MPSV); zvolte poslední dostupné období a exportujte do xlsx nebo csv |
+| Míra nezaměstnanosti podle okresů | [Veřejná databáze ČSÚ](https://vdb.czso.cz/vdbvo2/) | ve VDB vyhledejte *nezaměstnanost* → tabulka nezaměstnanosti v okresech (ukazatel je ve VDB veden jako *podíl nezaměstnaných osob*, zdroj MPSV); zvolte poslední dostupné období a exportujte do xlsx nebo csv <a href="/download/UD-1790691580864.xlsx" download>Stáhnout Excel</a>|
 
 Alternativa k ArcČR: administrativní hranice z [RÚIAN / ČÚZK](https://services.cuzk.cz/shp/stat/epsg-5514/) (soubor `1.zip`, vrstva `OKRESY_P`).
 
