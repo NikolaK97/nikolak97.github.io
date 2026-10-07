@@ -6,7 +6,7 @@ permalink: /zpracovani_dat/
 
 
 <ol>
-{%- for i in (1..10) -%}
+{%- for i in (1..11) -%}
   {%- assign num = i | prepend: '0' | slice: -2, 2 %}
   <li><a href="{{ '/zpracovani_dat/cviceni-' | append: num | relative_url }}">Cvičení {{ i }}</a></li>
 {%- endfor %}
