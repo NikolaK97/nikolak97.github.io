@@ -28,8 +28,9 @@ Od vyučujícího dostanete soubor `Beskydy_sesuvy.zip`. Obsahuje geodatabázi s
 | `uzemi` | Obdélník zájmového území, asi 6 × 6 km | připravil vyučující |
 | `dmr5g` | Digitální model reliéfu, buňka 5 m, výšky v m | [ČÚZK, DMR 5G](https://geoportal.gov.cz/php/micka/record/basic/CZ-CUZK-ATOM-DMR5G-SJTSK?dlang=eng) |
 | `vodni_toky` | Síť vodních toků | [DIBAVOD, VÚV TGM](http://www.dibavod.cz/index.php?id=27) |
-| `sesuvy` | Zmapované plošné svahové deformace | [ČGS, registr svahových nestabilit](http://inspire.geology.cz/geoserver/wfs?service=WFS&version=1.0.0&request=GetFeature&typeName=gsmlp:CZE_CGS_500k_Geology_Lito&outputFormat=SHAPE-ZIP) |
-| `geologie` (vytvoříte sami) | Geologické jednotky s popisem horniny | obkresleno podle [geologické mapy ČGS 1 : 50 000](https://mapy.geology.cz/geocr50/) |
+| `sesuvy` | Zmapované plošné svahové deformace | [ČGS, registr svahových nestabilit](https://mapy.geology.cz/arcgis/rest/services/Geohazardy/sesuvy_Geofond/MapServer/0/query?where=1%3D1&outFields=*&f=geojson) |
+| `sesuvy_body` | Zmapované plošné svahové deformace | [ČGS, registr svahových nestabilit](https://mapy.geology.cz/arcgis/rest/services/Geohazardy/sesuvy_Geofond/MapServer/1/query?where=1%3D1&outFields=*&f=geojson) |
+| `geologie` (vytvoříte sami) | Geologické jednotky s popisem horniny | obkresleno podle [geologické mapy ČGS 1 : 50 000]([https://mapy.geology.cz/geocr50/](http://inspire.geology.cz/geoserver/wfs?service=WFS&version=1.0.0&request=GetFeature&typeName=gsmlp:CZE_CGS_500k_Geology_Lito&outputFormat=SHAPE-ZIP)) |
 
 **Software:** ArcGIS Pro 3.x s extenzí **Spatial Analyst**. Bez ní nebudou fungovat nástroje Slope, Reclassify, Euclidean Distance, Raster Calculator ani Extract by Mask.
 
