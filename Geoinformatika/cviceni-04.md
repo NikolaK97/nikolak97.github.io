@@ -87,24 +87,10 @@ Kompletní tabulka se všemi sloupci: <a href="/download/kriminalita_kraje_TSK_2
 
 ### 4. Mapové výstupy
 
-> Kartogram i kartodiagram můžete vytvořit v jakémkoli softwaru. Výsledek musí obsahovat povinné prvky mapy uvedené níže.
-
-**Kartogram** zobrazuje relativní hodnotu `PODIL_TSK`. Použila jsem plošné vybarvení krajů v sekvenční barevné stupnici (světlá = nízký podíl, tmavá = vysoký podíl).
-
-![Kartogram – podíl krajů na podvodech v ČR 2025](img/kartogram.png)
-
-**Kartodiagram** zobrazuje absolutní počet `TSK`. Použila jsem proporcionální kruhy umístěné do středu krajů. Velikost kruhu odpovídá počtu registrovaných podvodů.
-
-![Kartodiagram – počet registrovaných podvodů v krajích ČR 2025](img/kartodiagram.png)
+> Kartogram i kartodiagram.
 
 Obě mapy obsahují název, legendu, měřítko, zdroj dat, autora a datum.
 
-## Zjištění
-
-- Nejvíce podvodů bylo registrováno v Praze (16,75 %) a ve Středočeském kraji (14,10 %). Dohromady tvoří téměř třetinu všech případů v ČR.
-- Nejnižší podíl má Karlovarský kraj (2,98 %).
-- Podíl na celku ČR do velké míry kopíruje počet obyvatel kraje. Přesnější srovnání by umožnil přepočet na 10 000 obyvatel.
-- Objasněnost podvodů je nízká, v průměru kolem 7 %. Nejvyšší je v Olomouckém kraji (11,9 %), nejnižší v Karlovarském (3,1 %).
 
 ## Zdroje
 
