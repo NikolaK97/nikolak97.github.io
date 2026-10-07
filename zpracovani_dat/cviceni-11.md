@@ -1,8 +1,7 @@
 ---
-title: "Zadání pro studenty"
 ---
 
-# Cvičení ArcGIS Pro: Mapa náchylnosti ke svahovým deformacím – Radhošť, Beskydy
+# Cvičení: Mapa náchylnosti ke svahovým deformacím – Radhošť, Beskydy
 
 ## O čem cvičení je
 
