@@ -1,5 +1,5 @@
 
-## 🧭 Teoretická část
+##  Teoretická část
 
 ---
 
@@ -117,144 +117,167 @@ Prostorové funkce jsou klíčovým nástrojem GIS:
 
 # CV05 – Praktická část: Prostorové funkce (GIS)
 
-##  Cíl cvičení
-- Seznámit se s vybranými prostorovými funkcemi GIS.
-- Vyzkoušet jejich použití na datech ArcČR 500.
-- Naučit se vytvářet a spravovat vlastní **File Geodatabase**.
-- Provést základní překryvné analýzy a interpretovat výsledky.
+## Společná část
 
----
+Všechny kroky vedou ke stejnému vzoru: vybrat prvky (atributově nebo polohově) → exportovat → spustit prostorovou funkci. Výstupy pojmenovávejte jednotně, např. `Ostrava_casti`, `Poruba`, `Silnice_Poruba_clip`.
 
-##  1. Příprava prostředí v ArcGIS Pro
+### 1. Přidání vrstev
 
-### Krok 1 – Založení projektu
-1. Otevři **ArcGIS Pro** a vytvoř **nový projekt** (např. `CV05_ProstoroveFunkce`).
-2. Zkontroluj, že se vytvořila výchozí geodatabáze (`CV05_ProstoroveFunkce.gdb`).
+1. Z administrativní geodatabáze přidejte **části obcí – polygony**, z topografické **silnice**.
+2. Otevřete atributovou tabulku částí obcí a najděte pole s názvem obce (typicky něco jako `NAZ_OBEC`) a s názvem části obce (typicky `NAZEV` / `NAZ_CAST`).
 
-### Krok 2 – Vytvoření vlastní geodatabáze
-1. Otevři **Catalog** → pravým tlačítkem → *New → File Geodatabase*.
-2. Pojmenuj např. `MojeData_CV05.gdb`.
+### 2. Části obce Ostrava → nová vrstva
 
-### Krok 3 – Přidání zdrojových dat
-1. Připoj složku s daty **ArcČR 500**.
-2. Přidej vrstvy:
-   - Části obce (polygony)
-   - Silnice (linie)
-   - Železniční stanice (body)
-   - Lesy (polygony)
+1. **Map → Select By Attributes**, Input Rows = části obcí.
+2. Podmínka: *pole názvu obce* **is equal to** `Ostrava`. Spolehlivější je filtr přes kód obce – Ostrava má kód **554821**.
+3. **Apply / OK** a ověřte počet vybraných prvků dole v tabulce.
+4. Pravým na vrstvu → **Data → Export Features** → výstup `Ostrava_casti` do projektové geodatabáze. Export bere jen vybrané prvky.
 
----
+### 3. Poruba → nová vrstva
 
-##  2. Práce s vrstvami a výběry
+1. **Select By Attributes** nad vrstvou `Ostrava_casti` (ne nad celou ČR – části obce jménem Poruba existují i jinde).
+2. Podmínka: název části obce **is equal to** `Poruba`.
+3. **Export Features** → `Poruba`.
 
-### Krok 4 – Výběr částí obce Ostrava
-```sql
-NAZ_OBEC = 'Ostrava'
-```
-- Exportuj jako `Ostrava_casti`.
+### 4. Silnice křížící Porubu → nová vrstva
 
-### Krok 5 – Vytvoření vrstvy Poruba
-```sql
-NAZ_CAST = 'Poruba'
-```
-- Exportuj jako `Poruba`.
+1. **Map → Select By Location**.
+2. Input Features = **silnice**, Relationship = **Intersect**, Selecting Features = **Poruba**.
+3. **Export Features** → `Silnice_Poruba`. Silnice jsou celé, tedy přesahují hranici Poruby – to je správně, ořez přijde v dalším kroku.
 
----
+### 5. Ořez silnic na území Poruby (CLIP)
 
-##  3. Prostorové operace
+1. **Map → Clear** (zrušit výběr na silnicích).
+2. **Analysis → Tools** → vyhledejte **Pairwise Clip** (rychlejší) nebo **Clip**.
+3. Input Features = `Silnice_Poruba` (nebo rovnou celé silnice), Clip Features = `Poruba`, Output = `Silnice_Poruba_clip`.
+4. Porovnejte délky: v tabulce výstupu se `Shape_Length` přepočítá jen na úseky uvnitř Poruby.
 
-### Krok 6 – Výběr silnic, které kříží Porubu
-- **Select by Location**
-  - *Input:* Silnice  
-  - *Relationship:* Intersect  
-  - *Selecting Features:* Poruba  
-- Exportuj jako `Silnice_Poruba`.
+### 6. Sloučení částí Ostravy do jednoho polygonu (DISSOLVE)
 
-### Krok 7 – Ořezání silnic na území Poruby (CLIP)
-- **Clip Tool**
-  - *Input Features:* Silnice  
-  - *Clip Features:* Poruba  
-  - *Output:* `Silnice_Poruba_clip`
+1. V tabulce `Ostrava_casti` hledejte pole, které mají **všechny části stejné** – název obce nebo kód obce. To je odpověď na otázku zadání.
+2. Nástroj **Dissolve** (nebo **Pairwise Dissolve**): Input = `Ostrava_casti`, Dissolve Field = *kód obce* (případně název obce), Output = `Ostrava_dissolve`.
+3. Nechte zaškrtnuté **Create multipart features**. Výsledkem je 1 prvek = celá Ostrava. Tuto vrstvu budete používat i v úloze o lesích.
 
-### Krok 8 – Sloučení částí Ostravy (DISSOLVE)
-- **Dissolve Tool**
-  - *Input:* Ostrava_casti  
-  - *Dissolve Field:* NAZ_OBEC  
-  - *Output:* `Ostrava_dissolved`
+### 7. Zábřeh → nová vrstva
 
-### Krok 9 – Spojení Poruby a Zábřehu (MERGE)
-1. Vyber `NAZ_CAST = 'Zábřeh'` → exportuj `Zabreh`.
-2. **Merge Tool**
-   - *Input Datasets:* Poruba, Zabreh  
-   - *Output:* `Poruba_Zabreh`
+1. **Select By Attributes** nad `Ostrava_casti`.
+2. V RÚIAN se část obce jmenuje **Zábřeh nad Odrou**, proto použijte podmínku **contains the text** `Zábřeh` (SQL: `NAZEV LIKE '%Zábřeh%'`).
+3. **Export Features** → `Zabreh`.
 
-### Krok 10 – Porovnání INTERSECT a UNION
-- **Intersect:** Lesy + Ostrava_dissolved → `Lesy_Ostrava_intersect`
-- **Union:** Lesy + Ostrava_dissolved → `Lesy_Ostrava_union`
+### 8. Spojení Zábřehu a Poruby (MERGE)
 
-### Krok 11 – Vytvoření bufferů
-- **Buffer Tool**
-  - 500 m → `Buffer_500m`
-  - 3 000 m → `Buffer_3km`
+1. Nástroj **Merge**: Input Datasets = `Poruba` + `Zabreh`, Output = `Poruba_Zabreh`.
+2. V sekci **Field Map** můžete přidat zdrojové pole (*Add source information to output*) – uvidíte, ze které vrstvy prvek pochází.
+3. Výstup má 2 samostatné prvky. Rozdíl oproti Dissolve: Merge spojuje **vrstvy**, Dissolve slučuje **prvky** podle atributu.
 
----
+### 9. Lesy: INTERSECT vs. UNION s Ostravou
 
-##  4. Aplikační úlohy
+1. Přidejte vrstvu **lesů**.
+2. **Pairwise Intersect**: Input = `lesy` + `Ostrava_dissolve`, Output = `Lesy_Ostrava_intersect`.
+3. **Union**: Input = `lesy` + `Ostrava_dissolve`, Output = `Lesy_Ostrava_union`. Union nad lesy celé ČR trvá déle; můžete nejdřív vybrat lesy, které Ostravu protínají (Select By Location), a pustit ho jen na ně.
+4. Porovnejte výsledky podle tabulky níže. V Union mají prvky bez překryvu v poli `FID_lesy` nebo `FID_Ostrava_dissolve` hodnotu **−1**.
 
-### Úloha 1 – Území do 500 m od dálnic
-- Buffer 500 m → Clip s hranicí ČR → Calculate Geometry (km²).
+|                       | Intersect                                    | Union                                        |
+| --------------------- | -------------------------------------------- | -------------------------------------------- |
+| Co ve výstupu zůstane | jen plochy, kde je les **a zároveň** Ostrava | vše z obou vrstev, rozřezané podle hranic    |
+| Booleovská logika     | AND                                          | OR                                           |
+| Atributy              | z obou vrstev                                | z obou, u nepřekrytých částí prázdné / −1    |
+| Typ vstupů            | polygony, linie i body                       | jen polygony                                 |
 
-### Úloha 2 – Obce do 10 km od řeky Morava
-- Buffer 10 km → Select by Location → součet obyvatel.
+### 10. Buffery kolem železničních stanic
 
-### Úloha 3 – Křížení silnic a železnic
-- Intersect *Dálnice + Silnice I. třídy + Železnice*.  
-- Vyhodnoť počet průsečíků a podíl dálnic (%).
+1. Přidejte vrstvu **železničních stanic**.
+2. Nástroj **Pairwise Buffer** (nebo **Buffer**): Input = stanice, Distance = **500 Meters**, Dissolve Type = **Dissolve all** (překrývající se zóny se sloučí), Output = `Stanice_buffer_500m`.
+3. Zopakujte s **3 Kilometers** → `Stanice_buffer_3km`.
+4. Alternativa: **Multiple Ring Buffer** s hodnotami `500; 3000` a jednotkou Meters vytvoří obě zóny v jedné vrstvě (vícevrstevná obalová zóna).
 
-### Úloha 4 – Spojení letišť a železničních stanic
-- Merge *Letiště + Železniční stanice* → zjisti počet objektů.
+## Analytické úlohy
 
-### Úloha 5 – Území dále než 1 km od silnic
-- Buffer 1 km → Erase od území ČR → oblasti bez dostupnosti.
+Každá úloha končí výpočtem plochy nebo počtu. Plochu v km² získáte tak, že do výsledné vrstvy přidáte pole `Plocha_km2` (Double) a v tabulce dáte pravým na něj **Calculate Geometry** → Property **Area**, Area Unit **Square kilometers**. Pokud má výstup víc prvků, sečtěte je: pravým na pole → **Statistics** (ukáže Sum). Konkrétní čísla zde nejsou uvedena, protože se liší podle verze dat – u ArcČR 4.3 vyjdou jinak než u v3.3.
 
-### Úloha 6 – Území do 100 km od hranic Prahy
-- Vyber Prahu → Buffer 100 km → Clip s ČR → výpočet výměry.
+### Úloha 1 – Výměra území ČR do 500 m od dálnic
 
-### Úloha 7 – Lesní pokryv Ostravy
-- Intersect Lesy × Ostrava_dissolved → výpočet plochy a procent.
+1. **Select By Attributes** na silnicích: pole třídy silnice = *dálnice*. Přes **Field → Unique values** si nejdřív ověřte přesné hodnoty – od roku 2016 jsou bývalé rychlostní silnice vedené jako dálnice II. třídy, takže může jít o více hodnot.
+2. **Pairwise Buffer**: Input = silnice (s výběrem), Distance = **500 Meters**, Dissolve Type = **Dissolve all** – jinak by se překryvy zón u křižovatek započítaly dvakrát. Output = `Dalnice_buf500`.
+3. **Map → Clear**, pak **Pairwise Clip**: Input = `Dalnice_buf500`, Clip Features = polygon **ČR / stát**, Output = `Dalnice_buf500_CR`. Tím odříznete části bufferu za hranicí (např. u D5, D8, D1 u Polska).
+4. Spočítejte plochu v km².
 
----
+### Úloha 2 – Obce celé do 10 km od řeky Moravy a jejich obyvatelé
 
-##  5. Editace dat a atributů
+1. **Select By Attributes** na vodních tocích: název **is equal to** `Morava`. Nepoužívejte *contains* – chytili byste Moravici, Morávku, Moravskou Sázavu či Moravskou Dyji. Zkontrolujte, že vybrané úseky vedou od Králického Sněžníku po soutok s Dyjí.
+2. **Pairwise Buffer**: Distance = **10 Kilometers**, Dissolve Type = **Dissolve all**, Output = `Morava_buf10km`.
+3. **Map → Clear**, pak **Select By Location**: Input = **obce**, Relationship = **Completely within** (případně **Within**), Selecting Features = `Morava_buf10km`.
+4. Počet obcí odečtěte dole v tabulce (Selected …).
+5. Počet obyvatel: v tabulce obcí pravým na pole s počtem obyvatel (u SLDB 2021 / ČSÚ statistik – ověřte název) → **Statistics** → hodnota **Sum** se počítá jen z vybraných prvků. Alternativa: nástroj **Summary Statistics** se statistikou SUM.
 
-1. Panel **Edit** → *Select* okres → *Delete Selected* (např. Frýdek-Místek).  
-2. V *Attribute Table* uprav hodnoty nebo přidej nové záznamy.
+### Úloha 3 – Křížení dálnic, rychlostních silnic a silnic I. třídy se železnicí
 
----
+1. **Select By Attributes** na silnicích: třída = dálnice **OR** rychlostní silnice (pokud v datech existuje) **OR** silnice I. třídy. Export → `Silnice_D_R_I`.
+2. **Pairwise Intersect**: Input = `Silnice_D_R_I` + **železnice**, **Output Type = Point**, Output = `Krizeni_body`. Bez přepnutí na Point dostanete linie, ne místa křížení.
+3. **Multipart To Singlepart** → `Krizeni_single`. Intersect může do jednoho prvku sloučit víc bodů.
+4. Volitelně **Delete Identical** (pole Shape) – odstraní duplicitní body vzniklé tam, kde je silnice či železnice v místě křížení rozdělená na dva úseky.
+5. Celkový počet = počet řádků `Krizeni_single`.
+6. Podíl dálnic: **Select By Attributes** na `Krizeni_single`, třída = dálnice (atributy silnic se do výstupu přenesou). Podíl = počet dálničních křížení / celkový počet × 100.
+7. Poznámka do protokolu: ve 2D se počítá každé mimoúrovňové i úrovňové křížení stejně, mosty se nerozlišují.
 
-##  6. Shrnutí funkcí
+### Úloha 4 – Společná vrstva letišť a železničních stanic
 
-| Funkce | Typ operace | Účel |
-|--------|--------------|------|
-| CLIP | Ořez | vymezení území podle jiné vrstvy |
-| BUFFER | Vzdálenostní analýza | analýza okolí objektů |
-| INTERSECT | Překryv | nalezení společného území |
-| UNION | Sjednocení | kombinace všech oblastí |
-| MERGE | Spojení vrstev | sloučení více vstupů |
-| DISSOLVE | Sloučení atributové | tvorba větších celků |
-| ERASE | Rozdíl | odečtení území |
+1. Ověřte typ geometrie obou vrstev (pravým → **Properties → Source**). Merge vyžaduje stejný typ.
+2. Pokud jsou letiště polygony, převeďte je nástrojem **Feature To Point** (zaškrtnout *Inside*) → `Letiste_body`.
+3. **Merge**: Inputs = letiště (body) + železniční stanice, Output = `Letiste_Stanice`.
+4. Počet objektů = počet řádků výstupu a musí se rovnat součtu počtů obou vstupů – to je kontrola správnosti.
 
----
+### Úloha 5 – Výměra ČR dále než 1 km od nejbližší silnice (ERASE)
 
-##  7. Závěr
-Prostorové funkce jsou základem analytické práce v GIS.  
-Díky nim lze efektivně:
-- analyzovat vztahy mezi objekty,
-- vytvářet nové vrstvy kombinující různé informace,
-- a podporovat rozhodování v územním plánování, dopravě i ekologii.
+1. **Map → Clear** na silnicích (bereme všechny třídy).
+2. **Pairwise Buffer**: Input = silnice, Distance = **1 Kilometers**, Dissolve Type = **Dissolve all**, Output = `Silnice_buf1km`. Vrstva silnic je velká, výpočet může trvat několik minut.
+3. **Pairwise Erase**: Input = polygon **ČR**, Erase Features = `Silnice_buf1km`, Output = `CR_dal_1km_od_silnic`.
+4. Spočítejte plochu v km². Kontrola: výsledek + plocha bufferu oříznutého na ČR ≈ rozloha ČR (78 871 km²).
 
----
+### Úloha 6 – Výměra ČR do 100 km od hranic Prahy
 
+1. **Select By Attributes** na krajích (nebo obcích): název = `Hlavní město Praha`. Export → `Praha`.
+2. **Buffer**: Input = `Praha`, Distance = **100 Kilometers**, Dissolve Type = **Dissolve all**, Output = `Praha_buf100km`.
+3. Rozhodněte, zda se má započítat i území Prahy samotné. Výchozí buffer polygon zahrnuje; parametr **Side Type = Exclude the input polygon** (`OUTSIDE_ONLY`, jen v nástroji Buffer, ne v Pairwise Buffer) ho vynechá. Do protokolu napište, kterou variantu jste zvolili.
+4. **Pairwise Clip** podle polygonu ČR – 100 km od Prahy přesahuje do Německa.
+5. Spočítejte plochu v km².
+
+### Úloha 7 – Kolik procent Ostravy pokrývá les
+
+1. Použijte `Ostrava_dissolve` ze společné části a vrstvu lesů.
+2. **Pairwise Clip**: Input = lesy, Clip Features = `Ostrava_dissolve`, Output = `Lesy_v_Ostrave` (stejný výsledek jako `Lesy_Ostrava_intersect` z kroku 9).
+3. Pokud se polygony lesů mohou překrývat, sloučte je: **Pairwise Dissolve** bez Dissolve Field → `Lesy_v_Ostrave_diss`.
+4. Spočítejte plochu lesů a plochu `Ostrava_dissolve` (stejnou metodou).
+5. Podíl = plocha lesa / plocha Ostravy × 100. Výpočet lze napsat i v **Calculate Field**, ale jednodušší je kalkulačka.
+
+## Tvorba vlastní geodatabáze a editace
+
+Editujte vždy jen exportovanou kopii ve vlastní geodatabázi, nikdy původní data ArcČR – jinak si je poškodíte pro další cvičení.
+
+### Vytvoření geodatabáze
+
+1. V panelu **Catalog** klikněte pravým na připojenou složku → **New → Folder**, pojmenujte např. `CV05_vlastni`.
+2. Pravým na novou složku → **New → File Geodatabase**, název např. `Moje_data.gdb`.
+
+### Import okresů
+
+1. Přidejte do mapy vrstvu **okresů** z ArcČR.
+2. Pravým na vrstvu v Contents → **Data → Export Features**.
+3. Output Location = `Moje_data.gdb`, Output Name = `Okresy`. Zkontrolujte, že na okresech není aktivní výběr – jinak by se exportoval jen ten.
+4. Nová vrstva se sama přidá do mapy. Další možnost importu: v Catalogu pravým na `Moje_data.gdb` → **Import → Feature Class(es)**.
+
+### Smazání okresu Frýdek-Místek
+
+1. **Select By Attributes** na vrstvě `Okresy` (ta z vaší gdb): název okresu **is equal to** `Frýdek-Místek`.
+2. Karta **Edit** → **Delete** (případně klávesa Delete).
+3. Karta **Edit** → **Save** → potvrďte uložení. Bez uložení změna po zavření projektu zmizí; **Discard** ji naopak zahodí.
+
+### Změna hodnot v atributové tabulce
+
+1. Otevřete atributovou tabulku `Okresy`.
+2. Dvojklikem do buňky ji přepíšete přímo; pro více prvků najednou použijte **Edit → Attributes** (panel s formulářem vybraného prvku) nebo pravým na hlavičku pole → **Calculate Field**.
+3. Nové pole přidáte přes **Add Field** v horní liště tabulky (Data Design → Fields), pak **Save** v pásu Fields.
+4. Nakonec **Edit → Save**. Ověřte v tabulce, že změna platí a počet okresů je o 1 nižší než v originálu.
 
 
 
