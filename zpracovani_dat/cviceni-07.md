@@ -154,6 +154,9 @@ Uděláš to dvěma různými nástroji a pak porovnáš, jak moc se výsledky l
 | [Adresy_CV08.xlsx](download/Adresy_CV08.xlsx) | 10 adres pro geokódování v ArcGIS Online (A2) a Google Sheets (A3) |
 | [Adresy_CV08.csv](download/Adresy_CV08.csv) | Stejné adresy jako CSV – pro Geoapify a MapDevelopers (A3) |
 | [Nemocnice_CV08.xlsx](download/Nemocnice_CV08.xlsx) | Šablona – doplň adresy nemocnic ve svém kraji (žlutá pole) |
+<a href="/download/Adresy_CV08.xlsx" download>📥 Adresy_CV08.xlsx</a>
+<a href="/download/Adresy_CV08.csv" download>📥 Adresy_CV08.csv</a>
+<a href="/download/Nemocnice_CV08.xlsx" download>📥 Nemocnice_CV08.xlsx</a>
 
 Tabulka adres vypadá takto:
 
