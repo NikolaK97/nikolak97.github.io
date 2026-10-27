@@ -1,587 +1,472 @@
 ---
 title: CV08 – Síťové analýzy a geokódování
 layout: default
-description: Detailní návod pro ArcGIS Pro a ArcGIS Online – geokódování, síťové analýzy, TSP a Dijkstrův algoritmus
+description: Návod krok za krokem pro ArcGIS Online a ArcGIS Pro – geokódování adres, trasy, dostupnost, TSP a Dijkstrův algoritmus
 ---
 
 # CV08 – Síťové analýzy a geokódování
-Podrobný metodický návod pro ArcGIS Pro a ArcGIS Online
+
+Návod krok za krokem pro ArcGIS Online a ArcGIS Pro
 
 ---
 
+## Než začneš
 
-## Úvod
+### Co se v tomto cvičení naučíš
 
-Síťové analýzy představují soubor nástrojů pro řešení úloh typu nalezení nejkratší trasy, optimalizace rozmístění zdrojů, určování dostupnosti nebo hledání nejbližších zařízení.  
-Hlavním zdrojem dat je ohodnocená uliční síť, kde každý úsek má atribut nákladnosti – nejčastěji čas nebo vzdálenost.
+1. **Geokódovat adresy** – udělat z tabulky adres body v mapě.
+2. **Porovnat přesnost** dvou geokodérů.
+3. **Počítat trasy a dostupnost po silnicích** – ne „vzdušnou čarou“, ale tak, jak by jelo auto.
 
----
+### Co budeš potřebovat
 
-# Část A – Geokódování a příprava dat
+| Co | Poznámka |
+|----|----------|
+| Účet ArcGIS Online (školní) | Síťové analýzy a geokódování spotřebovávají **kredity** – pracuj s malým počtem bodů. |
+| ArcGIS Pro | Přihlášený stejným účtem (vpravo nahoře). |
+| ArcČR 500 | Hlavně vrstva **obcí** (s počtem obyvatel). |
+| Excel nebo Google Sheets | Pro tabulku adres. |
 
-## Vytvoření vstupních dat v Excelu
+### Jeden příběh pro celé cvičení
 
-Cíl: připravit tabulku adres, které budou později geokódovány.
+Aby se ti to nepletlo, dělej všechny úlohy na **jednom scénáři**:
 
-| Sloupec | Popis |
-|----------|--------|
-| ID | unikátní identifikátor |
-| Ulice | název ulice |
-| Cislo_popisne | číslo popisné |
-| Nazev_obce | město nebo obec |
+> Pracuješ pro krajský úřad (např. **Jihomoravský kraj**). Zajímá tě, jak dobře jsou obce dostupné k **nemocnicím** a kam by se hodila nová.
 
-Příklad datové sady:
+- **Obce** = místa, kde žijí lidé (body z ArcČR 500).
+- **Nemocnice** = zařízení (body, které si vytvoříš geokódováním jejich adres – viz Část A).
 
-| ID | Ulice | Cislo_popisne | Nazev_obce |
-|----|--------|----------------|-------------|
-| 1 | Česká | 25 | Brno |
-| 2 | Masarykova | 10 | Brno |
-| 3 | Nádražní | 7 | Modřice |
-| 4 | Dlouhá | 123 | Šlapanice |
-| 5 | Hlavní | 52 | Rajhrad |
-| 6 | Komenského | 8 | Židlochovice |
-| 7 | Těšanská | 15 | Měnín |
-| 8 | Masarykovo náměstí | 2 | Pohořelice |
-| 9 | Svatopluka Čecha | 1 | Hustopeče |
-| 10 | Nádražní | 10 | Ivančice |
+Pokud chceš jiný kraj nebo jiný typ zařízení (hasiči, školy, pošty), klidně – jen to drž stejné ve všech úlohách.
 
-Ulož jako `Adresy_CV08.xlsx`.
+### Přehled cvičení
 
----
-
-## Geokódování v ArcGIS Online
-
-### Přidání dat
-1. Přihlaš se na [ArcGIS Online](https://www.arcgis.com).
-2. Content → Add item → From your computer → Upload `Adresy_CV08.xlsx`.
-3. Zaškrtni **Publish this file as a hosted layer** a potvrď.
-
-### Nastavení geokódování
-1. V dialogu **Publish a layer** vyber:
-   - Location information is in multiple fields
-2. Nastav pole:
-   - Street → `Ulice` + `Cislo_popisne`
-   - City → `Nazev_obce`
-3. Klikni **Publish** → ArcGIS spustí geokódování.
-
-### Kontrola a opravy
-- Zkontroluj polohu bodů v mapě.
-- Nesprávné body oprav pomocí **Edit → Move point**.
-- Vrstva by měla být typu *Hosted Feature Layer*.
-
-### Export
-- … → Export data → Shapefile (.zip)
-- Ulož jako `Adresa_AGOL.shp`.
+| Část | Kde | Co děláš | Výstup |
+|------|-----|----------|--------|
+| **A** | Excel → ArcGIS Online → Google Sheets → ArcGIS Pro | Geokódování a porovnání přesnosti | 2 bodové vrstvy + tabulka rozdílů |
+| **B** | ArcGIS Online | Nejbližší zařízení, dojezdové zóny, plán trasy | 3 mapy + komentář |
+| **C** | ArcGIS Pro | Route, TSP, Service Area, Closest Facility, VRP, Location-Allocation | 6 map + komentář |
+| **D** | Word / PDF | Dokumentace | Odevzdávaný soubor |
 
 ---
 
-## Geokódování pomocí Google Awesome Table
+# Teorie v kostce
 
-### Postup
-1. Vytvoř stejnou tabulku v Google Sheets.  
-2. Otevři [Awesome Table](https://awesome-table.com).  
-3. Add-ons → Geocode by Awesome Table → Start.  
-4. Nastav:
-   - Street → `Ulice + Cislo_popisne`
-   - City → `Nazev_obce`
-5. Po zpracování vzniknou nové sloupce: `Latitude`, `Longitude`.
+Přečti si to před prací – stačí pět minut. Pomůže ti to pochopit, *co* vlastně nástroje počítají.
 
-### Export
-- File → Download → CSV  
-- Soubor: `Adresa_Awesome.csv`.
+## Síť = graf
 
----
-# Geokódování adres – přehled metod
+Silniční síť si GIS představuje jako **graf**:
 
-Níže najdete čtyři způsoby, jak jednoduše převést adresy na geografické souřadnice (latitude, longitude). Každá varianta má své výhody – od rychlých online nástrojů až po integraci přímo v Google Sheets.
+- **Uzly** (nodes) = křižovatky, konce silnic, obce.
+- **Hrany** (edges) = úseky silnic mezi uzly.
+- Každá hrana má **cenu průjezdu** = **impedance** – nejčastěji *čas* (minuty) nebo *vzdálenost* (km).
 
----
+Síťová analýza pak hledá třeba cestu, jejíž součet impedancí je co nejmenší.
 
-## Aleternativa A – Geoapify (online, copy-paste / CSV)
+## Slovníček
 
-**Vhodné pro:** přesnější výsledky, menší objem dat (cca 10–100 adres)
+| Pojem | Co to znamená | Příklad |
+|-------|---------------|---------|
+| **Impedance** | „Cena“ průjezdu úsekem | 2 minuty, 1,5 km |
+| **Cost** | Součet impedancí celé trasy | trasa trvá 23 minut |
+| **Travel Mode** | Způsob dopravy | auto, chůze, kamion |
+| **Facility** (zařízení) | Cíl, ke kterému se vztahuje analýza | nemocnice |
+| **Incident / Demand Point** | Místo, odkud vzniká poptávka | obec |
+| **Cutoff** | Maximální čas / vzdálenost, dál se nehledá | 20 minut |
+| **Breaks / Cutoffs** | Intervaly pro dojezdové zóny | 5, 10, 15 minut |
 
-1. Otevřete web [Geoapify Online Geocoding](https://www.geoapify.com/geocoding-api) (nebo vyhledejte „Geoapify online geocoding“).  
-2. Vložte až 10 adres do textového pole – každá adresa na samostatný řádek.  
-   Alternativně můžete nahrát CSV soubor s adresami.  
-3. Pokud nahráváte CSV, namapujte sloupce – určete, který obsahuje plnou adresu.  
-4. Klikněte na „Geocode“ (nebo podobné tlačítko) a spusťte zpracování.  
-5. Po dokončení si stáhněte výsledky jako CSV – soubor bude obsahovat:  
-   - Latitude a Longitude  
-   - Doplňkové informace (např. typ shody, skóre přesnosti)  
-6. Soubor si uložte k sobě (např. `results.csv`).
+## Jaké otázky síťové analýzy řeší
 
----
+| Otázka | Typ analýzy | Nástroj v ArcGIS |
+|--------|-------------|------------------|
+| *Jak se nejrychleji dostanu z A do B?* | Trasování | Route |
+| *V jakém pořadí objet zastávky, abych ujel co nejméně?* | Problém obchodního cestujícího (TSP) | Route (přeuspořádání zastávek), Plan Routes |
+| *Kam dojedu do 10 minut?* | Dostupnost | Service Area, Create Drive-Time Areas |
+| *Která nemocnice je pro tuto obec nejbližší?* | Nejbližší zařízení | Closest Facility, Find Nearest |
+| *Jak rozdělit zákazníky mezi 3 auta?* | Rozvoz (VRP) | Vehicle Routing Problem |
+| *Kam postavit 2 nové nemocnice, aby pokryly co nejvíc lidí?* | Umístění (alokace) | Location-Allocation |
 
-## Alternativa B – MapDevelopers: Batch Geocode (nejrychlejší jednorázovka)
+## Dijkstrův algoritmus – jak počítač najde nejkratší cestu
 
-**Vhodné pro:** rychlé jednorázové použití bez registrace
+Na Dijkstrově algoritmu (Edsger Dijkstra, 1959) stojí skoro všechny nástroje výše.
 
-1. Otevřete stránku [MapDevelopers – Batch Geocode](https://www.mapdevelopers.com/batch_geocode_tool.php).  
-2. Vložte 10 adres (každou na nový řádek).  
-3. Klikněte na „Find Addresses“.  
-4. U každé adresy se zobrazí souřadnice.  
-5. Výslednou tabulku zkopírujte do Excelu nebo Google Sheets.  
-6. Pomocí funkce „Text do sloupců“ (oddělovač TAB) tabulku upravte a uložte jako CSV.
+**Princip jednou větou:** postupně „rozšiřuj“ hledání od startu vždy do toho uzlu, který je zatím nejblíž, a průběžně si zapisuj nejlepší známou vzdálenost ke každému uzlu.
 
+**Kroky:**
 
----
+1. Start má hodnotu 0, všechny ostatní uzly ∞ (zatím neznámé).
+2. Vyber nevyřešený uzel s **nejmenší** hodnotou a označ ho jako vyřešený.
+3. Pro jeho sousedy spočítej: *hodnota vybraného uzlu + délka hrany*. Pokud je to méně, než mají zapsáno, přepiš to.
+4. Opakuj krok 2–3, dokud nevyřešíš cíl (nebo všechny uzly).
 
+### Vyřešený příklad
 
-## Porovnání obou výsledků v ArcGIS Pro
+Síť s pěti uzly, čísla jsou minuty jízdy:
 
-### Načtení dat
-1. Spusť ArcGIS Pro → vytvoř nový projekt `Map`.
-2. Přidej vrstvy:
-   - `Adresa_AGOL.shp`
-   - `Adresa_Awesome.csv` → převod pomocí **XY Table To Point**.
+| Hrana | A–B | A–C | C–B | B–D | C–D | C–E | D–E |
+|-------|-----|-----|-----|-----|-----|-----|-----|
+| Čas (min) | 4 | 2 | 1 | 5 | 8 | 10 | 3 |
 
-### XY Table To Point
-- Input Table → `Adresa_Awesome.csv`  
-- X Field → `Longitude`  
-- Y Field → `Latitude`  
-- Coordinate System → WGS 1984  
-- Run → vrstva `Adresa_Awesome_Point`.
+Hledáme nejrychlejší cestu **z A do E**. Tučně = uzel v tomto kroku vyřešen.
 
-### Porovnání
-- Odliš symboly: AGOL = modrá, Awesome = červená.
-- Změř rozdíly (Measure nebo Select By Location).
-- Vyhodnoť přesnost:
+| Krok | Vybraný uzel | A | B | C | D | E |
+|------|--------------|---|---|---|---|---|
+| Start | – | 0 | ∞ | ∞ | ∞ | ∞ |
+| 1 | A | **0** | 4 | 2 | ∞ | ∞ |
+| 2 | C | | 3 *(2+1 < 4)* | **2** | 10 | 12 |
+| 3 | B | | **3** | | 8 *(3+5 < 10)* | 12 |
+| 4 | D | | | | **8** | 11 *(8+3 < 12)* |
+| 5 | E | | | | | **11** |
 
-| Zdroj | Přesnost | Poznámka |
-|--------|-----------|----------|
-| ArcGIS Online | velmi přesná | využívá Esri World Geocoder |
-| Awesome Table | střední | může mít chyby v číslech popisných |
+**Výsledek:** A → C → B → D → E, celkem **11 minut**.
 
----
+Všimni si: přímá cesta C → E (10 min) vypadá lákavě, ale celkem by to bylo 12 minut. Algoritmus „objížďku“ přes B a D najde sám.
 
-# Část B – Síťové analýzy v ArcGIS Pro a ArcGIS Online
-# Teoretická část – Síťové analýzy v GIS
+**A\*** je vylepšený Dijkstra: navíc odhaduje, jak daleko je to ještě do cíle (třeba vzdušnou čarou), takže zbytečně nezkoumá uzly, které vedou opačným směrem. Je proto rychlejší.
 
-Síťové analýzy (Network Analysis) představují jednu z klíčových skupin prostorových analýz v geografických informačních systémech.  
-Jejich cílem je modelovat a vyhodnocovat **pohyb, dostupnost, spojení a vztahy mezi objekty** v prostředí, které je reprezentováno jako **síť (network)** – nejčastěji dopravní nebo komunikační.
+**TSP (problém obchodního cestujícího):** navštívit všechna místa právě jednou a vrátit se na start co nejkratší cestou. ArcGIS nejdřív Dijkstrovým algoritmem spočítá vzdálenosti mezi všemi dvojicemi zastávek a pak heuristikou (přibližnou metodou) hledá nejlepší pořadí. Přesné řešení by u mnoha zastávek trvalo extrémně dlouho.
 
----
+## ArcGIS Online vs. ArcGIS Pro
 
-## 1. Princip síťového modelu
-
-Síť je matematicky reprezentována pomocí **grafu**, který se skládá z:
-- **Uzly (nodes, vertices)** – reprezentují významné body (např. křižovatky, obce, zařízení).  
-- **Hrany (edges, links)** – představují spojení mezi uzly (např. silnice, železnice).  
-
-Každé spojení může mít **atribut impedance**, který vyjadřuje náklad pohybu (např. délku, čas, cenu, kapacitu).  
-Síťový model tak umožňuje analyzovat optimální trasy, časové dostupnosti či interakce mezi místy.
+| | ArcGIS Online | ArcGIS Pro |
+|-|---------------|------------|
+| Kde běží | V prohlížeči | Na počítači |
+| Síť | Esri ji dodá (online služba) | Online služba Esri **nebo** vlastní síť (Network Dataset) |
+| Nastavení | Základní, jednoduché | Podrobné (impedance, omezení, pořadí…) |
+| Kredity | Ano | Ano, pokud používáš online síť Esri |
+| Sdílení výsledků | Snadné (webová mapa, dashboard) | Nutné publikovat / exportovat |
+| Pro koho | Rychlé úlohy, začátečníci | Detailní analýzy, projekty |
 
 ---
 
-## 2. Základní pojmy
+# Část A – Geokódování
 
-| Pojem | Význam |
-|--------|---------|
-| **Impedance** | Náklad pohybu po síti (např. TravelTime, Distance). |
-| **Cost** | Celková hodnota impedance na trase (součet všech hran). |
-| **Travel Mode** | Typ dopravy (auto, chůze, nákladní vozidlo). |
-| **Cutoff** | Maximální povolená vzdálenost nebo čas (např. 20 minut). |
-| **Facility** | Objekt, ke kterému směřuje analýza (např. nemocnice). |
-| **Incident / Demand Point** | Místa, která generují poptávku (např. obce). |
-| **Breaks** | Intervaly pro analýzu dostupnosti (např. 5, 10, 15 min). |
+**Geokódování** = převod adresy (text) na souřadnice (bod v mapě).
 
----
+Uděláš to dvěma různými nástroji a pak porovnáš, jak moc se výsledky liší.
 
-## 3. Typy síťových analýz
+## A1 – Stáhni tabulku adres
 
-Síťové analýzy lze rozdělit podle účelu:
+**Stáhni si připravená data:**
 
-### 3.1 Analýzy přístupnosti (Access / Proximity)
-- Zjišťují, jak daleko jsou body od zařízení, případně kolik zařízení je v určité vzdálenosti.
-- Typické nástroje: **Find Nearest**, **Service Area**, **Create Drive-Time Areas**.
-- Výstupem bývá buď vzdálenost (číslo), nebo plocha dostupnosti (polygony).
+| Soubor | K čemu |
+|--------|--------|
+| [Adresy_CV08.xlsx](download/Adresy_CV08.xlsx) | 10 adres pro geokódování v ArcGIS Online (A2) a Google Sheets (A3) |
+| [Adresy_CV08.csv](download/Adresy_CV08.csv) | Stejné adresy jako CSV – pro Geoapify a MapDevelopers (A3) |
+| [Nemocnice_CV08.xlsx](download/Nemocnice_CV08.xlsx) | Šablona – doplň adresy nemocnic ve svém kraji (žlutá pole) |
 
-### 3.2 Analýzy trasování (Routing)
-- Hledají **nejkratší nebo nejrychlejší trasu** mezi dvěma či více body.
-- Nástroje: **Route**, **Plan Routes**, **TSP (Traveling Salesman Problem)**.
-- Výstupem je linie trasy s informací o vzdálenosti, čase a pořadí zastávek.
+Tabulka adres vypadá takto:
 
-### 3.3 Analýzy přidělování (Allocation)
-- Určují, které zařízení má obsluhovat který bod poptávky.
-- Nástroje: **Location-Allocation**, **Closest Facility**.
-- Využití: návrh umístění nové školy, skladu, nemocnice, apod.
+| ID | Ulice | Cislo_popisne | Nazev_obce | Adresa |
+|----|-------|---------------|------------|--------|
+| 1 | Česká | 25 | Brno | Česká 25, Brno |
+| 2 | Masarykova | 10 | Brno | Masarykova 10, Brno |
+| 3 | Nádražní | 7 | Modřice | Nádražní 7, Modřice |
+| 4 | Dlouhá | 123 | Šlapanice | Dlouhá 123, Šlapanice |
+| 5 | Hlavní | 52 | Rajhrad | Hlavní 52, Rajhrad |
+| 6 | Komenského | 8 | Židlochovice | Komenského 8, Židlochovice |
+| 7 | Těšanská | 15 | Měnín | Těšanská 15, Měnín |
+| 8 | Masarykovo náměstí | 2 | Pohořelice | Masarykovo náměstí 2, Pohořelice |
+| 9 | Svatopluka Čecha | 1 | Hustopeče | Svatopluka Čecha 1, Hustopeče |
+| 10 | Nádražní | 10 | Ivančice | Nádražní 10, Ivančice |
 
-### 3.4 Analýzy rozvozu (Vehicle Routing Problem)
-- Optimalizují trasy více vozidel tak, aby obsloužila dané zákazníky s minimálními náklady.
-- Zohledňují kapacitu vozidel, časové okna, přestávky apod.
-- Typicky se využívají v logistice a zásobování.
+Sloupec **Adresa** se skládá vzorcem z ostatních sloupců:
 
----
+```
+=B2&" "&C2&", "&D2
+```
 
-## 4. Dijkstrův algoritmus
+Jedno pole s celou adresou se pak mnohem snáz nastavuje ve všech geokodérech. Pokud chceš vlastní adresy, přepiš sloupce B–D. Adresa se přepočítá sama.
 
-Základem většiny síťových analýz je **Dijkstrův algoritmus** (Edsger Dijkstra, 1959), který hledá nejkratší cestu v grafu.
+> **Nemocnice:** do šablony `Nemocnice_CV08.xlsx` doplň 4–8 nemocnic ve svém kraji. První řádek je ukázka, další řádky přidej pod něj a vzorec ve sloupci Adresa stáhni dolů. Prázdné řádky v tabulce nenechávej. Tabulku geokóduj stejným postupem jako v A2 a vznikne ti vrstva **Nemocnice** pro části B a C.
 
-**Princip:**
-1. Každý uzel dostane počáteční hodnotu ∞ (nekonečno), výchozí uzel = 0.  
-2. Vybere se uzel s nejnižší známou hodnotou (nejbližší dosud nevyřešený).  
-3. Přepočítají se vzdálenosti k sousedním uzlům.  
-4. Pokud je nová hodnota nižší než dosavadní, nahradí se.  
-5. Opakuje se, dokud nejsou zpracovány všechny uzly.
+## A2 – Geokódování v ArcGIS Online
 
-**Výsledek:**  
-Nejkratší (nebo nejrychlejší) cesta mezi výchozím a cílovým uzlem.
+1. Přihlas se na [ArcGIS Online](https://www.arcgis.com).
+2. **Content → New item → Your device** → vyber `Adresy_CV08.xlsx`.
+3. Zvol **Add the file and create a hosted feature layer**.
+4. U nastavení polohy (*Location settings*) vyber **Addresses**.
+5. Namapuj pole:
+   - **Address** → `Adresa`
+   - (pokud nabízí zemi, nastav **Czechia**)
+6. Pojmenuj vrstvu `Adresy_AGOL` a potvrď. ArcGIS adresy převede na body.
+7. **Zkontroluj body v mapě.** Leží každý bod u správné adresy? Pokud ne, otevři vrstvu v Map Vieweru a bod přesuň (**Edit → vyber bod → přetáhni**).
+8. **Export:** na stránce vrstvy (item page) → **Export Data → Export to Shapefile** → vznikne nová položka → **Download**. Ulož jako `Adresy_AGOL.zip`.
 
-V prostředí GIS se používají optimalizované varianty algoritmu (např. **A\***, který využívá heuristický odhad vzdálenosti).
+## A3 – Geokódování druhým nástrojem
 
----
+Vyber **jednu** z možností. Výstupem je vždy CSV se sloupci `Latitude` a `Longitude`.
 
-## 5. Síťové analýzy v ArcGIS Online
+### Možnost 1 – Google Sheets + Geocode by Awesome Table
 
-ArcGIS Online umožňuje provádět síťové analýzy prostřednictvím cloudových služeb Esri.  
-Výhodou je jednoduchost a rychlost – výpočty probíhají na serveru, není nutné připravovat lokální síť.  
+1. Nahraj tabulku do Google Sheets (nebo ji tam zkopíruj).
+2. **Rozšíření (Extensions) → Doplňky → Získat doplňky** → vyhledej *Geocode by Awesome Table* → nainstaluj.
+3. **Rozšíření → Geocode by Awesome Table → Start Geocoding**.
+4. Jako adresu vyber sloupec `Adresa` → spusť.
+5. Doplněk přidá sloupce `Latitude` a `Longitude`.
+6. **Soubor → Stáhnout → CSV** → ulož jako `Adresy_Druhy.csv`.
 
-Dostupné nástroje (v sekci **Analysis → Use Proximity**):
-- **Find Nearest** – vyhledání nejbližšího objektu.  
-- **Create Drive-Time Areas** – tvorba izochron podle času jízdy.  
-- **Plan Routes** – optimalizace pořadí zastávek.  
-- **Location-Allocation** – optimalizace rozmístění zařízení.  
-- **Vehicle Routing Problem** – plánování rozvozových tras.
+### Možnost 2 – Geoapify (když doplněk nefunguje)
 
-**Nevýhody:**  
-- Požaduje připojení k internetu a kreditní systém (ArcGIS credits).  
-- Omezené možnosti přizpůsobení a nastavení síťových parametrů.  
+1. Otevři [Geoapify – geocoding](https://www.geoapify.com/geocoding-api) (nebo vyhledej „Geoapify batch geocoding online“).
+2. Vlož adresy ze sloupce `Adresa` (každou na nový řádek) nebo nahraj CSV.
+3. Spusť geokódování a výsledek stáhni jako CSV → `Adresy_Druhy.csv`.
 
-**Výhody:**  
-- Rychlá vizualizace, snadná publikace výstupů.  
-- Vhodné pro menší nebo školní projekty.
+### Možnost 3 – MapDevelopers (nejrychlejší, bez registrace)
 
----
+1. Otevři [MapDevelopers – Batch Geocode](https://www.mapdevelopers.com/batch_geocode_tool.php).
+2. Vlož adresy (každou na nový řádek) → **Find Addresses**.
+3. Výslednou tabulku zkopíruj do Excelu, případně rozděl přes **Data → Text do sloupců** (oddělovač tabulátor).
+4. Ulož jako CSV → `Adresy_Druhy.csv`.
 
-## 6. Síťové analýzy v ArcGIS Pro
+> ⚠️ **Pozor na desetinnou čárku!** Souřadnice musí mít **desetinnou tečku** (`49.1951`, ne `49,1951`). Jinak je ArcGIS nenačte jako čísla. V Google Sheets: **Soubor → Nastavení → Národní prostředí → Spojené státy** a teprve pak exportuj.
 
-ArcGIS Pro nabízí pokročilé desktopové prostředí pro detailní síťové modelování.  
-Síť může být:
-- **Předdefinovaná (Network Dataset)** – vytvořená z dat (např. ArcČR 500).  
-- **Online síť (Esri Network Service)** – dostupná přes připojení k ArcGIS Online.
+## A4 – Porovnání v ArcGIS Pro
 
-### Hlavní nástroje
-- **Route** – nalezení nejkratší cesty.  
-- **Service Area** – tvorba dostupnostních zón.  
-- **Closest Facility** – hledání nejbližších zařízení.  
-- **Vehicle Routing Problem (VRP)** – optimalizace rozvozů.  
-- **Location-Allocation** – výběr optimálních lokalit.  
-- **OD Cost Matrix** – výpočet vzdáleností mezi všemi páry bodů.
+1. Spusť ArcGIS Pro → **New → Map**.
+2. **Map → Add Data** → přidej `Adresy_AGOL.zip` (shapefile).
+3. CSV převeď na body nástrojem **XY Table To Point** (Analysis → Tools → vyhledej název):
 
-### Výhody
-- Vysoká přesnost, možnost vlastní definice sítě a impedance.  
-- Možnost kombinovat více faktorů (čas, typ silnice, kapacita).  
-- Integrace s analytickými nástroji a Python skripty.
+   | Parametr | Hodnota |
+   |----------|---------|
+   | Input Table | `Adresy_Druhy.csv` |
+   | Output Feature Class | `Adresy_Druhy_body` |
+   | X Field | `Longitude` |
+   | Y Field | `Latitude` |
+   | Coordinate System | GCS WGS 1984 |
 
----
+   > Zapamatuj si: **X = zeměpisná délka (Longitude), Y = zeměpisná šířka (Latitude).** Když to prohodíš, body skončí v Indickém oceánu.
 
-## 7. Typické aplikace síťových analýz
+4. Obarvi vrstvy odlišně: AGOL = **modrá**, druhý nástroj = **červená**.
+5. Nástrojem **Measure** (karta Map → Measure) změř vzdálenost mezi modrým a červeným bodem pro každé ID a zapiš do tabulky:
 
-| Oblast | Příklad využití |
-|---------|------------------|
-| **Dopravní plánování** | Vyhledání nejrychlejší trasy, simulace uzavírek, veřejná doprava. |
-| **Územní plánování** | Hodnocení dostupnosti služeb, návrh nové infrastruktury. |
-| **Logistika a zásobování** | Optimalizace rozvozových tras (VRP). |
-| **Zdravotnictví a záchranné složky** | Analýza dojezdových časů, rozmístění stanic. |
-| **Obchodní analýzy** | Určení spádových oblastí zákazníků. |
+   | ID | Adresa | Rozdíl (m) | Který bod je správně? |
+   |----|--------|------------|------------------------|
+   | 1 | Česká 25, Brno | … | … |
+   | … | … | … | … |
+
+6. Napiš 2–3 věty: *Který geokodér byl přesnější? U jakých adres vznikly největší chyby a proč (malá obec, chybějící číslo popisné, stejný název ulice ve více obcích…)?*
 
 ---
 
-## 8. Srovnání ArcGIS Online a ArcGIS Pro
+# Část B – Síťové analýzy v ArcGIS Online
 
-| Kritérium | ArcGIS Online | ArcGIS Pro |
-|------------|----------------|-------------|
-| **Přístupnost** | Webové rozhraní, bez instalace | Desktopová aplikace |
-| **Náročnost na data** | Data hostována online | Vyžaduje vlastní Network Dataset |
-| **Detail nastavení** | Základní parametry | Pokročilé (impedance, omezení, směry) |
-| **Rychlost výpočtu** | Rychlá, závislá na internetu | Lokální výpočty, závislé na výkonu PC |
-| **Publikace výsledků** | Snadná (WebMap, Dashboard) | Nutnost exportu/publikace |
-| **Vhodnost pro výuku** | Vysoká | Pokročilí uživatelé, projekty |
+**Příprava:**
+
+1. Otevři **Map Viewer** a přidej vrstvy **Obce** (svého kraje) a **Nemocnice**.
+   - Obce z ArcČR 500 nahraj jako zazipovaný shapefile (**Content → New item**) – vznikne hosted feature layer.
+   - **Šetři kredity:** vyber jen obce jednoho okresu nebo do 50 obcí.
+2. Vpravo klikni na **Analysis → Tools → Use Proximity**.
+
+> V starší verzi (Map Viewer Classic) najdeš nástroje pod **Analysis → Use Proximity** a některé se jmenují trochu jinak – viz poznámky u úloh.
+
+## B1 – Find Nearest (nejbližší nemocnice)
+
+**Otázka:** *Ke které nemocnici to má každá obec nejblíž – po silnici?*
+
+| Parametr | Hodnota |
+|----------|---------|
+| Odkud hledáš (input / analysis layer) | Obce |
+| Co hledáš (near layer) | Nemocnice |
+| Measurement type | Driving Time (nebo Driving Distance) |
+| Limit hledání | 30 km |
+| Počet nejbližších | 1 |
+
+→ **Run**
+
+**Odevzdej:**
+
+- Mapu s liniemi obec → nemocnice.
+- Výřez atributové tabulky (vzdálenost, čas, nemocnice).
+- 2–3 věty: *Jaká je průměrná dojezdová doba? Které části kraje jsou na tom nejhůř?*
+
+## B2 – Create Drive-Time Areas (dojezdové zóny)
+
+> V novém Map Vieweru se nástroj jmenuje **Generate Travel Areas**.
+
+**Otázka:** *Kam se dá od nemocnice dojet za 5, 10 a 15 minut?*
+
+| Parametr | Hodnota |
+|----------|---------|
+| Input layer | Nemocnice |
+| Travel mode | Driving Time |
+| Časy (cutoffs) | 5, 10, 15 minut |
+
+→ **Run**
+
+**Odevzdej:**
+
+- Mapu se zónami (izochronami) a legendou.
+- 2–3 věty: *Které obce leží mimo 15minutovou zónu? Kde by se hodila nová nemocnice?*
+
+## B3 – Plan Routes (optimální pořadí zastávek)
+
+**Otázka:** *Jakým pořadím objet 8–12 obcí, abych jel co nejkratší dobu?* (např. inspekční cesta)
+
+| Parametr | Hodnota |
+|----------|---------|
+| Stops | 8–12 vybraných obcí (nebo tvé adresy z části A) |
+| Počet vozidel (routes) | 1 |
+| Start a návrat | Krajský úřad / jedna zvolená adresa |
+| Travel mode | Driving Time |
+
+→ **Run** (Plan Routes pořadí zastávek optimalizuje automaticky.)
+
+**Odevzdej:**
+
+- Mapu trasy s očíslovaným pořadím zastávek.
+- Celkový čas a délku trasy.
+- 2–3 věty: *Liší se optimální pořadí od toho, jak bys zastávky seřadil sám? O kolik je kratší?* (Pro porovnání můžeš použít výsledek z úlohy C1.)
 
 ---
 
-## 9. Shrnutí teorie
+# Část C – Síťové analýzy v ArcGIS Pro
 
-Síťové analýzy umožňují modelovat reálný pohyb po infrastruktuře a odpovídat na otázky typu:
-- *Jak se dostat z bodu A do bodu B nejrychleji?*
-- *Které oblasti jsou dosažitelné do 10 minut?*
-- *Kde by bylo vhodné umístit nové zařízení, aby pokrylo co nejvíce obyvatel?*
+## C0 – Příprava (udělej jednou)
 
-Základem je **síťový model** s definovanými náklady (impedancí), nad kterým se provádějí algoritmy jako **Dijkstra** nebo **A\***.  
-Výsledky mohou mít podobu **tras (linie)**, **izočron (polygony)** nebo **tabulek vztahů** mezi poptávkou a nabídkou.
+1. **Přihlas se** v ArcGIS Pro (vpravo nahoře) školním účtem.
+2. Ověř licenci: **Project → Licensing** → u *Network Analyst* musí být **Yes**.
+3. Přidej vrstvy **Obce** a **Nemocnice** (a případně tvé adresy z části A).
+4. **Zdroj sítě:** karta **Analysis → Network Analysis → Network Data Source** → nech **ArcGIS Online** (výchozí). Nemusíš tak vyrábět vlastní síť.
 
-Síťové analýzy představují klíčový nástroj pro rozhodování v dopravě, krizovém řízení, územním plánování i komerční sféře.
+> Všechny nástroje níže spustíš stejně: **Analysis → Network Analysis → vyber nástroj**. Do obsahu mapy se přidá nová skupina vrstev a v pásu karet se objeví nová karta (např. *Route*), kde vše nastavíš. Výpočet spustíš tlačítkem **Run**.
 
----
+**Pokročilá varianta (nepovinná):** vytvořit vlastní **Network Dataset** ze silnic ArcČR 500 (nástroj *Create Network Dataset*). Je to ale výrazně pracnější – silnice musí být ve feature datasetu a musíš jim dopočítat čas průjezdu.
 
+## C1 – Route + TSP (nejkratší trasa a nejlepší pořadí)
 
-## Základy síťových analýz
-
-Síťová analýza modeluje pohyb po síti – silnice, cesty, vedení.  
-Každá hrana má atributy jako délka, čas, rychlost nebo omezení.
-
-| Úloha | Nástroj | Příklad |
-|--------|----------|---------|
-| Route | Route | Nejkratší cesta z A do B |
-| Service Area | Service Area | Kam dojedu za 10 minut |
-| Closest Facility | Closest Facility | Nejbližší nemocnice |
-| VRP | Vehicle Routing Problem | Optimalizace rozvozu |
-| Location-Allocation | Location-Allocation | Rozmístění skladů |
-
----
-
-# Síťové analýzy v ArcGIS Online a ArcGIS Pro
-
-Tento úkol se zaměřuje na aplikaci síťových (network) analýz v prostředí **ArcGIS Online** a **ArcGIS Pro**.  
-Cílem je naučit se využívat síťová data k analýze dostupnosti, vyhledávání nejbližších zařízení, optimalizaci tras a rozvozů, a návrhu umístění nových služeb.  
-
-Pro práci použijte **datovou sadu ArcČR 500** – především vrstvy:
-- **Dopravní síť** (silnice, komunikace)
-- **Obce** nebo **části obcí**
-- **Veřejná zařízení** (např. nemocnice, školy, pošty – dle dostupných dat nebo vytvořených bodů)
-- Volitelné vrstvy: hranice krajů, centroidy obcí, administrativní členění
-
----
-
-## 1. Síťové analýzy v ArcGIS Online
-
-### Aktivace nástrojů
-1. Přihlaste se do svého účtu **ArcGIS Online**.  
-2. Otevřete novou nebo existující webovou mapu.  
-3. V horní liště zvolte **Analysis → Use Proximity**.  
-4. Zkontrolujte, že máte přístup k síťovým službám (vyžadují *credits*).
-
----
-
-### 1.1 Find Nearest
-
-**Účel:** zjistit, které zařízení (např. nemocnice) je nejblíže zadaným adresám (např. obcím).  
+**Otázka:** *Jaká je nejrychlejší trasa přes vybrané body – a záleží na tom, jestli optimalizuju čas nebo vzdálenost?*
 
 **Postup:**
-1. `Input layer`: vrstvy adres (obce ArcČR 500).  
-2. `Near layer`: vrstvy zařízení (např. školy, nemocnice).  
-3. `Measurement type`: *Driving distance*.  
-4. `Search radius`: 30 km.  
-5. `Nearest locations`: 1.  
-6. Klikněte na **Run Analysis**.
 
-**Odevzdat:**
-- Výsledná mapa s liniemi (adresy → zařízení).  
-- Tabulka s atributy (vzdálenost, čas jízdy, ID zařízení).  
-- Krátký popis interpretace: *Jaká je průměrná dostupnost? Jsou regionální rozdíly?*
+1. **Analysis → Network Analysis → Route**.
+2. Karta *Route* → **Import Stops** → vyber svou vrstvu bodů (5–10 bodů).
+3. **Travel Mode:** *Driving Time*.
+4. **Sequence:** *Use Current* (pořadí, jak jsou body v tabulce = „ruční“ pořadí) → **Run**.
+5. Zapiš si celkový čas a délku: otevři atributovou tabulku podvrstvy **Routes** (pole `Total_Minutes`, `Total_Kilometers`).
+6. Teď nastav **Sequence:** *Find Best* → **Run** → zapiš znovu.
+   - Pro **TSP s návratem na start** přidej startovní bod ještě jednou na konec a zvol *Preserve First and Last Stop*.
+7. Nakonec změň **Travel Mode** na *Driving Distance* → **Run** → zapiš.
 
----
+**Výsledky zapiš do tabulky:**
 
-### 1.2 Create Drive-Time Areas
+| Varianta | Čas (min) | Délka (km) |
+|----------|-----------|------------|
+| Ruční pořadí, čas | | |
+| Optimální pořadí (TSP), čas | | |
+| Optimální pořadí, vzdálenost | | |
 
-**Účel:** zjistit, jak daleko jsou zařízení dosažitelná v určitém čase (5, 10, 15 minut).  
+**Odevzdej:** mapy tras, tabulku a 2–3 věty: *Kolik ušetřila optimalizace pořadí? Proč je nejkratší trasa jiná než nejrychlejší?* (Nápověda: dálnice bývá delší, ale rychlejší.)
 
-**Postup:**
-1. `Input layer`: zařízení (např. nemocnice, hasičské stanice).  
-2. `Measure`: *Driving time*.  
-3. `Drive times`: 5, 10, 15 minut.  
-4. `Travel mode`: *Auto*.  
-5. Klikněte na **Run Analysis**.
+## C2 – Service Area (dojezdové zóny)
 
-**Odevzdat:**
-- Mapa s polygony dostupnosti (izochny) s popisem vrstev.  
-- Krátká interpretace: *Jaké oblasti nejsou v 15 min dostupnosti? Kde je potřeba nové zařízení?*
-
----
-
-### 1.3 Plan Routes
-
-**Účel:** optimalizovat pořadí zastávek na trase (např. inspekční nebo doručovací trasa).  
+**Otázka:** *Kolik obcí je do 15 minut od nemocnice?*
 
 **Postup:**
-1. `Stops layer`: adresy zastávek (např. 8–12 obcí).  
-2. `Travel mode`: *Driving*.  
-3. `Reorder stops`: zapnuto.  
-4. Klikněte na **Run Analysis**.  
 
-**Odevzdat:**
-- Mapa s trasou a optimálním pořadím zastávek.  
-- Popis: *Jaký je rozdíl mezi ručně zadaným pořadím a optimalizovaným výsledkem?*
+1. **Analysis → Network Analysis → Service Area**.
+2. **Import Facilities** → Nemocnice.
+3. **Direction:** *Away From Facilities* (od nemocnice ven).
+4. **Cutoffs:** `5, 10, 15` (minuty), Travel Mode *Driving Time*.
+5. **Run**.
+6. Spočítej obce: **Map → Select By Location** → vstup *Obce*, vztah *Intersect*, výběrová vrstva *Polygons* (zóna 15 min). Počet vybraných uvidíš dole v atributové tabulce.
 
----
+**Odevzdej:** mapu zón a 2–3 věty: *Kolik obcí (a kolik % obyvatel, pokud máš počet obyvatel) je do 15 minut?*
 
-## 2. Síťové analýzy v ArcGIS Pro
+## C3 – Closest Facility (nejbližší nemocnice)
 
-### 2.1 Aktivace Network Analyst
-1. Otevřete **Customize → Extensions → Network Analyst**.  
-2. Zapněte **Network Analyst Toolbar**.  
-3. Připravte datové vrstvy (dopravní síť z ArcČR 500, obce, zařízení).  
-4. Ověřte, že síťová vrstva má atributy pro výpočet času nebo délky (`TravelTime`, `Length`).
-
----
-
-### 2.2 Route – nalezení nejkratší cesty
-
-**Cíl:** vypočítat nejkratší nebo nejrychlejší trasu mezi body.
+**Otázka:** *Ke které nemocnici to má každá obec nejblíž a kolik obcí je dál než 20 minut?*
 
 **Postup:**
-1. Vytvořte nový projekt a otevřete mapu s dopravní sítí.  
-2. **Network Analyst → New Route**.  
-3. Přidejte zastávky: **Stops → Load Locations** (adresy).  
-4. Nastavte `Impedance = TravelTime` a zapněte `Reorder Stops`.  
-5. Klikněte na **Solve**.
 
-**Odevzdat:**
-- Mapa s výslednou trasou.  
-- Porovnání dvou variant: trasa podle vzdálenosti vs. podle času.  
-- Diskuze: *Jak volba impedance ovlivňuje výsledek?*
+1. **Analysis → Network Analysis → Closest Facility**.
+2. **Import Facilities** → Nemocnice.
+3. **Import Incidents** → Obce.
+4. **Facilities:** 1 (hledáme jednu nejbližší).
+5. **Cutoff:** 20 (minut), Travel Mode *Driving Time*.
+6. **Run**.
+7. Počet obcí mimo 20 minut = **počet obcí − počet tras** v podvrstvě *Routes* (obce, ke kterým se trasa nenašla, jsou mimo limit).
 
----
+**Odevzdej:** mapu tras obec → nemocnice a 2–3 věty: *Kolik obcí je mimo 20 minut? Kde leží?*
 
-### 2.3 Service Area – analýza dostupnosti
+Jaký je rozdíl oproti B1? Úloha je skoro stejná – porovnej výsledek z ArcGIS Online a Pro. Vyšlo to stejně?
 
-**Cíl:** vytvořit zónu dostupnosti kolem zařízení v různých časových intervalech.
+## C4 – Vehicle Routing Problem (rozvoz)
 
-**Postup:**
-1. **Network Analyst → New Service Area**.  
-2. Přidejte zařízení (např. nemocnice).  
-3. Nastavte `Breaks`: 5, 10, 15 minut.  
-4. `Travel direction`: From facility.  
-5. Klikněte na **Solve**.
-
-**Odevzdat:**
-- Polygony dostupnosti.  
-- Analýzu: *Kolik obcí spadá do 15min oblasti?*
-
----
-
-### 2.4 Closest Facility – hledání nejbližšího zařízení
-
-**Cíl:** určit, které zařízení je nejblíže jednotlivým obcím.
+**Otázka:** *Jak rozvézt zboží ze skladu do obcí 2–3 auty, aby byl celkový čas co nejmenší?*
 
 **Postup:**
-1. **New Closest Facility**.  
-2. `Facilities`: zařízení (např. nemocnice).  
-3. `Incidents`: obce nebo adresy.  
-4. `Impedance`: TravelTime.  
-5. `Cutoff`: 20 min.  
-6. Klikněte na **Solve**.
 
-**Odevzdat:**
-- Trasy z obcí k nejbližším nemocnicím.  
-- Statistiku: *Kolik obcí je mimo 20min dostupnost?*
+1. **Analysis → Network Analysis → Vehicle Routing Problem**.
+2. **Import Orders** → obce, kam se rozváží (15–25 obcí).
+3. **Import Depots** → sklad (1 bod, např. jedna z tvých adres).
+4. **Routes:** přidej 2–3 vozidla (*Import Routes* / *Add Route*).
+5. Otevři atributovou tabulku podvrstvy **Routes** a vyplň u každého vozidla:
+   - `StartDepotName` a `EndDepotName` = název skladu,
+   - `MaxOrderCount` = 10 (max. 10 zastávek na auto).
+6. **Run**.
 
----
+**Odevzdej:** mapu tras (každé auto jinou barvou) a 2–3 věty: *Kolik zastávek obslouží každé auto? Jaký je celkový čas? Jak bys je rozdělil ručně a bylo by to horší?*
 
-### 2.5 Vehicle Routing Problem (VRP)
+## C5 – Location-Allocation (kam postavit nové zařízení)
 
-**Cíl:** naplánovat rozvoz zboží z depa k zákazníkům s omezením počtu objednávek na jedno vozidlo.
-
-**Postup:**
-1. **New Vehicle Routing Problem**.  
-2. `Orders`: zákazníci (např. obce s poptávkou).  
-3. `Depots`: sklady (výchozí body).  
-4. `Routes`: vozidla (např. 2–3).  
-5. `MaxOrderCount`: např. 10 zákazníků.  
-6. Klikněte na **Solve**.
-
-**Odevzdat:**
-- Mapa s trasami vozidel.  
-- Popis optimalizace: *Jak se změnila celková délka oproti ručnímu rozdělení tras?*
-
----
-
-### 2.6 Location-Allocation – výběr optimálního umístění
-
-**Cíl:** najít nejlepší umístění nových zařízení vzhledem k poptávce.
+**Otázka:** *Které 2 z navržených míst jsou nejlepší pro novou nemocnici, aby do 15 minut pokryly co nejvíc lidí?*
 
 **Postup:**
-1. **New Location-Allocation**.  
-2. `Demand Points`: obce (populace).  
-3. `Facilities`: potenciální umístění zařízení (např. školy).  
-4. `Problem Type`: Maximize coverage.  
-5. `Facilities to locate`: 2.  
-6. Klikněte na **Solve**.
 
-**Odevzdat:**
-- Mapa s vybranými lokalitami.  
-- Interpretace: *Proč byla vybrána právě tato místa?*
+1. Připrav vrstvu **kandidátů** – 5–8 bodů, kde by nová nemocnice mohla stát (např. větší obce v oblastech mimo zóny z C2).
+2. **Analysis → Network Analysis → Location-Allocation**.
+3. **Import Facilities** → kandidáti.
+4. **Import Demand Points** → Obce. V mapování polí přiřaď **Weight** = pole s **počtem obyvatel** (tím řekneš, že velká obec je důležitější).
+5. **Problem Type:** *Maximize Coverage*.
+6. **Facilities** (počet k výběru): 2.
+7. **Cutoff:** 15 (minut), Travel Mode *Driving Time*.
+8. **Run**. Vybraná místa mají v tabulce Facilities hodnotu `FacilityType = Chosen`.
 
----
-
-### 2.7 TSP – Problém obchodního cestujícího
-
-**Teorie:**  
-Cílem je navštívit všechny body právě jednou a vrátit se na start s minimální délkou trasy.  
-ArcGIS používá heuristiku TSP založenou na **Dijkstrově algoritmu**.
-
-**Postup v ArcGIS Pro:**
-1. **New Route**  
-2. Přidejte body (Stops).  
-3. Aktivujte **Reorder Stops to Find Optimal Route**.  
-4. Klikněte na **Solve**.
-
-**Odevzdat:**
-- Optimalizovanou trasu.  
-- Porovnání s ručně zadaným pořadím zastávek.
+**Odevzdej:** mapu s vybranými místy a 2–3 věty: *Proč algoritmus vybral právě tato místa? Kolik obyvatel nově pokryjí?*
 
 ---
 
-### 2.8 Dijkstrův algoritmus (princip)
+# Část D – Odevzdání
 
-**Použití:** v trasování, Closest Facility, Route i VRP.  
-Zajišťuje nalezení nejkratší cesty mezi uzly dopravní sítě.
+## Co odevzdat
 
-**Princip:**
-1. Každý uzel má počáteční hodnotu ∞ (nekonečno), start = 0.  
-2. Vybere se nejbližší nevyřešený uzel.  
-3. Aktualizují se vzdálenosti k sousedním uzlům.  
-4. Postup se opakuje, dokud nejsou všechny uzly zpracovány.  
+**Jeden dokument (Word nebo PDF)** pro jeden zvolený kraj. Pro každou úlohu použij stejnou šablonu:
 
-Varianta s heuristikou využívá **A\*** algoritmus (rychlejší výpočet díky odhadu vzdálenosti k cíli).
+| Položka | Co napsat |
+|---------|-----------|
+| **Úloha** | např. C2 – Service Area |
+| **Otázka** | co jsem zjišťoval |
+| **Vstupní vrstvy** | Nemocnice, Obce (okres …) |
+| **Parametry** | Driving Time, cutoffs 5/10/15 min, … |
+| **Mapa** | s legendou, měřítkem a severkou |
+| **Výsledek a interpretace** | 2–3 věty |
 
----
+## Kontrolní seznam
 
-## 3. Zadání úkolu
-
-### Cíl
-Pro jeden vybraný kraj vytvořte a zdokumentujte příklady síťových analýz v **ArcGIS Online** a **ArcGIS Pro**.  
-Zaměřte se na **dostupnost služeb**, **optimalizaci tras** a **návrh nových lokalit**.
-
-### Datové podklady
-- ArcČR 500 (silniční síť, obce, zařízení)
-- Volitelně: vlastní body adres, doplňková zařízení (např. hasičské stanice, školy)
-- V případě potřeby převeďte vrstvy do formátu vhodného pro ArcGIS Online (Feature Layer)
-
-### Odevzdání
-1. **Dokumentace (word nebo PDF)** obsahující:
-   - popis postupu každé analýzy,  
-   - nastavené parametry,  
-   - interpretaci výsledků (2–3 věty ke každé úloze),  
-   - krátké porovnání mezi online a desktopovou verzí.  
-2. **Bonus:** vytvořte webovou mapu nebo *dashboard* s kombinací výsledků.
-
-
+- [ ] **A:** tabulka adres, 2 vrstvy bodů, tabulka rozdílů, zhodnocení přesnosti geokódování
+- [ ] **B1** Find Nearest, **B2** Drive-Time Areas, **B3** Plan Routes
+- [ ] **C1** Route + TSP (tabulka 3 variant), **C2** Service Area, **C3** Closest Facility, **C4** VRP, **C5** Location-Allocation
+- [ ] Krátké porovnání ArcGIS Online vs. ArcGIS Pro (co bylo jednodušší, co přesnější, vyšly B1 a C3 stejně?)
+- [ ] Všechny mapy mají legendu, měřítko a popisky
+- [ ] **Bonus:** webová mapa nebo dashboard v ArcGIS Online, který kombinuje výsledky
 
 ---
 
-## Shrnutí postupu CV08
+# Časté problémy
 
-| Krok | Prostředí | Nástroj | Cíl |
-|------|-------------|----------|-----|
-| 1 | Excel | – | Příprava dat |
-| 2 | ArcGIS Online | Geocoding | Umístění bodů |
-| 3 | Google Awesome Table | Geocoding | Porovnání |
-| 4 | ArcGIS Pro | XY Table To Point | Vizualizace |
-| 5 | ArcGIS Online | Network Analysis | Síťové analýzy |
-| 6 | ArcGIS Pro | Route / Closest Facility / VRP | Optimalizace |
-| 7 | ArcGIS Pro | TSP / Dijkstra | Teorie a praxe |
-
----
-
-## Doporučení k odevzdání
-- Exportuj mapové výstupy do PDF s legendou, měřítkem a popisy.
-- Uveď parametry: čas, vzdálenost, počet zařízení.
-- Doplň popis metody a zhodnocení přesnosti geokódování.
+| Problém | Řešení |
+|---------|--------|
+| Body z CSV jsou v moři / u Afriky | Prohozené X a Y. X = Longitude, Y = Latitude. |
+| XY Table To Point nenabízí sloupce souřadnic | Souřadnice mají desetinnou čárku → jsou text. Oprav na tečku a exportuj znovu. |
+| Bod je v jiné obci se stejnou ulicí | Doplň do adresy obec (a případně PSČ) a geokóduj znovu, nebo bod přesuň ručně. |
+| Network Analysis je šedé / nejde spustit | Nejsi přihlášený v ArcGIS Pro, nebo chybí licence Network Analyst (Project → Licensing). |
+| Chyba „insufficient credits“ | Došly kredity – zmenši počet bodů nebo kontaktuj vyučujícího. |
+| Některé body se nenapojí na síť | Bod leží daleko od silnice (např. centroid obce v lese). Posuň ho blíž k silnici. |
+| Closest Facility nenajde trasu pro některé obce | To je v pořádku – jsou dál než cutoff (20 min). Právě ty počítáš jako „mimo dostupnost“. |
 
 ---
 
 ## VARIANTA FUNNY TIMES WITH ANALYSIS
 
-- Otevřete disk [Zadáníčko](https://drive.google.com/drive/folders/1PeaxpP0Suy0DBky8KBiBZswD7NctY637?usp=share_link) 
+- Otevřete disk [Zadáníčko](https://drive.google.com/drive/folders/1PeaxpP0Suy0DBky8KBiBZswD7NctY637?usp=share_link)
