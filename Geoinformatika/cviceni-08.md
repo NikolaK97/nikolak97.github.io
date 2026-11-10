@@ -213,9 +213,6 @@ Výsledný plakát může vypadat třeba takto (rozvržení je doporučení, ne 
 
 **c)** **Kernel Density** (Spatial Analyst): Population Field = `NEVOLICI`, Cell Size 250, Search Radius 5000, Area units = Square kilometers. Porovnejte s heat mapou nástrojem **Swipe**.
 
-> ❓ Čím se liší heat mapa od rastru z Kernel Density?
->
-> <details><summary>Odpověď</summary>Heat mapa je jen způsob vykreslení – barvy se přepočítávají podle výřezu, takže stejné místo má při různém přiblížení jinou barvu. Kernel Density vytvoří rastr s pevnými hodnotami (nevoliči na km²), které nezávisí na měřítku a dají se dál analyzovat.</details>
 
 ---
 
